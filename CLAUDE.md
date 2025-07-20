@@ -110,6 +110,10 @@ http://localhost:8080
   - loadNextQuestion: 함수 존재 여부 확인 후 안전한 호출
   - 백업 문제에 category 필드 추가
   - 함수 로딩 순서 문제 대응
+- **🐛 2025-07-21 00:15: problems.js 객체 문법 오류 수정**
+  - 2788번 줄: generateDynamicProblem 메서드 후 누락된 콤마 추가
+  - dynamicProblemGenerators 객체 내 메서드 구문 오류 해결
+  - 문제 불러오기 실패 완전 해결
 
 ### 🐛 알려진 이슈
 - Service Worker 관련 경고 (비활성화됨)
