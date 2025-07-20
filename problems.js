@@ -1046,9 +1046,9 @@ const dynamicProblemGenerators = {
     bondEnergyProblem() {
         const bonds = [
             { bond: "H-H", energy: 436, type: "단일결합" },
-            { bond: "C-C", energy: 347, type: "단일결합" },
-            { bond: "C=C", energy: 602, type: "이중결합" },
-            { bond: "C≡C", energy: 835, type: "삼중결합" },
+            { bond: "C-C", energy: 348, type: "단일결합" },
+            { bond: "C=C", energy: 614, type: "이중결합" },
+            { bond: "C≡C", energy: 839, type: "삼중결합" },
             { bond: "N≡N", energy: 942, type: "삼중결합" },
             { bond: "O=O", energy: 495, type: "이중결합" }
         ];

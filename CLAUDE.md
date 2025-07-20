@@ -62,6 +62,11 @@ http://localhost:8080
   - problems-database.md: 96개 문제 데이터베이스 구축
   - content-management.md: 컨텐츠 관리 가이드 작성
   - content-sync.js: MD↔JS 동기화 도구 (개발 중)
+- **2025-07-20 22:45: 컨텐츠 오류 진단 및 개선**
+  - CO₂ 이중결합 표현 명확화 (O=C=O 구조 강조)
+  - 결합 에너지 수치 표준화 (C-C: 348, C=C: 614, C≡C: 839 kJ/mol)
+  - 분자 구조 설명 명확성 개선 ("결합각" 명시)
+  - content.js, problems.js 내 결합 에너지 값 통일
 
 ### 🐛 알려진 이슈
 - Service Worker 관련 경고 (비활성화됨)
