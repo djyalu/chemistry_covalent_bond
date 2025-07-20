@@ -100,6 +100,11 @@ http://localhost:8080
   - 중복된 explanation/hint 제거
   - 누락된 category/templates 구조 추가
   - 문제 버전 v7→v8 업데이트로 캐시 문제 해결
+- **🔗 2025-07-21 00:00: 문제풀기-학습진도 연결 수정**
+  - progress.js: window.progressManager 전역 할당 추가
+  - problems.js: generateProblem/generateTopicProblem 함수에 category 정보 추가
+  - 문제 생성 시 category 필드가 개별 문제 객체에 포함되도록 수정
+  - checkAnswer 함수에서 주제별 진도 추적 정상 작동
 
 ### 🐛 알려진 이슈
 - Service Worker 관련 경고 (비활성화됨)
