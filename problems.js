@@ -98,6 +98,80 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "H₂는 2개의 결합 전자와 0개의 반결합 전자를 가져 결합 차수는 (2-0)/2 = 1입니다.",
                     hint: "수소는 각각 1개의 전자를 제공합니다."
+                }
+            ]
+        },
+        {
+            category: 'reactions',
+            templates: [
+                {
+                    question: "다음 중 연소 반응의 예는?",
+                    type: "multiple-choice",
+                    options: ["C + O₂ → CO₂", "NaCl + H₂O → Na⁺ + Cl⁻", "H₂O → H⁺ + OH⁻", "N₂ + 3H₂ → 2NH₃"],
+                    correctIndex: 0,
+                    explanation: "연소 반응은 물질이 산소와 반응하여 이산화탄소와 물을 생성하는 반응입니다.",
+                    hint: "산소와 반응하여 에너지를 방출하는 반응을 생각해보세요."
+                },
+                {
+                    question: "산-염기 중화 반응의 생성물은?",
+                    type: "multiple-choice",
+                    options: ["물과 이산화탄소", "물과 염", "수소 기체", "산소 기체"],
+                    correctIndex: 1,
+                    explanation: "산과 염기가 반응하면 물과 염이 생성됩니다.",
+                    hint: "HCl + NaOH → ? 반응을 생각해보세요."
+                },
+                {
+                    question: "산화-환원 반응에서 전자를 잃는 것은?",
+                    type: "multiple-choice",
+                    options: ["산화", "환원", "중성화", "이온화"],
+                    correctIndex: 0,
+                    explanation: "산화는 전자를 잃는 과정이고, 환원은 전자를 얻는 과정입니다.",
+                    hint: "OIL RIG - Oxidation Is Loss, Reduction Is Gain"
+                },
+                {
+                    question: "반응속도에 영향을 주는 요인이 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["온도", "농도", "촉매", "생성물의 색깔"],
+                    correctIndex: 3,
+                    explanation: "반응속도는 온도, 농도, 촉매, 표면적에 의해 영향을 받습니다.",
+                    hint: "화학 반응의 빠르기에 영향을 주는 조건들을 생각해보세요."
+                }
+            ]
+        },
+        {
+            category: 'dailyChemistry',
+            templates: [
+                {
+                    question: "베이킹소다(NaHCO₃)의 주요 용도는?",
+                    type: "multiple-choice",
+                    options: ["산성 중화", "산화 방지", "단백질 분해", "지방 유화"],
+                    correctIndex: 0,
+                    explanation: "베이킹소다는 약염기성을 가져 산성을 중화하는 데 사용됩니다.",
+                    hint: "위산 과다일 때 사용하는 이유를 생각해보세요."
+                },
+                {
+                    question: "비누가 때를 제거하는 원리는?",
+                    type: "multiple-choice",
+                    options: ["산화", "환원", "유화", "중화"],
+                    correctIndex: 2,
+                    explanation: "비누는 친수성과 소수성 부분을 가져 기름때를 물에 분산시킵니다.",
+                    hint: "기름과 물을 섞이게 하는 작용을 생각해보세요."
+                },
+                {
+                    question: "철이 녹스는 현상은 어떤 반응인가요?",
+                    type: "multiple-choice",
+                    options: ["중화반응", "산화반응", "환원반응", "분해반응"],
+                    correctIndex: 1,
+                    explanation: "철이 녹스는 것은 철이 산소와 반응하여 산화되는 과정입니다.",
+                    hint: "철이 산소와 만나서 일어나는 변화를 생각해보세요."
+                },
+                {
+                    question: "식초의 주성분인 아세트산의 화학식은?",
+                    type: "multiple-choice",
+                    options: ["CH₃COOH", "HCl", "H₂SO₄", "C₆H₁₂O₆"],
+                    correctIndex: 0,
+                    explanation: "식초의 주성분은 아세트산(CH₃COOH)으로 약한 산입니다.",
+                    hint: "탄소 2개, 수소 4개, 산소 2개로 이루어진 산입니다."
                 },
                 {
                     question: "다음 중 극성 분자는?",
@@ -140,6 +214,72 @@ const problemTemplates = {
                     correctIndex: 0,
                     explanation: "공유결합에서는 전자를 공유합니다.",
                     hint: "공유결합의 '공유'가 무엇을 뜻하는지 생각해보세요."
+                },
+                // 추가 문제들
+                {
+                    question: "다음 중 비금속 원소끼리 만드는 결합은?",
+                    type: "multiple-choice",
+                    options: ["이온결합", "공유결합", "금속결합", "배위결합"],
+                    correctIndex: 1,
+                    explanation: "비금속 원소끼리는 전자를 공유하여 공유결합을 만듭니다.",
+                    hint: "비금속 원소들은 전자를 주고받기보다는..."
+                },
+                {
+                    question: "루이스 점 구조에서 점이 나타내는 것은?",
+                    type: "multiple-choice", 
+                    options: ["양성자", "중성자", "원자가 전자", "내부 전자"],
+                    correctIndex: 2,
+                    explanation: "루이스 점 구조에서 점은 원자가 전자를 나타냅니다.",
+                    hint: "화학 결합에 참여하는 전자를 생각해보세요."
+                },
+                {
+                    question: "다음 화학 반응식을 완성하세요: 2H₂ + O₂ → ?",
+                    type: "multiple-choice",
+                    options: ["H₂O", "2H₂O", "H₂O₂", "2H₂O₂"],
+                    correctIndex: 1,
+                    explanation: "수소 2분자와 산소 1분자가 반응하여 물 2분자가 생성됩니다.",
+                    hint: "원자의 개수가 좌변과 우변에서 같아야 합니다."
+                },
+                {
+                    question: "공유결합 화합물이 전기를 통하지 않는 이유는?",
+                    type: "short-answer",
+                    keywords: ["이온", "없", "전자", "이동"],
+                    answer: "자유롭게 이동할 수 있는 이온이나 전자가 없기 때문",
+                    explanation: "공유결합 화합물은 분자로 이루어져 있어 전하를 띤 입자가 자유롭게 이동할 수 없습니다.",
+                    hint: "전기가 통하려면 무엇이 이동해야 할까요?"
+                },
+                {
+                    question: "다음 분자들을 결합 에너지가 큰 순서대로 배열하세요.",
+                    type: "sequence",
+                    steps: ["H-H", "C-C", "C=C", "C≡C"],
+                    correctOrder: [3, 2, 1, 0],
+                    explanation: "삼중결합 > 이중결합 > 단일결합 순으로 결합 에너지가 큽니다.",
+                    hint: "결합 차수가 높을수록..."
+                },
+                {
+                    question: "다음 물질들을 극성/무극성으로 분류하세요.",
+                    type: "drag-drop",
+                    items: ["H₂O", "CO₂", "NH₃", "CH₄", "HCl", "O₂"],
+                    categories: {
+                        "극성 분자": ["H₂O", "NH₃", "HCl"],
+                        "무극성 분자": ["CO₂", "CH₄", "O₂"]
+                    },
+                    explanation: "분자의 구조와 전기음성도 차이가 극성을 결정합니다.",
+                    hint: "분자의 대칭성을 고려해보세요."
+                },
+                {
+                    question: "가상 실험: 메탄 연소 반응",
+                    type: "simulation",
+                    scenario: "메탄 가스에 불을 붙이면 어떤 일이 일어날까요?",
+                    steps: [
+                        "메탄 가스(CH₄)를 준비한다",
+                        "충분한 산소(O₂)를 공급한다",
+                        "점화한다",
+                        "푸른 불꽃이 나타난다"
+                    ],
+                    correctAnswer: "메탄이 산소와 반응하여 이산화탄소와 물이 생성되며 열이 발생한다",
+                    explanation: "CH₄ + 2O₂ → CO₂ + 2H₂O + 열",
+                    hint: "완전연소 반응을 생각해보세요."
                 }
             ]
         }
@@ -253,6 +393,75 @@ const problemTemplates = {
             ]
         },
         {
+            category: 'reactions',
+            templates: [
+                {
+                    question: "다음 반응에서 산화되는 물질은? Zn + CuSO₄ → ZnSO₄ + Cu",
+                    type: "multiple-choice",
+                    options: ["Zn", "Cu", "S", "O"],
+                    correctIndex: 0,
+                    explanation: "아연(Zn)이 전자를 잃고 Zn²⁺이 되므로 산화됩니다.",
+                    hint: "전자를 잃는 것이 산화입니다."
+                },
+                {
+                    question: "반응 속도를 빠르게 하는 방법이 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["온도 올리기", "농도 높이기", "촉매 첨가", "압력 낮추기"],
+                    correctIndex: 3,
+                    explanation: "기체 반응에서 압력을 낮추면 반응속도가 느려집니다.",
+                    hint: "기체의 농도와 압력의 관계를 생각해보세요."
+                },
+                {
+                    question: "중화열이 가장 큰 반응은?",
+                    type: "multiple-choice",
+                    options: ["HCl + NaOH", "CH₃COOH + NaOH", "HCl + NH₃", "CH₃COOH + NH₃"],
+                    correctIndex: 0,
+                    explanation: "강산과 강염기의 중화반응에서 중화열이 가장 큽니다.",
+                    hint: "강산과 강염기를 찾아보세요."
+                }
+            ]
+        },
+        {
+            category: 'dailyChemistry',
+            templates: [
+                {
+                    question: "세제가 기름때를 제거하는 원리를 설명하세요.",
+                    type: "fill-dropdown",
+                    question_template: "세제 분자는 {선택1}과 {선택2} 부분을 가져 기름을 {선택3}시킵니다.",
+                    dropdowns: {
+                        "선택1": ["친수성", "소수성", "중성", "산성"],
+                        "선택2": ["친수성", "소수성", "중성", "염기성"],
+                        "선택3": ["분해", "유화", "중화", "산화"]
+                    },
+                    correctAnswers: ["친수성", "소수성", "유화"],
+                    explanation: "세제는 친수성과 소수성 부분을 모두 가져 기름을 작은 입자로 분산시킵니다.",
+                    hint: "물과 기름 사이를 연결하는 역할을 생각해보세요."
+                },
+                {
+                    question: "다음 중 항산화제로 사용되는 것은?",
+                    type: "multiple-choice",
+                    options: ["비타민 C", "소금", "설탕", "전분"],
+                    correctIndex: 0,
+                    explanation: "비타민 C(아스코르브산)는 대표적인 항산화제입니다.",
+                    hint: "산화를 방지하는 물질을 생각해보세요."
+                },
+                {
+                    question: "pH 지시약 실험: 가정용품의 산성도 측정",
+                    type: "simulation",
+                    scenario: "리트머스 종이를 사용해 각 용액의 산성도를 측정해보세요.",
+                    items: ["레몬즙", "비누물", "물", "식초"],
+                    expected_results: {
+                        "레몬즙": "빨간색 (산성)",
+                        "비누물": "파란색 (염기성)",
+                        "물": "변화없음 (중성)",
+                        "식초": "빨간색 (산성)"
+                    },
+                    explanation: "산성 용액은 리트머스를 빨갛게, 염기성 용액은 파랗게 변화시킵니다.",
+                    hint: "신맛이 나는 것은 산성, 미끌거리는 것은 염기성입니다."
+                }
+            ]
+        },
+        {
             category: 'advanced-concepts',
             templates: [
                 {
@@ -360,6 +569,126 @@ const problemTemplates = {
                     correctIndex: 0,
                     explanation: "물(H₂O)을 전기분해하면 수소 기체(H₂)와 산소 기체(O₂)가 생성됩니다.",
                     hint: "물 분자가 어떤 원소로 이루어져 있는지 생각해보세요."
+                },
+                {
+                    question: "분자간 수소결합이 가능한 물질끼리 매칭하세요.",
+                    type: "matching",
+                    pairs: [
+                        { left: "H₂O", right: "물 분자끼리" },
+                        { left: "NH₃", right: "암모니아 분자끼리" },
+                        { left: "HF", right: "플루오린화수소 분자끼리" },
+                        { left: "CH₃OH", right: "메탄올 분자끼리" }
+                    ],
+                    explanation: "O, N, F와 결합한 H가 있는 분자들은 수소결합이 가능합니다.",
+                    hint: "전기음성도가 큰 원소와 결합한 수소를 찾아보세요."
+                },
+                {
+                    question: "sp³ 혼성 궤도를 가지는 분자는?",
+                    type: "multiple-choice",
+                    options: ["BF₃", "CH₄", "CO₂", "C₂H₄"],
+                    correctIndex: 1,
+                    explanation: "메탄(CH₄)의 탄소는 sp³ 혼성으로 정사면체 구조를 가집니다.",
+                    hint: "4개의 단일결합을 가진 탄소를 찾아보세요."
+                },
+                {
+                    question: "다음 이온 결정의 격자 에너지가 가장 큰 것은?",
+                    type: "multiple-choice",
+                    options: ["NaCl", "KCl", "MgO", "CaO"],
+                    correctIndex: 2,
+                    explanation: "MgO는 이온의 전하가 크고(Mg²⁺, O²⁻) 크기가 작아 격자 에너지가 가장 큽니다.",
+                    hint: "이온의 전하와 크기를 고려해보세요."
+                }
+            ]
+        },
+        {
+            category: 'reactions',
+            templates: [
+                {
+                    question: "다음 반응식을 완성하세요: CH₄ + O₂ → ? + ?",
+                    type: "fill-blank",
+                    answer: "CO₂ + H₂O",
+                    explanation: "메탄의 완전연소: CH₄ + 2O₂ → CO₂ + 2H₂O",
+                    hint: "완전연소 반응의 생성물을 생각해보세요."
+                },
+                {
+                    question: "반응 엔탈피(ΔH)가 음수인 반응은?",
+                    type: "multiple-choice",
+                    options: ["흡열반응", "발열반응", "평형반응", "가역반응"],
+                    correctIndex: 1,
+                    explanation: "ΔH < 0이면 에너지를 방출하는 발열반응입니다.",
+                    hint: "에너지 변화의 방향을 생각해보세요."
+                },
+                {
+                    question: "촉매의 역할을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["활성화", "에너지", "낮춤", "속도"],
+                    answer: "활성화 에너지를 낮춰 반응속도를 빠르게 함",
+                    explanation: "촉매는 반응의 활성화 에너지를 낮춰 반응이 더 쉽게 일어나도록 도와줍니다.",
+                    hint: "반응이 시작되는 데 필요한 에너지를 생각해보세요."
+                },
+                {
+                    question: "화학 평형에서 Le Chatelier 원리란?",
+                    type: "short-answer",
+                    keywords: ["평형", "이동", "변화", "상쇄"],
+                    answer: "외부 조건 변화에 대해 평형이 그 변화를 상쇄하는 방향으로 이동",
+                    explanation: "온도, 압력, 농도 등이 변하면 평형은 그 변화를 최소화하는 방향으로 이동합니다.",
+                    hint: "평형상태에서 조건이 바뀔 때 일어나는 현상을 생각해보세요."
+                }
+            ]
+        },
+        {
+            category: 'dailyChemistry',
+            templates: [
+                {
+                    question: "계면활성제가 세정 효과를 나타내는 원리를 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["친수성", "소수성", "유화", "표면장력"],
+                    answer: "친수성과 소수성 부분으로 기름과 물 사이의 표면장력을 낮춰 유화시킴",
+                    explanation: "계면활성제는 양친매성 분자로 기름과 물 사이를 연결하여 유화 현상을 일으킵니다.",
+                    hint: "비누나 세제의 분자 구조를 생각해보세요."
+                },
+                {
+                    question: "식품 보존에 사용되는 화학적 방법은?",
+                    type: "multiple-choice",
+                    options: ["산화 촉진", "pH 조절", "온도 상승", "습도 증가"],
+                    correctIndex: 1,
+                    explanation: "pH를 조절하여 세균의 번식을 억제하는 것이 대표적인 화학적 보존 방법입니다.",
+                    hint: "세균이 자라기 어려운 환경을 만드는 방법을 생각해보세요."
+                },
+                {
+                    question: "발효 과정에서 일어나는 주요 화학 반응은?",
+                    type: "multiple-choice",
+                    options: ["산화", "환원", "분해", "중합"],
+                    correctIndex: 2,
+                    explanation: "발효는 미생물이 유기물을 분해하여 알코올이나 산을 만드는 과정입니다.",
+                    hint: "당분이 알코올로 변하는 과정을 생각해보세요."
+                },
+                {
+                    question: "콜라의 탄산이 빠지는 현상을 화학적으로 설명하세요.",
+                    type: "short-answer", 
+                    keywords: ["CO₂", "용해도", "압력", "온도"],
+                    answer: "압력 감소나 온도 상승으로 CO₂의 용해도가 감소하여 기체로 빠져나감",
+                    explanation: "기체의 용해도는 압력에 비례하고 온도에 반비례하므로 병을 열거나 온도가 올라가면 CO₂가 빠져나갑니다.",
+                    hint: "헨리의 법칙을 생각해보세요."
+                },
+                {
+                    question: "화학 평형 상태의 특징이 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["정반응과 역반응의 속도가 같다", "농도가 일정하다", "반응이 완전히 멈춘다", "동적 평형 상태이다"],
+                    correctIndex: 2,
+                    explanation: "화학 평형은 정반응과 역반응이 같은 속도로 계속 일어나는 동적 평형입니다.",
+                    hint: "평형 상태에서도 분자 수준에서는..."
+                },
+                {
+                    question: "완충 용액을 만들기 위한 물질 조합으로 적절한 것은?",
+                    type: "drag-drop",
+                    items: ["CH₃COOH", "CH₃COONa", "HCl", "NaOH", "NH₃", "NH₄Cl"],
+                    categories: {
+                        "아세트산 완충액": ["CH₃COOH", "CH₃COONa"],
+                        "암모니아 완충액": ["NH₃", "NH₄Cl"]
+                    },
+                    explanation: "약산과 그 짝염기, 또는 약염기와 그 짝산의 조합으로 완충액을 만듭니다.",
+                    hint: "약산/약염기와 그들의 염을 찾아보세요."
                 }
             ]
         }
@@ -512,7 +841,11 @@ const problemStats = {
         covalent: { attempted: 0, correct: 0 },
         ionic: { attempted: 0, correct: 0 },
         molecular: { attempted: 0, correct: 0 },
-        bonding: { attempted: 0, correct: 0 }
+        bonding: { attempted: 0, correct: 0 },
+        reactions: { attempted: 0, correct: 0 },
+        dailyChemistry: { attempted: 0, correct: 0 },
+        'basic-concepts': { attempted: 0, correct: 0 },
+        'advanced-concepts': { attempted: 0, correct: 0 }
     },
     
     updateStats(category, isCorrect) {

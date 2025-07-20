@@ -1,0 +1,386 @@
+/* 보강된 학습 컨텐츠 스타일 */
+
+/* 상세 정보 스타일 */
+.detail-info {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-left: 3px solid #2196F3;
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* 핵심 개념 하이라이트 */
+.concept-highlight {
+    margin: 20px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    border-radius: 10px;
+    border: 2px solid #1976D2;
+}
+
+.concept-highlight h4 {
+    color: #1976D2;
+    margin-bottom: 10px;
+}
+
+.concept-highlight ul {
+    margin-left: 20px;
+}
+
+/* 형성 과정 스타일 */
+.formation-process {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.process-step {
+    flex: 1;
+    min-width: 200px;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.process-step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: #2196F3;
+    color: white;
+    border-radius: 50%;
+    line-height: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+/* 극성 비교 스타일 */
+.polarity-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.polarity-type {
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    transition: border-color 0.3s ease;
+}
+
+.polarity-type:hover {
+    border-color: #2196F3;
+}
+
+.polarity-type h4 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.polarity-type ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.polarity-type li {
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.polarity-type li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #2196F3;
+    font-weight: bold;
+}
+
+/* 예시 디테일 스타일 */
+.example-detail {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* 놀라운 물질들 스타일 */
+.amazing-materials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.material-card {
+    padding: 20px;
+    background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.material-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.material-card h4 {
+    color: #1976D2;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.material-card ul {
+    margin-left: 20px;
+    color: #555;
+}
+
+/* 속성 설명 스타일 */
+.property-explanation {
+    margin-top: 20px;
+}
+
+.property-explanation h4 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.explanation-card {
+    margin: 15px 0;
+    padding: 15px;
+    background: #e8f5e9;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+}
+
+.explanation-card h5 {
+    color: #2E7D32;
+    margin-bottom: 10px;
+}
+
+.explanation-card .example {
+    font-style: italic;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* 이온 크기 정보 스타일 */
+.ion-size-info {
+    padding: 20px;
+    background: #fff3e0;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.ion-size-info h4 {
+    color: #E65100;
+    margin-bottom: 15px;
+}
+
+.size-example {
+    margin-top: 15px;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #FFE0B2;
+}
+
+.size-example p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* 일상생활 예시 보강 스타일 */
+.daily-examples {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.example-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.example-item:hover {
+    background: #e3f2fd;
+    border-color: #2196F3;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.example-item .icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.example-item span:nth-child(2) {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* 화학 반응 스타일 */
+.reaction-basics {
+    padding: 20px;
+    background: #f0f7ff;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.reaction-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.reaction-card {
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.reaction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.reaction-card h4 {
+    color: #1976D2;
+    margin-bottom: 10px;
+}
+
+.equation {
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    font-family: monospace;
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.reaction-card .example {
+    font-style: italic;
+    color: #666;
+    margin-top: 10px;
+}
+
+.factor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.factor-item {
+    padding: 20px;
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.factor-item h4 {
+    color: #E65100;
+    margin-bottom: 10px;
+}
+
+.factor-item .detail {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* 일상 속 화학 스타일 */
+.kitchen-chemistry, .bathroom-chemistry {
+    margin: 20px 0;
+}
+
+.daily-item {
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 4px solid #4CAF50;
+}
+
+.daily-item h4 {
+    color: #2E7D32;
+    margin-bottom: 10px;
+}
+
+.daily-item strong {
+    color: #1976D2;
+}
+
+.life-reactions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.reaction-example {
+    padding: 20px;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: 8px;
+}
+
+.reaction-example h4 {
+    color: #2E7D32;
+    margin-bottom: 10px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .polarity-comparison {
+        grid-template-columns: 1fr;
+    }
+    
+    .formation-process {
+        flex-direction: column;
+    }
+    
+    .amazing-materials {
+        grid-template-columns: 1fr;
+    }
+    
+    .daily-examples {
+        grid-template-columns: 1fr;
+    }
+    
+    .reaction-types {
+        grid-template-columns: 1fr;
+    }
+    
+    .factor-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .life-reactions {
+        grid-template-columns: 1fr;
+    }
+}
