@@ -1,0 +1,394 @@
+/* 동적 학습 시스템 스타일 */
+
+/* 적응형 정보 영역 */
+.adaptive-info {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    padding: 10px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.adaptive-info span {
+    font-size: 0.9em;
+    color: #495057;
+    font-weight: 500;
+}
+
+.learning-streak {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* 미니 대시보드 */
+.mini-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.mini-stat {
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.mini-stat-label {
+    display: block;
+    font-size: 0.8em;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.mini-stat-value {
+    display: block;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+/* 타겟 문제 배너 */
+.targeted-question-banner {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: #8b4513;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    border-left: 4px solid #ff6b35;
+}
+
+/* 스마트 힌트 */
+.smart-hint {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    border: 1px solid #81c784;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 15px 0;
+    box-shadow: 0 2px 8px rgba(129, 199, 132, 0.2);
+}
+
+.smart-hint h4 {
+    margin: 0 0 10px 0;
+    color: #2e7d32;
+    font-size: 1.1em;
+}
+
+.smart-hint p {
+    margin: 8px 0;
+    color: #1b5e20;
+    line-height: 1.5;
+}
+
+/* 향상된 피드백 영역 */
+.enhanced-feedback {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+}
+
+.learning-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.learning-section h4 {
+    margin: 0 0 12px 0;
+    color: #495057;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.concept-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.concept-tag {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.action-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* 분자 시각화 */
+.molecule-viz {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.molecule-viz h4 {
+    margin: 0 0 15px 0;
+    color: #8b4513;
+    font-size: 1.2em;
+}
+
+#molecule-display {
+    border: 2px solid #fff;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.viz-controls {
+    margin-top: 15px;
+}
+
+.viz-controls button {
+    background: #ff6b35;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.viz-controls button:hover {
+    background: #e55a2b;
+    transform: translateY(-2px);
+}
+
+/* 시각적 보조 버튼 */
+.visual-btn {
+    background: linear-gradient(135deg, #ff9a56 0%, #ffad56 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.visual-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 154, 86, 0.4);
+}
+
+/* 피드백 개선 */
+.praise {
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    color: #0d4f3c;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.insight {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    color: #1b5e20;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.encouragement {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: #8b4513;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.next-steps {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.next-steps h4 {
+    margin: 0 0 10px 0;
+    color: #007bff;
+}
+
+/* 레벨업 알림 */
+.level-up-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1000;
+    animation: levelUpPop 0.5s ease;
+}
+
+.level-up-content {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.level-text {
+    display: block;
+    font-size: 2em;
+    margin-top: 10px;
+    background: linear-gradient(45deg, #ffd700, #ffed4a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@keyframes levelUpPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .adaptive-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .mini-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .concept-tags {
+        justify-content: center;
+    }
+    
+    #molecule-display {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+    .mini-dashboard {
+        background: #2d3748;
+    }
+    
+    .learning-section {
+        background: #2d3748;
+        color: #e2e8f0;
+    }
+    
+    .enhanced-feedback {
+        background: #1a202c;
+        border-color: #4a5568;
+    }
+    
+    .molecule-viz {
+        background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    }
+    
+    .molecule-viz h4 {
+        color: #e2e8f0;
+    }
+}
+
+/* 접근성 개선 */
+@media (prefers-reduced-motion: reduce) {
+    .action-btn:hover,
+    .visual-btn:hover,
+    .viz-controls button:hover {
+        transform: none;
+    }
+    
+    .level-up-notification {
+        animation: none;
+    }
+}
+
+/* 포커스 스타일 */
+.action-btn:focus,
+.visual-btn:focus,
+.viz-controls button:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* 로딩 상태 */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

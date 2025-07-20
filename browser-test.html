@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>브라우저 문제 풀기 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .error { color: red; }
+        .success { color: green; }
+        .info { color: blue; }
+        button { margin: 5px; padding: 10px; }
+        .question-display { background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 화학 학습 프로그램 - 문제 풀기 테스트</h1>
+    
+    <div class="test-section">
+        <h3>1. 스크립트 로딩 상태 확인</h3>
+        <div id="script-status"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. 문제 생성 테스트</h3>
+        <button onclick="testProblemGeneration()">문제 생성 테스트</button>
+        <div id="generation-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. 실제 문제 표시</h3>
+        <div>
+            <label>난이도: </label>
+            <select id="test-difficulty">
+                <option value="easy">쉬움</option>
+                <option value="medium" selected>보통</option>
+                <option value="hard">어려움</option>
+            </select>
+            <button onclick="loadTestQuestion()">문제 불러오기</button>
+        </div>
+        <div id="test-question-display" class="question-display" style="display:none;"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>4. DOM 요소 확인</h3>
+        <button onclick="checkDOMElements()">DOM 요소 확인</button>
+        <div id="dom-status"></div>
+    </div>
+
+    <!-- 스크립트 로딩 -->
+    <script src="problems.js"></script>
+    <script>
+        // 페이지 로드 시 초기 상태 확인
+        document.addEventListener('DOMContentLoaded', function() {
+            checkScriptLoading();
+        });
+
+        function checkScriptLoading() {
+            const statusDiv = document.getElementById('script-status');
+            let status = '';
+            
+            // problemTemplates 확인
+            if (typeof problemTemplates !== 'undefined') {
+                status += '<p class="success">✅ problemTemplates 로드됨</p>';
+                status += `<p class="info">난이도별 템플릿 개수: ${Object.keys(problemTemplates).join(', ')}</p>`;
+            } else {
+                status += '<p class="error">❌ problemTemplates 로드되지 않음</p>';
+            }
+            
+            // generateProblem 함수 확인
+            if (typeof generateProblem === 'function') {
+                status += '<p class="success">✅ generateProblem 함수 로드됨</p>';
+            } else {
+                status += '<p class="error">❌ generateProblem 함수 로드되지 않음</p>';
+            }
+            
+            statusDiv.innerHTML = status;
+        }
+
+        function testProblemGeneration() {
+            const resultDiv = document.getElementById('generation-result');
+            let result = '<h4>문제 생성 테스트 결과:</h4>';
+            
+            const difficulties = ['easy', 'medium', 'hard'];
+            
+            difficulties.forEach(difficulty => {
+                try {
+                    console.log(`Testing ${difficulty} difficulty...`);
+                    const problem = generateProblem(difficulty);
+                    
+                    if (problem && problem.question) {
+                        result += `<p class="success">✅ ${difficulty}: "${problem.question.substring(0, 50)}..."</p>`;
+                        result += `<p class="info">   타입: ${problem.type}, 점수: ${problem.points}</p>`;
+                    } else {
+                        result += `<p class="error">❌ ${difficulty}: 문제 생성 실패</p>`;
+                    }
+                } catch (error) {
+                    result += `<p class="error">❌ ${difficulty}: 오류 - ${error.message}</p>`;
+                    console.error(`Error testing ${difficulty}:`, error);
+                }
+            });
+            
+            resultDiv.innerHTML = result;
+        }
+
+        function loadTestQuestion() {
+            const difficulty = document.getElementById('test-difficulty').value;
+            const displayDiv = document.getElementById('test-question-display');
+            
+            try {
+                const problem = generateProblem(difficulty);
+                
+                if (problem) {
+                    let html = `
+                        <h4>생성된 문제 (${difficulty}):</h4>
+                        <p><strong>문제:</strong> ${problem.question}</p>
+                        <p><strong>타입:</strong> ${problem.type}</p>
+                    `;
+                    
+                    if (problem.type === 'multiple-choice' && problem.options) {
+                        html += '<p><strong>선택지:</strong></p><ul>';
+                        problem.options.forEach((option, index) => {
+                            const isCorrect = index === problem.correctIndex;
+                            html += `<li${isCorrect ? ' style="color: green; font-weight: bold;"' : ''}>${option} ${isCorrect ? '(정답)' : ''}</li>`;
+                        });
+                        html += '</ul>';
+                    }
+                    
+                    if (problem.explanation) {
+                        html += `<p><strong>설명:</strong> ${problem.explanation}</p>`;
+                    }
+                    
+                    if (problem.hint) {
+                        html += `<p><strong>힌트:</strong> ${problem.hint}</p>`;
+                    }
+                    
+                    displayDiv.innerHTML = html;
+                    displayDiv.style.display = 'block';
+                } else {
+                    displayDiv.innerHTML = '<p class="error">문제 생성에 실패했습니다.</p>';
+                    displayDiv.style.display = 'block';
+                }
+            } catch (error) {
+                displayDiv.innerHTML = `<p class="error">오류 발생: ${error.message}</p>`;
+                displayDiv.style.display = 'block';
+                console.error('Error loading test question:', error);
+            }
+        }
+
+        function checkDOMElements() {
+            const statusDiv = document.getElementById('dom-status');
+            
+            // 주요 DOM 요소들이 메인 index.html에 있는지 시뮬레이션
+            const expectedElements = [
+                'question-content',
+                'answer-section', 
+                'submit-btn',
+                'next-btn',
+                'feedback',
+                'question-number',
+                'score'
+            ];
+            
+            let status = '<h4>필요한 DOM 요소들:</h4>';
+            
+            expectedElements.forEach(elementId => {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    status += `<p class="success">✅ ${elementId} 존재</p>`;
+                } else {
+                    status += `<p class="error">❌ ${elementId} 없음 (메인 페이지에서 확인 필요)</p>`;
+                }
+            });
+            
+            statusDiv.innerHTML = status;
+        }
+
+        // 콘솔에 추가 정보 출력
+        console.log('브라우저 테스트 페이지 로드됨');
+        console.log('window.generateProblem:', typeof window.generateProblem);
+        console.log('problemTemplates:', typeof window.problemTemplates);
+    </script>
+</body>
+</html>

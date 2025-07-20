@@ -6,6 +6,7 @@
     <title>화학 학습 프로그램 - 공유결합과 이온화합물</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="enhanced-styles.css">
+    <link rel="stylesheet" href="dynamic-learning-styles.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2196F3">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,6 +75,28 @@
                             <option value="medium" selected>보통</option>
                             <option value="hard">어려움</option>
                         </select>
+                        <div class="adaptive-info">
+                            <span id="adaptive-difficulty">적응형 난이도: 보통 📘</span>
+                            <div class="learning-streak">
+                                <span id="current-streak">연속 정답: 0</span> 🔥
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 학습 진도 미니 대시보드 -->
+                <div class="mini-dashboard">
+                    <div class="mini-stat">
+                        <span class="mini-stat-label">레벨</span>
+                        <span id="current-level" class="mini-stat-value">1</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-stat-label">정답률</span>
+                        <span id="current-accuracy" class="mini-stat-value">0%</span>
+                    </div>
+                    <div class="mini-stat">
+                        <span class="mini-stat-label">약점 영역</span>
+                        <span id="weak-area" class="mini-stat-value">-</span>
                     </div>
                 </div>
                 
@@ -94,10 +117,27 @@
                     <div class="button-group">
                         <button id="submit-btn" class="submit-btn" onclick="checkAnswer()">정답 확인</button>
                         <button id="next-btn" class="next-btn" onclick="loadNextQuestion()" style="display:none;">다음 문제</button>
-                        <button id="hint-btn" class="hint-btn" onclick="showHint()">힌트 보기</button>
+                        <button id="hint-btn" class="hint-btn" onclick="showSmartHint()">스마트 힌트</button>
+                        <button id="visual-aid-btn" class="visual-btn" onclick="showVisualAid()" style="display:none;">시각적 설명</button>
                     </div>
                     
                     <div id="feedback" class="feedback"></div>
+                    
+                    <!-- 향상된 피드백 영역 -->
+                    <div id="enhanced-feedback" class="enhanced-feedback" style="display:none;">
+                        <div id="learning-tips" class="learning-section"></div>
+                        <div id="related-concepts" class="learning-section"></div>
+                        <div id="next-steps" class="learning-section"></div>
+                    </div>
+                    
+                    <!-- 분자 시각화 영역 -->
+                    <div id="molecule-visualization" class="molecule-viz" style="display:none;">
+                        <h4>분자 구조 시각화</h4>
+                        <canvas id="molecule-display" width="400" height="300"></canvas>
+                        <div class="viz-controls">
+                            <button onclick="hideVisualization()">닫기</button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -157,6 +197,7 @@
     <script src="molecule-viewer.js"></script>
     <script src="enhanced-problems.js"></script>
     <script src="gamification.js"></script>
+    <script src="enhanced-learning.js"></script>
     
     <!-- Service Worker 등록 -->
     <script>

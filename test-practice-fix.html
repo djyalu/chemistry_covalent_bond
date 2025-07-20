@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제 풀기 기능 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .section.active { background-color: #f0f8ff; border-color: #0066cc; }
+        .nav-btn { margin: 5px; padding: 10px 15px; border: none; background: #e0e0e0; border-radius: 3px; cursor: pointer; }
+        .nav-btn.active { background: #0066cc; color: white; }
+        .question-container { background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .option-label { display: block; margin: 8px 0; padding: 8px; background: white; border: 1px solid #ccc; border-radius: 3px; cursor: pointer; }
+        .option-label:hover { background: #f0f0f0; }
+        .button-group { margin: 15px 0; }
+        .button-group button { margin: 5px; padding: 8px 15px; border: none; border-radius: 3px; cursor: pointer; }
+        .submit-btn { background: #28a745; color: white; }
+        .next-btn { background: #007bff; color: white; }
+        .hint-btn { background: #ffc107; }
+        .feedback { margin: 15px 0; padding: 10px; border-radius: 3px; }
+        .correct-answer { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .wrong-answer { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; }
+        .debug { background: #e2e3e5; padding: 10px; margin: 10px 0; border-radius: 3px; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <h1>🧪 화학 학습 프로그램 - 문제 풀기 기능 테스트</h1>
+    
+    <div class="debug">
+        <h3>테스트 진행 상황:</h3>
+        <div id="test-log"></div>
+    </div>
+    
+    <!-- 네비게이션 시뮬레이션 -->
+    <nav>
+        <button class="nav-btn active" data-section="learn">학습하기</button>
+        <button class="nav-btn" data-section="practice">문제풀기</button>
+        <button class="nav-btn" data-section="progress">학습진도</button>
+    </nav>
+    
+    <!-- 학습 섹션 -->
+    <section id="learn" class="section active">
+        <h2>학습 섹션</h2>
+        <p>여기는 학습 내용이 표시되는 곳입니다.</p>
+    </section>
+    
+    <!-- 문제 풀기 섹션 -->
+    <section id="practice" class="section">
+        <h2>문제 풀어보기</h2>
+        
+        <div>
+            <label>난이도:</label>
+            <select id="difficulty">
+                <option value="easy">쉬움</option>
+                <option value="medium" selected>보통</option>
+                <option value="hard">어려움</option>
+            </select>
+        </div>
+        
+        <div id="question-container" class="question-container">
+            <div class="question-header">
+                <span id="question-number">문제 1</span>
+                <span id="score">점수: 0</span>
+            </div>
+            
+            <div id="question-content" class="question-content">
+                <!-- 문제가 동적으로 로드됩니다 -->
+            </div>
+            
+            <div id="answer-section" class="answer-section">
+                <!-- 답변 입력 영역 -->
+            </div>
+            
+            <div class="button-group">
+                <button id="submit-btn" class="submit-btn" onclick="checkAnswer()">정답 확인</button>
+                <button id="next-btn" class="next-btn" onclick="loadNextQuestion()" style="display:none;">다음 문제</button>
+                <button id="hint-btn" class="hint-btn" onclick="showSmartHint()">스마트 힌트</button>
+                <button id="visual-aid-btn" class="visual-btn" onclick="showVisualAid()" style="display:none;">시각적 설명</button>
+            </div>
+            
+            <div id="feedback" class="feedback"></div>
+            
+            <div id="enhanced-feedback" class="enhanced-feedback" style="display:none;"></div>
+            
+            <div id="molecule-visualization" class="molecule-viz" style="display:none;">
+                <h4>분자 구조 시각화</h4>
+                <canvas id="molecule-display" width="400" height="300"></canvas>
+                <div class="viz-controls">
+                    <button onclick="hideVisualization()">닫기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 학습 진도 섹션 -->
+    <section id="progress" class="section">
+        <h2>학습 진도</h2>
+        <p>여기는 진도가 표시되는 곳입니다.</p>
+        
+        <!-- 미니 대시보드 요소들 -->
+        <div style="display: none;">
+            <span id="current-level">1</span>
+            <span id="current-accuracy">0%</span>
+            <span id="current-streak">0</span>
+            <span id="weak-area">-</span>
+        </div>
+    </section>
+
+    <!-- 스크립트 로딩 -->
+    <script src="problems.js"></script>
+    <script src="app.js"></script>
+    
+    <script>
+        // 테스트 로깅 함수
+        function logTest(message, isSuccess = true) {
+            const logDiv = document.getElementById('test-log');
+            const timestamp = new Date().toLocaleTimeString();
+            const status = isSuccess ? '✅' : '❌';
+            logDiv.innerHTML += `<div>${timestamp} ${status} ${message}</div>`;
+        }
+
+        // 페이지 로드 후 테스트 시작
+        window.addEventListener('load', () => {
+            logTest('페이지 로드 완료');
+            
+            // 잠시 후 테스트 진행
+            setTimeout(() => {
+                runTests();
+            }, 500);
+        });
+
+        function runTests() {
+            logTest('테스트 시작...');
+            
+            // 1. 기본 함수들이 로드되었는지 확인
+            if (typeof generateProblem === 'function') {
+                logTest('generateProblem 함수 로드됨');
+            } else {
+                logTest('generateProblem 함수가 로드되지 않음', false);
+                return;
+            }
+            
+            // 2. 문제 생성 테스트
+            try {
+                const testProblem = generateProblem('medium');
+                if (testProblem && testProblem.question) {
+                    logTest('문제 생성 성공: ' + testProblem.question.substring(0, 30) + '...');
+                } else {
+                    logTest('문제 생성 실패', false);
+                    return;
+                }
+            } catch (error) {
+                logTest('문제 생성 중 오류: ' + error.message, false);
+                return;
+            }
+            
+            // 3. practice 섹션으로 전환 테스트
+            logTest('practice 섹션으로 전환 중...');
+            setTimeout(() => {
+                const practiceBtn = document.querySelector('[data-section="practice"]');
+                if (practiceBtn) {
+                    practiceBtn.click();
+                    
+                    // 잠시 후 문제가 로드되었는지 확인
+                    setTimeout(() => {
+                        const questionContent = document.getElementById('question-content');
+                        if (questionContent && questionContent.innerHTML.trim()) {
+                            logTest('문제가 성공적으로 표시됨!');
+                            logTest('표시된 내용: ' + questionContent.innerHTML.substring(0, 50) + '...');
+                            
+                            // 4. 답변 영역 확인
+                            const answerSection = document.getElementById('answer-section');
+                            if (answerSection && answerSection.innerHTML.trim()) {
+                                logTest('답변 입력 영역이 생성됨');
+                                testComplete();
+                            } else {
+                                logTest('답변 입력 영역이 생성되지 않음', false);
+                            }
+                        } else {
+                            logTest('문제가 표시되지 않음', false);
+                        }
+                    }, 200);
+                } else {
+                    logTest('practice 버튼을 찾을 수 없음', false);
+                }
+            }, 100);
+        }
+
+        function testComplete() {
+            logTest('🎉 모든 테스트 통과! 문제 풀기 기능이 정상적으로 작동합니다.');
+            
+            // 추가 정보 표시
+            if (currentQuestion) {
+                logTest('현재 문제 타입: ' + currentQuestion.type);
+                logTest('현재 문제 점수: ' + (currentQuestion.points || 10));
+            }
+        }
+
+        // 오류 캐치
+        window.addEventListener('error', (e) => {
+            logTest('JavaScript 오류 발생: ' + e.message, false);
+        });
+    </script>
+</body>
+</html>
