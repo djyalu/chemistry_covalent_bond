@@ -328,10 +328,10 @@ function loadNextQuestion() {
                 <div class="targeted-question-banner">
                     🎯 ${currentQuestion.targetReason}
                 </div>
-                ${currentQuestion.question}
+                <h3>${currentQuestion.question}</h3>
             `;
         } else {
-            document.getElementById('question-content').innerHTML = currentQuestion.question;
+            document.getElementById('question-content').innerHTML = `<h3>${currentQuestion.question}</h3>`;
         }
         
         // 답변 영역 설정
