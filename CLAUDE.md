@@ -95,6 +95,11 @@ http://localhost:8080
   - 미니 대시보드 (문제풀기 섹션 실시간 통계)
   - localStorage 기반 데이터 영속성 및 내보내기 기능
   - app.js checkAnswer 함수와 완전 통합
+- **🐛 2025-07-20 23:45: 문제 로딩 오류 긴급 수정**
+  - problems.js 문법 오류 2건 수정 (678번, 1404번 줄)
+  - 중복된 explanation/hint 제거
+  - 누락된 category/templates 구조 추가
+  - 문제 버전 v7→v8 업데이트로 캐시 문제 해결
 
 ### 🐛 알려진 이슈
 - Service Worker 관련 경고 (비활성화됨)
