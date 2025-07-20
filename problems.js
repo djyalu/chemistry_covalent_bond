@@ -905,11 +905,11 @@ const usedTopicProblems = {};
 function generateTopicProblem(topic, difficulty) {
     const templates = problemTemplates[difficulty];
     
-    // 주제 매핑 (각 주제별 카테고리 명확히 구분)
+    // 주제 매핑 (각 주제별 카테고리 명확히 구분 + 관련 카테고리 포함)
     const topicMapping = {
-        'covalent': ['covalent'],
-        'ionic': ['ionic'], 
-        'molecular': ['molecular'],
+        'covalent': ['covalent', 'basic-concepts'],  // 기본 개념도 포함
+        'ionic': ['ionic'],
+        'molecular': ['molecular', 'advanced-concepts'],  // 고급 개념도 포함  
         'bonding': ['bonding'],
         'reactions': ['reactions'],
         'dailyChemistry': ['dailyChemistry']

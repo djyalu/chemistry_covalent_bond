@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중복 문제 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; border-left: 4px solid #28a745; }
+        .warning { background-color: #fff3cd; border-left: 4px solid #ffc107; }
+        .error { background-color: #f8d7da; border-left: 4px solid #dc3545; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔍 중복 문제 테스트</h1>
+    
+    <div>
+        <button onclick="testGeneralDuplicates()">일반 문제 중복 테스트</button>
+        <button onclick="testTopicDuplicates()">주제별 중복 테스트</button>
+        <button onclick="testResetFunctionality()">초기화 기능 테스트</button>
+        <button onclick="runAllDuplicateTests()">전체 중복 테스트</button>
+    </div>
+    
+    <div id="testResults"></div>
+    
+    <!-- 필요한 스크립트 로드 -->
+    <script src="problems.js"></script>
+    
+    <script>
+        let testResults = [];
+        
+        function logResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = message;
+            document.getElementById('testResults').appendChild(div);
+            console.log(message);
+        }
+        
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+            testResults = [];
+        }
+        
+        async function testGeneralDuplicates() {
+            clearResults();
+            logResult('<h2>일반 문제 중복 테스트 시작</h2>');
+            
+            const difficulties = ['easy', 'medium', 'hard'];
+            
+            for (const difficulty of difficulties) {
+                logResult(`<h3>${difficulty} 난이도 테스트</h3>`);
+                
+                const generatedQuestions = [];
+                const duplicates = [];
+                let attempts = 50;
+                let successCount = 0;
+                
+                for (let i = 0; i < attempts; i++) {
+                    try {
+                        const question = generateUniqueQuestion(difficulty);
+                        if (question) {
+                            successCount++;
+                            const questionId = question.uniqueId || `${question.question.substring(0, 50)}_${question.type}`;
+                            
+                            if (generatedQuestions.includes(questionId)) {
+                                duplicates.push({
+                                    attempt: i + 1,
+                                    questionId,
+                                    question: question.question.substring(0, 100) + '...'
+                                });
+                            } else {
+                                generatedQuestions.push(questionId);
+                            }
+                        }
+                    } catch (error) {
+                        logResult(`문제 생성 오류 (시도 ${i + 1}): ${error.message}`, 'error');
+                    }
+                    
+                    // UI 블록 방지
+                    if (i % 10 === 0) {
+                        await new Promise(resolve => setTimeout(resolve, 1));
+                    }
+                }
+                
+                const duplicateCount = duplicates.length;
+                const uniqueRate = successCount > 0 ? ((successCount - duplicateCount) / successCount * 100).toFixed(1) : '0';
+                
+                let resultType = 'success';
+                if (duplicateCount > 5) resultType = 'error';
+                else if (duplicateCount > 2) resultType = 'warning';
+                
+                logResult(`${difficulty} 결과: ${attempts}회 시도, ${successCount}개 생성, ${duplicateCount}개 중복 (고유율: ${uniqueRate}%)`, resultType);
+                
+                if (duplicates.length > 0) {
+                    logResult(`중복 발견: <pre>${JSON.stringify(duplicates.slice(0, 5), null, 2)}</pre>`, 'warning');
+                }
+            }
+        }
+        
+        async function testTopicDuplicates() {
+            clearResults();
+            logResult('<h2>주제별 문제 중복 테스트 시작</h2>');
+            
+            const topics = ['covalent', 'ionic', 'molecular', 'bonding', 'reactions', 'dailyChemistry'];
+            
+            for (const topic of topics) {
+                logResult(`<h3>${topic} 주제 테스트</h3>`);
+                
+                const generatedQuestions = [];
+                const duplicates = [];
+                let attempts = 30;
+                let successCount = 0;
+                
+                for (let i = 0; i < attempts; i++) {
+                    try {
+                        const question = generateTopicProblem(topic, 'medium');
+                        if (question) {
+                            successCount++;
+                            const questionId = question.uniqueId || `${question.question.substring(0, 50)}_${question.type}`;
+                            
+                            if (generatedQuestions.includes(questionId)) {
+                                duplicates.push({
+                                    attempt: i + 1,
+                                    questionId,
+                                    question: question.question.substring(0, 100) + '...'
+                                });
+                            } else {
+                                generatedQuestions.push(questionId);
+                            }
+                        }
+                    } catch (error) {
+                        logResult(`주제별 문제 생성 오류 (시도 ${i + 1}): ${error.message}`, 'error');
+                    }
+                    
+                    if (i % 10 === 0) {
+                        await new Promise(resolve => setTimeout(resolve, 1));
+                    }
+                }
+                
+                const duplicateCount = duplicates.length;
+                const uniqueRate = successCount > 0 ? ((successCount - duplicateCount) / successCount * 100).toFixed(1) : '0';
+                
+                let resultType = 'success';
+                if (duplicateCount > 3) resultType = 'error';
+                else if (duplicateCount > 1) resultType = 'warning';
+                
+                logResult(`${topic} 결과: ${attempts}회 시도, ${successCount}개 생성, ${duplicateCount}개 중복 (고유율: ${uniqueRate}%)`, resultType);
+                
+                if (duplicates.length > 0) {
+                    logResult(`중복 발견: <pre>${JSON.stringify(duplicates.slice(0, 3), null, 2)}</pre>`, 'warning');
+                }
+            }
+        }
+        
+        function testResetFunctionality() {
+            clearResults();
+            logResult('<h2>초기화 기능 테스트</h2>');
+            
+            try {
+                // 사용된 문제 추적 객체 확인
+                if (typeof usedProblems !== 'undefined') {
+                    logResult('✓ usedProblems 객체가 존재합니다', 'success');
+                    
+                    // 일부 문제 생성하여 추적 객체에 데이터 추가
+                    for (let i = 0; i < 5; i++) {
+                        generateUniqueQuestion('easy');
+                    }
+                    
+                    const beforeReset = usedProblems.easy.size;
+                    logResult(`초기화 전 easy 난이도 사용된 문제 수: ${beforeReset}개`);
+                    
+                    // 초기화 함수 테스트
+                    if (typeof resetUsedProblems === 'function') {
+                        resetUsedProblems();
+                        const afterReset = usedProblems.easy.size;
+                        logResult(`초기화 후 easy 난이도 사용된 문제 수: ${afterReset}개`);
+                        
+                        if (afterReset === 0) {
+                            logResult('✓ 일반 문제 초기화 기능이 정상 작동합니다', 'success');
+                        } else {
+                            logResult('✗ 일반 문제 초기화 기능에 문제가 있습니다', 'error');
+                        }
+                    } else {
+                        logResult('✗ resetUsedProblems 함수가 존재하지 않습니다', 'error');
+                    }
+                } else {
+                    logResult('✗ usedProblems 객체가 존재하지 않습니다', 'error');
+                }
+                
+                // 주제별 초기화 테스트
+                if (typeof usedTopicProblems !== 'undefined') {
+                    logResult('✓ usedTopicProblems 객체가 존재합니다', 'success');
+                    
+                    // 주제별 문제 생성
+                    for (let i = 0; i < 3; i++) {
+                        generateTopicProblem('covalent', 'medium');
+                    }
+                    
+                    if (typeof resetTopicProblems === 'function') {
+                        resetTopicProblems('covalent');
+                        logResult('✓ 주제별 문제 초기화 기능이 호출되었습니다', 'success');
+                    } else {
+                        logResult('✗ resetTopicProblems 함수가 존재하지 않습니다', 'error');
+                    }
+                } else {
+                    logResult('✗ usedTopicProblems 객체가 존재하지 않습니다', 'error');
+                }
+                
+            } catch (error) {
+                logResult(`초기화 기능 테스트 중 오류: ${error.message}`, 'error');
+            }
+        }
+        
+        async function runAllDuplicateTests() {
+            clearResults();
+            logResult('<h1>🧪 전체 중복 테스트 실행</h1>');
+            
+            await testGeneralDuplicates();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testTopicDuplicates();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            testResetFunctionality();
+            
+            logResult('<h2>🏆 테스트 완료</h2>', 'success');
+            logResult('모든 중복 테스트가 완료되었습니다. 위 결과를 참고하여 시스템을 개선하세요.');
+        }
+        
+        // 페이지 로드 시 기본 정보 표시
+        window.addEventListener('load', () => {
+            logResult('<h2>📋 시스템 정보</h2>');
+            logResult(`총 문제 템플릿: ${Object.keys(problemTemplates).length}개 난이도`);
+            
+            Object.keys(problemTemplates).forEach(difficulty => {
+                const totalQuestions = problemTemplates[difficulty].reduce((sum, category) => 
+                    sum + category.templates.length, 0);
+                logResult(`${difficulty} 난이도: ${totalQuestions}개 문제`);
+            });
+            
+            logResult('위 버튼들을 클릭하여 중복 테스트를 실행하세요.');
+        });
+    </script>
+</body>
+</html>

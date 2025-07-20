@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화학 학습 프로그램 종합 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .test-section h2 {
+            color: #2196F3;
+            border-bottom: 2px solid #2196F3;
+            padding-bottom: 10px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; border-left: 4px solid #28a745; }
+        .warning { background-color: #fff3cd; border-left: 4px solid #ffc107; }
+        .error { background-color: #f8d7da; border-left: 4px solid #dc3545; }
+        .info { background-color: #d1ecf1; border-left: 4px solid #17a2b8; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2196F3;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .test-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-btn:hover {
+            background: #1976D2;
+        }
+        
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 화학 학습 프로그램 종합 테스트 보고서</h1>
+        
+        <div class="test-section">
+            <h2>1. 테스트 개요</h2>
+            <div class="info test-result">
+                <strong>테스트 범위:</strong> 문제풀이 시스템의 중복 방지, 문제 유효성, 프로세스 검증, 사용자 경험
+            </div>
+            <div class="test-controls">
+                <button class="test-btn" onclick="runAllTests()">전체 테스트 실행</button>
+                <button class="test-btn" onclick="runDuplicateTest()">중복 문제 테스트</button>
+                <button class="test-btn" onclick="runValidityTest()">문제 유효성 테스트</button>
+                <button class="test-btn" onclick="runProcessTest()">프로세스 테스트</button>
+                <button class="test-btn" onclick="runTopicTest()">주제별 테스트</button>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="testProgress" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. 문제 데이터 통계</h2>
+            <div id="dataStats" class="stats-grid">
+                <!-- 통계 데이터가 여기에 표시됩니다 -->
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. 중복 문제 검증</h2>
+            <div id="duplicateResults">
+                <!-- 중복 테스트 결과가 여기에 표시됩니다 -->
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. 문제 유효성 검증</h2>
+            <div id="validityResults">
+                <!-- 유효성 테스트 결과가 여기에 표시됩니다 -->
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>5. 프로세스 검증</h2>
+            <div id="processResults">
+                <!-- 프로세스 테스트 결과가 여기에 표시됩니다 -->
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>6. 주제별 분포 분석</h2>
+            <div id="topicAnalysis">
+                <!-- 주제별 분석 결과가 여기에 표시됩니다 -->
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>7. 개선 권장사항</h2>
+            <div id="recommendations">
+                <!-- 개선 권장사항이 여기에 표시됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 필요한 스크립트 로드 -->
+    <script src="problems.js"></script>
+    <script src="content.js"></script>
+
+    <script>
+        let testResults = {
+            duplicate: {},
+            validity: {},
+            process: {},
+            topic: {}
+        };
+
+        // 전체 테스트 실행
+        async function runAllTests() {
+            updateProgress(0);
+            console.log('=== 화학 학습 프로그램 종합 테스트 시작 ===');
+            
+            // 데이터 통계 표시
+            displayDataStats();
+            updateProgress(15);
+            
+            // 각 테스트 실행
+            await runDuplicateTest();
+            updateProgress(40);
+            
+            await runValidityTest();
+            updateProgress(65);
+            
+            await runProcessTest();
+            updateProgress(85);
+            
+            await runTopicTest();
+            updateProgress(100);
+            
+            // 최종 권장사항 생성
+            generateRecommendations();
+            
+            console.log('=== 모든 테스트 완료 ===');
+        }
+
+        // 진행률 업데이트
+        function updateProgress(percent) {
+            document.getElementById('testProgress').style.width = percent + '%';
+        }
+
+        // 데이터 통계 표시
+        function displayDataStats() {
+            const stats = analyzeDataStructure();
+            const container = document.getElementById('dataStats');
+            
+            container.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${stats.totalQuestions}</div>
+                    <div>총 문제 수</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.difficulties.length}</div>
+                    <div>난이도 레벨</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.categories.length}</div>
+                    <div>카테고리 수</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${stats.questionTypes.length}</div>
+                    <div>문제 유형 수</div>
+                </div>
+            `;
+        }
+
+        // 데이터 구조 분석
+        function analyzeDataStructure() {
+            const difficulties = Object.keys(problemTemplates);
+            let totalQuestions = 0;
+            const categories = new Set();
+            const questionTypes = new Set();
+            
+            difficulties.forEach(difficulty => {
+                problemTemplates[difficulty].forEach(category => {
+                    categories.add(category.category);
+                    category.templates.forEach(template => {
+                        totalQuestions++;
+                        questionTypes.add(template.type);
+                    });
+                });
+            });
+            
+            return {
+                totalQuestions,
+                difficulties,
+                categories: Array.from(categories),
+                questionTypes: Array.from(questionTypes)
+            };
+        }
+
+        // 중복 문제 테스트
+        async function runDuplicateTest() {
+            console.log('중복 문제 테스트 시작...');
+            const container = document.getElementById('duplicateResults');
+            const results = [];
+            
+            // 각 난이도별로 중복 테스트
+            for (const difficulty of ['easy', 'medium', 'hard']) {
+                const duplicateInfo = await testDuplicates(difficulty, 50);
+                results.push({
+                    difficulty,
+                    ...duplicateInfo
+                });
+            }
+            
+            // 주제별 중복 테스트
+            const topics = ['covalent', 'ionic', 'molecular', 'bonding', 'reactions', 'dailyChemistry'];
+            const topicResults = [];
+            
+            for (const topic of topics) {
+                const topicDuplicates = await testTopicDuplicates(topic, 30);
+                topicResults.push({
+                    topic,
+                    ...topicDuplicates
+                });
+            }
+            
+            testResults.duplicate = { general: results, topics: topicResults };
+            displayDuplicateResults(results, topicResults, container);
+        }
+
+        // 중복 테스트 실행
+        async function testDuplicates(difficulty, attempts) {
+            const generatedQuestions = [];
+            const duplicates = [];
+            let successfulGenerations = 0;
+            
+            for (let i = 0; i < attempts; i++) {
+                try {
+                    const question = generateUniqueQuestion(difficulty);
+                    if (question) {
+                        const questionId = question.uniqueId || `${question.question}_${question.type}`;
+                        
+                        if (generatedQuestions.includes(questionId)) {
+                            duplicates.push({
+                                attempt: i + 1,
+                                questionId,
+                                question: question.question
+                            });
+                        } else {
+                            generatedQuestions.push(questionId);
+                        }
+                        successfulGenerations++;
+                    }
+                } catch (error) {
+                    console.error(`문제 생성 오류 (${difficulty}, 시도 ${i + 1}):`, error);
+                }
+                
+                // 짧은 지연으로 UI 블록 방지
+                if (i % 10 === 0) await new Promise(resolve => setTimeout(resolve, 1));
+            }
+            
+            return {
+                attempts,
+                successfulGenerations,
+                duplicateCount: duplicates.length,
+                duplicates,
+                uniqueRate: ((successfulGenerations - duplicates.length) / successfulGenerations * 100).toFixed(1)
+            };
+        }
+
+        // 주제별 중복 테스트
+        async function testTopicDuplicates(topic, attempts) {
+            const generatedQuestions = [];
+            const duplicates = [];
+            let successfulGenerations = 0;
+            
+            for (let i = 0; i < attempts; i++) {
+                try {
+                    const question = generateTopicProblem(topic, 'medium');
+                    if (question) {
+                        const questionId = question.uniqueId || `${question.question}_${question.type}`;
+                        
+                        if (generatedQuestions.includes(questionId)) {
+                            duplicates.push({
+                                attempt: i + 1,
+                                questionId,
+                                question: question.question
+                            });
+                        } else {
+                            generatedQuestions.push(questionId);
+                        }
+                        successfulGenerations++;
+                    }
+                } catch (error) {
+                    console.error(`주제별 문제 생성 오류 (${topic}, 시도 ${i + 1}):`, error);
+                }
+                
+                if (i % 5 === 0) await new Promise(resolve => setTimeout(resolve, 1));
+            }
+            
+            return {
+                attempts,
+                successfulGenerations,
+                duplicateCount: duplicates.length,
+                duplicates,
+                uniqueRate: successfulGenerations > 0 ? ((successfulGenerations - duplicates.length) / successfulGenerations * 100).toFixed(1) : '0'
+            };
+        }
+
+        // 중복 테스트 결과 표시
+        function displayDuplicateResults(results, topicResults, container) {
+            let html = '<h3>일반 문제풀이 중복 테스트</h3>';
+            
+            results.forEach(result => {
+                const resultClass = result.duplicateCount === 0 ? 'success' : 
+                                   result.duplicateCount <= 2 ? 'warning' : 'error';
+                html += `
+                    <div class="${resultClass} test-result">
+                        <strong>${result.difficulty} 난이도:</strong> 
+                        ${result.attempts}회 시도 중 ${result.duplicateCount}개 중복 발견
+                        (고유율: ${result.uniqueRate}%)
+                        ${result.duplicates.length > 0 ? `<br>중복 문제: ${result.duplicates.map(d => d.questionId).join(', ')}` : ''}
+                    </div>
+                `;
+            });
+            
+            html += '<h3>주제별 문제풀이 중복 테스트</h3>';
+            
+            topicResults.forEach(result => {
+                const resultClass = result.duplicateCount === 0 ? 'success' : 
+                                   result.duplicateCount <= 1 ? 'warning' : 'error';
+                html += `
+                    <div class="${resultClass} test-result">
+                        <strong>${result.topic} 주제:</strong> 
+                        ${result.attempts}회 시도 중 ${result.duplicateCount}개 중복 발견
+                        (고유율: ${result.uniqueRate}%)
+                        ${result.duplicates.length > 0 ? `<br>중복 문제: ${result.duplicates.map(d => d.questionId).join(', ')}` : ''}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // 문제 유효성 테스트
+        async function runValidityTest() {
+            console.log('문제 유효성 테스트 시작...');
+            const container = document.getElementById('validityResults');
+            const results = {
+                invalidQuestions: [],
+                validationErrors: [],
+                totalChecked: 0
+            };
+            
+            // 모든 문제 검증
+            Object.keys(problemTemplates).forEach(difficulty => {
+                problemTemplates[difficulty].forEach((category, catIndex) => {
+                    category.templates.forEach((template, templateIndex) => {
+                        results.totalChecked++;
+                        const questionId = `${difficulty}_${category.category}_${templateIndex}`;
+                        
+                        // 기본 필드 검증
+                        const validation = validateQuestion(template, questionId);
+                        if (!validation.isValid) {
+                            results.invalidQuestions.push({
+                                id: questionId,
+                                question: template.question,
+                                errors: validation.errors
+                            });
+                            results.validationErrors.push(...validation.errors);
+                        }
+                    });
+                });
+            });
+            
+            testResults.validity = results;
+            displayValidityResults(results, container);
+        }
+
+        // 개별 문제 검증
+        function validateQuestion(question, questionId) {
+            const errors = [];
+            
+            // 필수 필드 검증
+            if (!question.question || question.question.trim() === '') {
+                errors.push('문제 텍스트가 없습니다');
+            }
+            
+            if (!question.type) {
+                errors.push('문제 유형이 지정되지 않았습니다');
+            }
+            
+            if (!question.explanation) {
+                errors.push('설명이 없습니다');
+            }
+            
+            // 타입별 검증
+            if (question.type === 'multiple-choice') {
+                if (!question.options || !Array.isArray(question.options)) {
+                    errors.push('객관식 선택지가 없습니다');
+                } else if (question.options.length < 2) {
+                    errors.push('선택지가 2개 미만입니다');
+                }
+                
+                if (question.correctIndex === undefined || question.correctIndex < 0 || 
+                    question.correctIndex >= (question.options ? question.options.length : 0)) {
+                    errors.push('정답 인덱스가 유효하지 않습니다');
+                }
+            }
+            
+            if (question.type === 'short-answer') {
+                if (!question.keywords && !question.answer) {
+                    errors.push('단답형 문제에 키워드나 정답이 없습니다');
+                }
+            }
+            
+            // 내용 검증
+            if (question.question && question.question.length > 500) {
+                errors.push('문제 텍스트가 너무 깁니다 (500자 초과)');
+            }
+            
+            if (question.explanation && question.explanation.length > 1000) {
+                errors.push('설명이 너무 깁니다 (1000자 초과)');
+            }
+            
+            return {
+                isValid: errors.length === 0,
+                errors
+            };
+        }
+
+        // 유효성 테스트 결과 표시
+        function displayValidityResults(results, container) {
+            const errorRate = (results.invalidQuestions.length / results.totalChecked * 100).toFixed(1);
+            const resultClass = results.invalidQuestions.length === 0 ? 'success' : 
+                               results.invalidQuestions.length <= 5 ? 'warning' : 'error';
+            
+            let html = `
+                <div class="${resultClass} test-result">
+                    <strong>전체 검증 결과:</strong> ${results.totalChecked}개 문제 중 ${results.invalidQuestions.length}개 문제에서 오류 발견
+                    (오류율: ${errorRate}%)
+                </div>
+            `;
+            
+            if (results.invalidQuestions.length > 0) {
+                html += '<h4>오류가 발견된 문제들:</h4>';
+                html += '<table><tr><th>문제 ID</th><th>문제</th><th>오류</th></tr>';
+                results.invalidQuestions.forEach(item => {
+                    html += `
+                        <tr>
+                            <td>${item.id}</td>
+                            <td>${item.question.substring(0, 100)}...</td>
+                            <td>${item.errors.join(', ')}</td>
+                        </tr>
+                    `;
+                });
+                html += '</table>';
+            }
+            
+            container.innerHTML = html;
+        }
+
+        // 프로세스 테스트
+        async function runProcessTest() {
+            console.log('프로세스 테스트 시작...');
+            const container = document.getElementById('processResults');
+            const results = {
+                functionTests: [],
+                performanceTests: [],
+                logicTests: []
+            };
+            
+            // 함수 존재 검증
+            const requiredFunctions = [
+                'generateProblem', 'generateUniqueQuestion', 'generateTopicProblem',
+                'shuffleOptions', 'resetUsedProblems', 'resetTopicProblems'
+            ];
+            
+            requiredFunctions.forEach(funcName => {
+                const exists = typeof window[funcName] === 'function';
+                results.functionTests.push({
+                    function: funcName,
+                    exists,
+                    status: exists ? 'pass' : 'fail'
+                });
+            });
+            
+            // 성능 테스트
+            const performanceResult = await testPerformance();
+            results.performanceTests.push(performanceResult);
+            
+            // 로직 테스트
+            const logicResult = await testLogic();
+            results.logicTests.push(logicResult);
+            
+            testResults.process = results;
+            displayProcessResults(results, container);
+        }
+
+        // 성능 테스트
+        async function testPerformance() {
+            const startTime = performance.now();
+            const testCount = 100;
+            let successCount = 0;
+            
+            for (let i = 0; i < testCount; i++) {
+                try {
+                    const question = generateUniqueQuestion('medium');
+                    if (question) successCount++;
+                } catch (error) {
+                    console.error('성능 테스트 중 오류:', error);
+                }
+            }
+            
+            const endTime = performance.now();
+            const totalTime = endTime - startTime;
+            const averageTime = totalTime / testCount;
+            
+            return {
+                testName: '문제 생성 성능',
+                totalTime: totalTime.toFixed(2),
+                averageTime: averageTime.toFixed(2),
+                successRate: (successCount / testCount * 100).toFixed(1),
+                status: averageTime < 10 ? 'pass' : 'warning'
+            };
+        }
+
+        // 로직 테스트
+        async function testLogic() {
+            const tests = [];
+            
+            // 점수 시스템 테스트
+            const easyQ = generateUniqueQuestion('easy');
+            const mediumQ = generateUniqueQuestion('medium');
+            const hardQ = generateUniqueQuestion('hard');
+            
+            tests.push({
+                test: '난이도별 점수 설정',
+                result: easyQ?.points === 10 && mediumQ?.points === 20 && hardQ?.points === 30,
+                details: `Easy: ${easyQ?.points}, Medium: ${mediumQ?.points}, Hard: ${hardQ?.points}`
+            });
+            
+            // 카테고리 매핑 테스트
+            const topicMapping = {
+                'covalent': ['covalent'],
+                'ionic': ['ionic'],
+                'molecular': ['molecular'],
+                'bonding': ['bonding']
+            };
+            
+            let mappingCorrect = true;
+            Object.keys(topicMapping).forEach(topic => {
+                try {
+                    const question = generateTopicProblem(topic, 'medium');
+                    if (question && !topicMapping[topic].includes(question.category)) {
+                        mappingCorrect = false;
+                    }
+                } catch (error) {
+                    mappingCorrect = false;
+                }
+            });
+            
+            tests.push({
+                test: '주제-카테고리 매핑',
+                result: mappingCorrect,
+                details: '주제별 문제가 올바른 카테고리에서 생성되는지 확인'
+            });
+            
+            return {
+                testName: '로직 검증',
+                tests,
+                passedTests: tests.filter(t => t.result).length,
+                totalTests: tests.length,
+                status: tests.every(t => t.result) ? 'pass' : 'fail'
+            };
+        }
+
+        // 프로세스 테스트 결과 표시
+        function displayProcessResults(results, container) {
+            let html = '<h3>함수 존재 검증</h3>';
+            
+            results.functionTests.forEach(test => {
+                const resultClass = test.status === 'pass' ? 'success' : 'error';
+                html += `
+                    <div class="${resultClass} test-result">
+                        <strong>${test.function}:</strong> ${test.exists ? '존재함' : '존재하지 않음'}
+                    </div>
+                `;
+            });
+            
+            html += '<h3>성능 테스트</h3>';
+            results.performanceTests.forEach(test => {
+                const resultClass = test.status === 'pass' ? 'success' : 'warning';
+                html += `
+                    <div class="${resultClass} test-result">
+                        <strong>${test.testName}:</strong> 
+                        평균 ${test.averageTime}ms, 성공률 ${test.successRate}%
+                        (총 소요시간: ${test.totalTime}ms)
+                    </div>
+                `;
+            });
+            
+            html += '<h3>로직 검증</h3>';
+            results.logicTests.forEach(test => {
+                const resultClass = test.status === 'pass' ? 'success' : 'error';
+                html += `
+                    <div class="${resultClass} test-result">
+                        <strong>${test.testName}:</strong> 
+                        ${test.passedTests}/${test.totalTests} 테스트 통과
+                    </div>
+                `;
+                
+                test.tests.forEach(t => {
+                    const testClass = t.result ? 'success' : 'error';
+                    html += `
+                        <div class="${testClass} test-result" style="margin-left: 20px;">
+                            ${t.test}: ${t.result ? 'PASS' : 'FAIL'}
+                            ${t.details ? `<br><small>${t.details}</small>` : ''}
+                        </div>
+                    `;
+                });
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // 주제별 분석
+        async function runTopicTest() {
+            console.log('주제별 분석 시작...');
+            const container = document.getElementById('topicAnalysis');
+            
+            const analysis = analyzeTopicDistribution();
+            displayTopicAnalysis(analysis, container);
+        }
+
+        // 주제별 분포 분석
+        function analyzeTopicDistribution() {
+            const analysis = {
+                byDifficulty: {},
+                byCategory: {},
+                questionTypes: {},
+                totalByTopic: {}
+            };
+            
+            Object.keys(problemTemplates).forEach(difficulty => {
+                analysis.byDifficulty[difficulty] = {};
+                
+                problemTemplates[difficulty].forEach(category => {
+                    const categoryName = category.category;
+                    const questionCount = category.templates.length;
+                    
+                    // 난이도별 카테고리 분포
+                    analysis.byDifficulty[difficulty][categoryName] = questionCount;
+                    
+                    // 전체 카테고리 분포
+                    analysis.byCategory[categoryName] = (analysis.byCategory[categoryName] || 0) + questionCount;
+                    
+                    // 주제별 총계
+                    analysis.totalByTopic[categoryName] = (analysis.totalByTopic[categoryName] || 0) + questionCount;
+                    
+                    // 문제 유형 분석
+                    category.templates.forEach(template => {
+                        const type = template.type;
+                        analysis.questionTypes[type] = (analysis.questionTypes[type] || 0) + 1;
+                    });
+                });
+            });
+            
+            return analysis;
+        }
+
+        // 주제별 분석 결과 표시
+        function displayTopicAnalysis(analysis, container) {
+            let html = '<h3>주제별 문제 분포</h3>';
+            
+            // 카테고리별 분포 차트
+            html += '<table><tr><th>카테고리</th><th>문제 수</th><th>비율</th></tr>';
+            const totalQuestions = Object.values(analysis.byCategory).reduce((a, b) => a + b, 0);
+            
+            Object.entries(analysis.byCategory).forEach(([category, count]) => {
+                const percentage = (count / totalQuestions * 100).toFixed(1);
+                html += `<tr><td>${category}</td><td>${count}</td><td>${percentage}%</td></tr>`;
+            });
+            html += '</table>';
+            
+            // 난이도별 분포
+            html += '<h3>난이도별 분포</h3>';
+            html += '<table><tr><th>난이도</th><th>카테고리</th><th>문제 수</th></tr>';
+            
+            Object.entries(analysis.byDifficulty).forEach(([difficulty, categories]) => {
+                Object.entries(categories).forEach(([category, count]) => {
+                    html += `<tr><td>${difficulty}</td><td>${category}</td><td>${count}</td></tr>`;
+                });
+            });
+            html += '</table>';
+            
+            // 문제 유형 분포
+            html += '<h3>문제 유형 분포</h3>';
+            html += '<table><tr><th>문제 유형</th><th>문제 수</th><th>비율</th></tr>';
+            const totalByType = Object.values(analysis.questionTypes).reduce((a, b) => a + b, 0);
+            
+            Object.entries(analysis.questionTypes).forEach(([type, count]) => {
+                const percentage = (count / totalByType * 100).toFixed(1);
+                html += `<tr><td>${type}</td><td>${count}</td><td>${percentage}%</td></tr>`;
+            });
+            html += '</table>';
+            
+            container.innerHTML = html;
+        }
+
+        // 개선 권장사항 생성
+        function generateRecommendations() {
+            const container = document.getElementById('recommendations');
+            const recommendations = [];
+            
+            // 중복 문제 기반 권장사항
+            if (testResults.duplicate.general) {
+                const duplicateIssues = testResults.duplicate.general.filter(r => r.duplicateCount > 2);
+                if (duplicateIssues.length > 0) {
+                    recommendations.push({
+                        priority: 'high',
+                        category: '중복 방지',
+                        issue: '일부 난이도에서 중복 문제가 자주 발생',
+                        recommendation: '문제 풀 확장 및 중복 방지 알고리즘 개선 필요'
+                    });
+                }
+            }
+            
+            // 유효성 기반 권장사항
+            if (testResults.validity.invalidQuestions && testResults.validity.invalidQuestions.length > 0) {
+                recommendations.push({
+                    priority: 'high',
+                    category: '문제 품질',
+                    issue: `${testResults.validity.invalidQuestions.length}개 문제에서 유효성 오류 발견`,
+                    recommendation: '문제 데이터 검증 및 수정 필요'
+                });
+            }
+            
+            // 성능 기반 권장사항
+            if (testResults.process.performanceTests) {
+                const perfTest = testResults.process.performanceTests[0];
+                if (perfTest && parseFloat(perfTest.averageTime) > 10) {
+                    recommendations.push({
+                        priority: 'medium',
+                        category: '성능',
+                        issue: '문제 생성 속도가 느림',
+                        recommendation: '문제 생성 알고리즘 최적화 필요'
+                    });
+                }
+            }
+            
+            // 추가 일반 권장사항
+            recommendations.push({
+                priority: 'medium',
+                category: '사용자 경험',
+                issue: '문제 다양성 확보',
+                recommendation: '더 다양한 문제 유형 및 인터랙티브 요소 추가'
+            });
+            
+            recommendations.push({
+                priority: 'low',
+                category: '학습 효과',
+                issue: '개인화 학습',
+                recommendation: '사용자별 맞춤형 문제 추천 시스템 도입'
+            });
+            
+            displayRecommendations(recommendations, container);
+        }
+
+        // 권장사항 표시
+        function displayRecommendations(recommendations, container) {
+            let html = '';
+            
+            recommendations.forEach(rec => {
+                const priorityClass = rec.priority === 'high' ? 'error' : 
+                                     rec.priority === 'medium' ? 'warning' : 'info';
+                html += `
+                    <div class="${priorityClass} test-result">
+                        <strong>[${rec.priority.toUpperCase()}] ${rec.category}:</strong><br>
+                        <strong>문제:</strong> ${rec.issue}<br>
+                        <strong>권장사항:</strong> ${rec.recommendation}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // 페이지 로드 시 기본 통계 표시
+        document.addEventListener('DOMContentLoaded', () => {
+            displayDataStats();
+        });
+    </script>
+</body>
+</html>
