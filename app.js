@@ -210,10 +210,22 @@ function displayQuestion() {
     document.getElementById('next-btn').style.display = 'none';
     document.getElementById('feedback').innerHTML = '';
     
+    // 시각적 설명 버튼 보이기
+    const visualBtn = document.getElementById('visual-aid-btn');
+    if (visualBtn) {
+        visualBtn.style.display = 'inline-block';
+    }
+    
     // 향상된 피드백 영역 숨기기
     const enhancedFeedback = document.getElementById('enhanced-feedback');
     if (enhancedFeedback) {
         enhancedFeedback.style.display = 'none';
+    }
+    
+    // 분자 시각화 영역 숨기기
+    const vizContainer = document.getElementById('molecule-visualization');
+    if (vizContainer) {
+        vizContainer.style.display = 'none';
     }
 }
 
@@ -670,7 +682,48 @@ function showVisualAid() {
     const molecule = extractMoleculeFromQuestion(currentQuestion.question);
     
     // 시각적 설명 콘텐츠 생성
-    const visualContent = generateVisualExplanation(molecule, currentQuestion);
+    let visualContent;
+    if (!molecule) {
+        visualContent = `
+            <div class="explanation-section">
+                <h5>💡 개념 설명</h5>
+                <p>${currentQuestion.explanation || '이 문제에 대한 추가 설명을 제공합니다.'}</p>
+                ${currentQuestion.hint ? `<p><strong>힌트:</strong> ${currentQuestion.hint}</p>` : ''}
+            </div>
+        `;
+    } else {
+        const visualExplanations = {
+            'H₂O': `<div class="molecule-display"><h5>💧 물(H₂O) 분자</h5><div class="ascii-molecule"><pre>        H
+         \\
+          O -- H
+         /
+    (굽은형)</pre></div><ul><li>🔗 산소와 수소가 <strong>공유결합</strong></li><li>📐 결합각: 약 104.5°</li><li>⚡ 극성 분자 (부분적 음전하와 양전하)</li><li>🧊 수소결합으로 인한 높은 끓는점</li></ul></div>`,
+            'CO₂': `<div class="molecule-display"><h5>💨 이산화탄소(CO₂) 분자</h5><div class="ascii-molecule"><pre>    O = C = O
+   (직선형)</pre></div><ul><li>🔗 탄소와 산소가 <strong>이중결합</strong></li><li>📐 결합각: 180° (직선형)</li><li>⚖️ 무극성 분자 (대칭 구조)</li><li>🌡️ 상온에서 기체</li></ul></div>`,
+            'CH₄': `<div class="molecule-display"><h5>🔥 메탄(CH₄) 분자</h5><div class="ascii-molecule"><pre>        H
+        |
+    H - C - H
+        |
+        H
+   (정사면체)</pre></div><ul><li>🔗 탄소와 수소가 <strong>단일결합</strong></li><li>📐 결합각: 109.5° (정사면체)</li><li>⚖️ 무극성 분자</li><li>⛽ 천연가스의 주성분</li></ul></div>`,
+            'NH₃': `<div class="molecule-display"><h5>🧪 암모니아(NH₃) 분자</h5><div class="ascii-molecule"><pre>      N
+     /|\\
+    H H H
+  (삼각뿔형)</pre></div><ul><li>🔗 질소와 수소가 <strong>단일결합</strong></li><li>📐 결합각: 약 107° (삼각뿔형)</li><li>👥 비공유 전자쌍 1개</li><li>⚡ 극성 분자</li></ul></div>`,
+            'NaCl': `<div class="molecule-display"><h5>🧂 소금(NaCl)</h5><div class="ascii-molecule"><pre>    Na⁺  Cl⁻
+     \\  /
+      이온결합</pre></div><ul><li>⚡ <strong>이온결합</strong> (정전기적 인력)</li><li>➕ Na⁺ (나트륨 양이온)</li><li>➖ Cl⁻ (염소 음이온)</li><li>🔥 높은 녹는점 (801°C)</li><li>💧 물에 잘 녹음</li></ul></div>`
+        };
+        
+        const key = molecule.formula.includes('₂') ? molecule.formula : molecule.formula.replace(/2/g, '₂').replace(/3/g, '₃');
+        visualContent = visualExplanations[key] || `
+            <div class="explanation-section">
+                <h5>📋 ${molecule.name}(${molecule.formula}) 설명</h5>
+                <p>${currentQuestion.explanation || '이 화합물에 대한 자세한 정보를 준비 중입니다.'}</p>
+                ${currentQuestion.hint ? `<p><strong>힌트:</strong> ${currentQuestion.hint}</p>` : ''}
+            </div>
+        `;
+    }
     
     // 시각적 설명 표시
     vizContainer.innerHTML = `
@@ -698,6 +751,166 @@ function hideVisualization() {
     if (vizContainer) {
         vizContainer.style.display = 'none';
     }
+    
+    // 시각적 설명 버튼 다시 보이기
+    const visualBtn = document.getElementById('visual-aid-btn');
+    if (visualBtn) {
+        visualBtn.style.display = 'inline-block';
+    }
+}
+
+// 문제에서 분자 추출
+function extractMoleculeFromQuestion(questionText) {
+    const molecules = {
+        'H₂O': '물',
+        'H2O': '물', 
+        'CO₂': '이산화탄소',
+        'CO2': '이산화탄소',
+        'CH₄': '메탄',
+        'CH4': '메탄',
+        'NH₃': '암모니아',
+        'NH3': '암모니아',
+        'NaCl': '소금',
+        'O₂': '산소',
+        'O2': '산소',
+        'N₂': '질소',
+        'N2': '질소',
+        'H₂': '수소',
+        'H2': '수소',
+        'CaCO₃': '탄산칼슘',
+        'CaCO3': '탄산칼슘',
+        'MgO': '산화마그네슘'
+    };
+    
+    for (const [formula, name] of Object.entries(molecules)) {
+        if (questionText.includes(formula) || questionText.includes(name)) {
+            return { formula: formula.replace(/[₀-₉]/g, match => String.fromCharCode(48 + match.charCodeAt(0) - 8304)), name };
+        }
+    }
+    
+    return null;
+}
+
+// 시각적 설명 생성
+function generateVisualExplanation(molecule, question) {
+    if (!molecule) {
+        return `
+            <div class="explanation-section">
+                <h5>💡 개념 설명</h5>
+                <p>${question.explanation || '이 문제에 대한 추가 설명을 제공합니다.'}</p>
+                ${question.hint ? `<p><strong>힌트:</strong> ${question.hint}</p>` : ''}
+            </div>
+        `;
+    }
+    
+    const visualExplanations = {
+        'H₂O': `
+            <div class="molecule-display">
+                <h5>💧 물(H₂O) 분자</h5>
+                <div class="ascii-molecule">
+                    <pre>
+        H
+         \\
+          O -- H
+         /
+    (굽은형)
+                    </pre>
+                </div>
+                <ul>
+                    <li>🔗 산소와 수소가 <strong>공유결합</strong></li>
+                    <li>📐 결합각: 약 104.5°</li>
+                    <li>⚡ 극성 분자 (부분적 음전하와 양전하)</li>
+                    <li>🧊 수소결합으로 인한 높은 끓는점</li>
+                </ul>
+            </div>
+        `,
+        'CO₂': `
+            <div class="molecule-display">
+                <h5>💨 이산화탄소(CO₂) 분자</h5>
+                <div class="ascii-molecule">
+                    <pre>
+    O = C = O
+   (직선형)
+                    </pre>
+                </div>
+                <ul>
+                    <li>🔗 탄소와 산소가 <strong>이중결합</strong></li>
+                    <li>📐 결합각: 180° (직선형)</li>
+                    <li>⚖️ 무극성 분자 (대칭 구조)</li>
+                    <li>🌡️ 상온에서 기체</li>
+                </ul>
+            </div>
+        `,
+        'CH₄': `
+            <div class="molecule-display">
+                <h5>🔥 메탄(CH₄) 분자</h5>
+                <div class="ascii-molecule">
+                    <pre>
+        H
+        |
+    H - C - H
+        |
+        H
+   (정사면체)
+                    </pre>
+                </div>
+                <ul>
+                    <li>🔗 탄소와 수소가 <strong>단일결합</strong></li>
+                    <li>📐 결합각: 109.5° (정사면체)</li>
+                    <li>⚖️ 무극성 분자</li>
+                    <li>⛽ 천연가스의 주성분</li>
+                </ul>
+            </div>
+        `,
+        'NH₃': `
+            <div class="molecule-display">
+                <h5>🧪 암모니아(NH₃) 분자</h5>
+                <div class="ascii-molecule">
+                    <pre>
+      N
+     /|\\
+    H H H
+  (삼각뿔형)
+                    </pre>
+                </div>
+                <ul>
+                    <li>🔗 질소와 수소가 <strong>단일결합</strong></li>
+                    <li>📐 결합각: 약 107° (삼각뿔형)</li>
+                    <li>👥 비공유 전자쌍 1개</li>
+                    <li>⚡ 극성 분자</li>
+                </ul>
+            </div>
+        `,
+        'NaCl': `
+            <div class="molecule-display">
+                <h5>🧂 소금(NaCl)</h5>
+                <div class="ascii-molecule">
+                    <pre>
+    Na⁺  Cl⁻
+     \\  /
+      이온결합
+                    </pre>
+                </div>
+                <ul>
+                    <li>⚡ <strong>이온결합</strong> (정전기적 인력)</li>
+                    <li>➕ Na⁺ (나트륨 양이온)</li>
+                    <li>➖ Cl⁻ (염소 음이온)</li>
+                    <li>🔥 높은 녹는점 (801°C)</li>
+                    <li>💧 물에 잘 녹음</li>
+                </ul>
+            </div>
+        `
+    };
+    
+    const key = molecule.formula.includes('₂') ? molecule.formula : molecule.formula.replace(/2/g, '₂').replace(/3/g, '₃');
+    
+    return visualExplanations[key] || `
+        <div class="explanation-section">
+            <h5>📋 ${molecule.name}(${molecule.formula}) 설명</h5>
+            <p>${question.explanation || '이 화합물에 대한 자세한 정보를 준비 중입니다.'}</p>
+            ${question.hint ? `<p><strong>힌트:</strong> ${question.hint}</p>` : ''}
+        </div>
+    `;
 }
 
 // 향상된 피드백 표시
