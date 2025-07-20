@@ -910,7 +910,9 @@ function generateTopicProblem(topic, difficulty) {
         'covalent': ['covalent'],
         'ionic': ['ionic'], 
         'molecular': ['molecular'],
-        'bonding': ['bonding', 'reactions']
+        'bonding': ['bonding'],
+        'reactions': ['reactions'],
+        'dailyChemistry': ['dailyChemistry']
     };
     
     const allowedCategories = topicMapping[topic] || [topic];
