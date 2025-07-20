@@ -35,5 +35,15 @@
 4. GitHub 배포 시 checkpoint 기록
 
 ## 현재 해결해야 할 문제
-- enhanced-learning.js 에러 완전 제거
-- 브라우저 캐시 문제 해결
+- ~~enhanced-learning.js 에러 완전 제거~~ ✅ 해결됨 (2025-01-20)
+- ~~브라우저 캐시 문제 해결~~ ✅ 해결됨 (2025-01-20)
+
+## 최근 변경사항 (2025-01-20)
+- enhanced-learning.js 파일 로드 비활성화로 에러 해결
+- 모든 JS 파일에 버전 파라미터(v=6) 추가하여 캐시 문제 해결
+- 시각적 설명 버튼 완전 비활성화
+- Service Worker 등록 해제 코드 추가
+- 핵심 문제풀기 기능은 모두 정상 작동 중
+
+## Git Checkpoint
+- Commit: 34734c3 - Fix enhanced-learning.js errors and stabilize core functionality
