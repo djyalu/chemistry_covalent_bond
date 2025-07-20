@@ -19,6 +19,83 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "이산화탄소는 탄소와 산소가 전자를 공유하는 공유결합 물질입니다.",
                     hint: "비금속 원소들로 이루어진 물질을 찾아보세요."
+                },
+                {
+                    question: "공유결합에서 원자들이 공유하는 것은?",
+                    type: "multiple-choice",
+                    options: ["양성자", "중성자", "전자", "원자핵"],
+                    correctIndex: 2,
+                    explanation: "공유결합에서는 원자들이 원자가 전자를 공유합니다.",
+                    hint: "화학 결합에 참여하는 입자를 생각해보세요."
+                },
+                {
+                    question: "암모니아(NH₃)에서 질소와 수소는 어떤 결합을 하나요?",
+                    type: "multiple-choice",
+                    options: ["이온결합", "공유결합", "금속결합", "반데르발스 힘"],
+                    correctIndex: 1,
+                    explanation: "암모니아에서 질소와 수소는 전자를 공유하는 공유결합을 합니다.",
+                    hint: "두 비금속 원소 사이의 결합을 생각해보세요."
+                },
+                {
+                    question: "다음 중 공유결합을 형성하는 원소 쌍은?",
+                    type: "multiple-choice",
+                    options: ["Na-Cl", "C-O", "Ca-F", "K-Br"],
+                    correctIndex: 1,
+                    explanation: "탄소(C)와 산소(O)는 모두 비금속으로 공유결합을 형성합니다.",
+                    hint: "비금속끼리 결합하는 경우를 찾아보세요."
+                },
+                {
+                    question: "메탄(CH₄)에서 탄소는 몇 개의 공유결합을 만드나요?",
+                    type: "multiple-choice",
+                    options: ["1개", "2개", "3개", "4개"],
+                    correctIndex: 3,
+                    explanation: "메탄에서 탄소는 4개의 수소와 각각 공유결합을 만듭니다.",
+                    hint: "탄소의 원자가 전자 개수를 생각해보세요."
+                }
+            ]
+        },
+        {
+            category: 'molecular',
+            templates: [
+                {
+                    question: "물(H₂O) 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["직선형", "굽은형", "삼각형", "정사면체형"],
+                    correctIndex: 1,
+                    explanation: "물 분자는 산소의 비공유 전자쌍 때문에 굽은형 구조를 가집니다.",
+                    hint: "산소 원자 주위의 전자쌍 배치를 생각해보세요."
+                },
+                {
+                    question: "VSEPR 이론이란?",
+                    type: "multiple-choice",
+                    options: ["원자가 결합 이론", "원자가 껍질 전자쌍 반발 이론", "분자 궤도 이론", "혼성 궤도 이론"],
+                    correctIndex: 1,
+                    explanation: "VSEPR 이론은 원자가 껍질의 전자쌍들이 서로 반발하여 분자의 모양을 결정한다는 이론입니다.",
+                    hint: "전자쌍들이 서로 멀어지려고 하는 현상을 설명하는 이론입니다."
+                },
+                {
+                    question: "분자의 극성을 결정하는 요인은?",
+                    type: "multiple-choice",
+                    options: ["분자의 크기", "분자의 모양과 극성 결합", "원자의 개수", "분자량"],
+                    correctIndex: 1,
+                    explanation: "분자의 극성은 극성 결합의 존재와 분자의 대칭성에 의해 결정됩니다.",
+                    hint: "결합의 극성과 분자 전체의 대칭성을 고려해보세요."
+                },
+                {
+                    question: "암모니아(NH₃) 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["평면 삼각형", "삼각뿔형", "정사면체형", "직선형"],
+                    correctIndex: 1,
+                    explanation: "암모니아는 질소의 비공유 전자쌍 때문에 삼각뿔형 구조를 가집니다.",
+                    hint: "질소 원자의 비공유 전자쌍을 고려해보세요."
+                },
+                {
+                    question: "이산화탄소(CO₂)가 무극성인 이유는?",
+                    type: "multiple-choice",
+                    options: ["극성 결합이 없어서", "직선형 대칭 구조", "쌍극자 모멘트가 커서", "이온성 화합물이라서"],
+                    correctIndex: 1,
+                    explanation: "CO₂는 직선형 대칭 구조로 인해 쌍극자 모멘트가 상쇄되어 무극성입니다.",
+                    hint: "O=C=O 구조의 대칭성을 생각해보세요."
                 }
             ]
         },
@@ -40,6 +117,46 @@ const problemTemplates = {
                     correctIndex: 3,
                     explanation: "이온화합물은 일반적으로 상온에서 고체 상태입니다.",
                     hint: "소금의 상태를 생각해보세요."
+                },
+                {
+                    question: "양이온은 어떻게 형성되나요?",
+                    type: "multiple-choice",
+                    options: ["전자를 얻어서", "전자를 잃어서", "양성자를 얻어서", "중성자를 잃어서"],
+                    correctIndex: 1,
+                    explanation: "양이온은 원자가 전자를 잃어서 양전하를 띠게 된 이온입니다.",
+                    hint: "양전하를 띠려면 어떤 입자가 줄어들어야 할까요?"
+                },
+                {
+                    question: "다음 중 이온화합물은?",
+                    type: "multiple-choice",
+                    options: ["H₂O", "CO₂", "CaF₂", "CH₄"],
+                    correctIndex: 2,
+                    explanation: "CaF₂(플루오린화칼슘)는 금속(Ca)과 비금속(F)이 결합한 이온화합물입니다.",
+                    hint: "금속과 비금속의 결합을 찾아보세요."
+                },
+                {
+                    question: "나트륨 이온(Na⁺)의 전자 개수는?",
+                    type: "multiple-choice",
+                    options: ["10개", "11개", "12개", "23개"],
+                    correctIndex: 0,
+                    explanation: "나트륨 원자(11개 전자)가 1개 전자를 잃어 Na⁺가 되므로 10개 전자를 가집니다.",
+                    hint: "나트륨 원자에서 전자 1개가 빠진 상태입니다."
+                },
+                {
+                    question: "이온결합이 형성되는 주요 원인은?",
+                    type: "multiple-choice",
+                    options: ["공유전자쌍", "정전기적 인력", "자기장", "핵력"],
+                    correctIndex: 1,
+                    explanation: "이온결합은 양이온과 음이온 사이의 정전기적 인력에 의해 형성됩니다.",
+                    hint: "반대 전하끼리 끌어당기는 힘을 생각해보세요."
+                },
+                {
+                    question: "다음 중 음이온은?",
+                    type: "multiple-choice",
+                    options: ["Na⁺", "Ca²⁺", "Cl⁻", "K⁺"],
+                    correctIndex: 2,
+                    explanation: "Cl⁻(염화 이온)은 전자를 얻어 음전하를 띠는 음이온입니다.",
+                    hint: "음의 전하(-)를 가진 이온을 찾아보세요."
                 }
             ]
         },
@@ -304,6 +421,43 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "이산화탄소(CO₂)는 O=C=O 구조로 탄소와 산소 사이에 이중결합을 가집니다.",
                     hint: "탄소가 산소 두 개와 결합하는 방법을 생각해보세요."
+                }
+            ]
+        },
+        {
+            category: 'molecular',
+            templates: [
+                {
+                    question: "BF₃ 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["직선형", "삼각평면형", "삼각뿔형", "정사면체형"],
+                    correctIndex: 1,
+                    explanation: "BF₃는 붕소 주위에 3개의 결합 전자쌍만 있어 삼각평면형 구조입니다.",
+                    hint: "붕소 원자의 전자 부족을 고려해보세요."
+                },
+                {
+                    question: "분자의 쌍극자 모멘트가 0인 것은?",
+                    type: "multiple-choice",
+                    options: ["H₂O", "NH₃", "CO₂", "HCl"],
+                    correctIndex: 2,
+                    explanation: "CO₂는 직선형 대칭 구조로 쌍극자 모멘트가 상쇄되어 0입니다.",
+                    hint: "대칭 구조를 가진 분자를 찾아보세요."
+                },
+                {
+                    question: "CH₂O 분자에서 C-O 결합의 특징은?",
+                    type: "multiple-choice",
+                    options: ["단일결합", "이중결합", "삼중결합", "배위결합"],
+                    correctIndex: 1,
+                    explanation: "포름알데하이드(CH₂O)에서 탄소와 산소는 이중결합을 형성합니다.",
+                    hint: "탄소가 4개, 산소가 2개의 결합을 만들어야 합니다."
+                },
+                {
+                    question: "극성 분자와 무극성 분자를 구분하는 기준은?",
+                    type: "multiple-choice",
+                    options: ["분자량", "쌍극자 모멘트", "결합 개수", "원자 개수"],
+                    correctIndex: 1,
+                    explanation: "쌍극자 모멘트가 0이 아니면 극성 분자, 0이면 무극성 분자입니다.",
+                    hint: "전기적 비대칭성을 나타내는 물리량을 생각해보세요."
                 }
             ]
         },
