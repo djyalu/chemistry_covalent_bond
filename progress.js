@@ -458,6 +458,7 @@ let progressManager;
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
     progressManager = new ProgressManager();
+    window.progressManager = progressManager; // 전역 접근 가능하도록 설정
     
     // 5분마다 학습 시간 기록
     setInterval(() => {

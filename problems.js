@@ -746,6 +746,46 @@ const problemTemplates = {
                     answer: "계수는 분자의 개수, 첨자는 분자 내 원자의 개수를 나타내기 때문",
                     explanation: "계수는 화학반응에서 분자의 개수를, 첨자는 분자 구성을 나타냅니다.",
                     hint: "2H₂O에서 2는 계수, ₂는 첨자입니다."
+                },
+                {
+                    question: "물질의 상태 변화에서 보존되는 것은?",
+                    type: "multiple-choice",
+                    options: ["분자 수", "부피", "밀도", "질량"],
+                    correctIndex: 3,
+                    explanation: "상태가 변해도 질량은 보존됩니다(질량 보존 법칙).",
+                    hint: "얼음이 물로 녹을 때 변하지 않는 것을 생각해보세요."
+                },
+                {
+                    question: "화학적 성질과 물리적 성질을 구분하는 기준은?",
+                    type: "multiple-choice",
+                    options: ["측정 방법", "물질의 본질 변화 여부", "관찰 시간", "실험 도구"],
+                    correctIndex: 1,
+                    explanation: "물질의 본질이 변하면 화학적 성질, 변하지 않으면 물리적 성질입니다.",
+                    hint: "연소는 화학적, 녹는점은 물리적 성질입니다."
+                },
+                {
+                    question: "원소의 화학적 성질을 결정하는 주요 요인은?",
+                    type: "multiple-choice",
+                    options: ["원자량", "원자가 전자", "중성자 수", "원자 반지름"],
+                    correctIndex: 1,
+                    explanation: "원자가 전자의 수와 배치가 원소의 화학적 성질을 결정합니다.",
+                    hint: "같은 족의 원소들이 비슷한 성질을 갖는 이유를 생각해보세요."
+                },
+                {
+                    question: "농도를 나타내는 단위가 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["몰농도(M)", "퍼센트농도(%)", "몰랄농도(m)", "밀도(g/mL)"],
+                    correctIndex: 3,
+                    explanation: "밀도는 농도가 아니라 단위 부피당 질량을 나타내는 물리량입니다.",
+                    hint: "농도는 용질과 용매의 비율을 나타냅니다."
+                },
+                {
+                    question: "화학 반응의 속도에 영향을 주지 않는 요인은?",
+                    type: "multiple-choice",
+                    options: ["온도", "농도", "촉매", "용기의 재질"],
+                    correctIndex: 3,
+                    explanation: "용기의 재질은 일반적으로 반응 속도에 영향을 주지 않습니다.",
+                    hint: "반응하는 물질 자체나 반응 조건과 관련된 요인들을 생각해보세요."
                 }
             ]
         },
@@ -1608,6 +1648,214 @@ const problemTemplates = {
                     correctIndex: 2,
                     explanation: "NH₃는 3개의 결합전자쌍과 1개의 비공유전자쌍으로 정사면체형 전자쌍 기하구조를 가집니다.",
                     hint: "전체 전자쌍의 개수를 세어보세요."
+                },
+                {
+                    question: "d 궤도의 모양과 특징을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["d궤도", "5개", "모양", "전이원소"],
+                    answer: "5개의 서로 다른 모양을 가진 궤도로 전이원소의 특성을 결정",
+                    explanation: "d 궤도는 5개의 다른 공간 방향을 가지며, 전이원소의 색깔과 자기적 성질을 결정합니다.",
+                    hint: "전이금속의 특성과 관련된 궤도입니다."
+                },
+                {
+                    question: "분자 궤도 이론에서 He₂가 존재하지 않는 이유는?",
+                    type: "multiple-choice",
+                    options: ["결합차수가 0", "전자가 부족", "궤도가 없음", "에너지가 높음"],
+                    correctIndex: 0,
+                    explanation: "He₂는 결합성 궤도와 반결합성 궤도에 같은 수의 전자가 들어가 결합차수가 0이 됩니다.",
+                    hint: "결합차수 = (결합성 전자 - 반결합성 전자) / 2"
+                },
+                {
+                    question: "결정장 이론에서 d 궤도 분리가 일어나는 이유는?",
+                    type: "multiple-choice",
+                    options: ["온도 변화", "리간드의 전기장", "압력 변화", "pH 변화"],
+                    correctIndex: 1,
+                    explanation: "리간드의 전기장이 중심 원자의 d 궤도를 서로 다른 에너지 준위로 분리시킵니다.",
+                    hint: "착화합물에서 중심 원자 주변의 리간드를 생각해보세요."
+                },
+                {
+                    question: "Jahn-Teller 효과란?",
+                    type: "short-answer",
+                    keywords: ["분자", "왜곡", "전자", "불안정"],
+                    answer: "전자적으로 불안정한 분자가 구조 왜곡을 통해 안정화되는 현상",
+                    explanation: "축퇴된 궤도에 전자가 불균등하게 채워질 때 분자 구조가 왜곡되어 에너지를 낮추는 현상입니다.",
+                    hint: "Cu²⁺ 착화합물의 왜곡을 생각해보세요."
+                },
+                {
+                    question: "스핀-궤도 결합이란?",
+                    type: "multiple-choice",
+                    options: ["전자의 회전과 공전의 상호작용", "핵의 스핀", "분자의 회전", "진동 운동"],
+                    correctIndex: 0,
+                    explanation: "전자의 스핀과 궤도 각운동량 사이의 상호작용으로 미세구조를 만듭니다.",
+                    hint: "전자의 자기적 성질과 관련됩니다."
+                },
+                {
+                    question: "밴드 이론에서 절연체의 특징은?",
+                    type: "multiple-choice",
+                    options: ["전도대가 가득참", "밴드갭이 큼", "밴드갭이 작음", "밴드갭이 없음"],
+                    correctIndex: 1,
+                    explanation: "절연체는 원자가대와 전도대 사이의 밴드갭이 커서 전자가 전도대로 이동하기 어렵습니다.",
+                    hint: "다이아몬드와 같은 절연체의 전자 구조를 생각해보세요."
+                },
+                {
+                    question: "Van der Waals 방정식에서 실제 기체의 보정항은?",
+                    type: "multiple-choice",
+                    options: ["a와 b", "P와 V", "n과 R", "T와 P"],
+                    correctIndex: 0,
+                    explanation: "a는 분자간 인력, b는 분자의 부피를 보정하는 상수입니다.",
+                    hint: "이상기체 방정식과의 차이점을 생각해보세요."
+                },
+                {
+                    question: "유효핵전하(Zeff)가 증가하면 원자 반지름은?",
+                    type: "multiple-choice",
+                    options: ["증가", "감소", "변화없음", "불규칙변화"],
+                    correctIndex: 1,
+                    explanation: "유효핵전하가 클수록 전자가 핵에 더 강하게 끌려 원자 반지름이 감소합니다.",
+                    hint: "핵이 전자를 끌어당기는 힘이 세지는 효과를 생각해보세요."
+                },
+                {
+                    question: "Hund의 규칙의 내용은?",
+                    type: "short-answer",
+                    keywords: ["전자", "궤도", "같은", "스핀"],
+                    answer: "같은 에너지의 궤도에 전자가 채워질 때 스핀이 같은 방향으로 하나씩 먼저 채워짐",
+                    explanation: "전자들은 가능한 한 같은 스핀을 가지고 서로 다른 궤도를 먼저 차지합니다.",
+                    hint: "질소 원자의 전자 배치를 생각해보세요."
+                },
+                {
+                    question: "Pauli 배타 원리란?",
+                    type: "multiple-choice",
+                    options: ["같은 궤도에 전자 2개까지", "스핀이 반대여야 함", "4개의 양자수가 달라야 함", "모든 내용"],
+                    correctIndex: 3,
+                    explanation: "하나의 원자에서 두 전자가 4개의 양자수를 모두 같게 가질 수 없다는 원리입니다.",
+                    hint: "전자의 정체성을 구별하는 양자수들을 생각해보세요."
+                },
+                {
+                    question: "양자수 중 궤도의 모양을 결정하는 것은?",
+                    type: "multiple-choice",
+                    options: ["주양자수(n)", "방위양자수(l)", "자기양자수(ml)", "스핀양자수(ms)"],
+                    correctIndex: 1,
+                    explanation: "방위양자수 l이 궤도의 모양(s, p, d, f)을 결정합니다.",
+                    hint: "s, p, d 궤도의 서로 다른 모양을 생각해보세요."
+                },
+                {
+                    question: "전자친화도가 가장 큰 원소는?",
+                    type: "multiple-choice",
+                    options: ["플루오린", "염소", "산소", "질소"],
+                    correctIndex: 1,
+                    explanation: "염소가 전자친화도가 가장 크며, 전자를 가장 쉽게 받아들입니다.",
+                    hint: "할로겐 원소 중에서 생각해보세요."
+                },
+                {
+                    question: "쌍극자 모멘트의 단위는?",
+                    type: "multiple-choice",
+                    options: ["Debye", "Pascal", "Joule", "Coulomb"],
+                    correctIndex: 0,
+                    explanation: "쌍극자 모멘트의 단위는 Debye(D)입니다.",
+                    hint: "전기적 성질을 나타내는 단위입니다."
+                },
+                {
+                    question: "혼성화가 일어나는 이유는?",
+                    type: "short-answer",
+                    keywords: ["에너지", "안정화", "결합", "최적"],
+                    answer: "원자 궤도들이 혼합되어 더 안정한 결합을 형성하기 위해",
+                    explanation: "혼성화를 통해 더 효과적인 궤도 겹침이 가능해져 결합이 강해집니다.",
+                    hint: "탄소의 4개 결합이 모두 같은 이유를 생각해보세요."
+                },
+                {
+                    question: "금속 결합의 특징이 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["전자바다 모델", "방향성 없음", "높은 전기전도도", "분자 형성"],
+                    correctIndex: 3,
+                    explanation: "금속 결합은 분자를 형성하지 않고 거대한 금속 결정을 만듭니다.",
+                    hint: "금속의 물리적 성질을 생각해보세요."
+                },
+                {
+                    question: "London 분산력이 강해지는 조건은?",
+                    type: "multiple-choice",
+                    options: ["분자량 증가", "분자량 감소", "온도 증가", "압력 감소"],
+                    correctIndex: 0,
+                    explanation: "분자량이 클수록 전자가 많아져 순간 쌍극자가 쉽게 형성되어 분산력이 강해집니다.",
+                    hint: "할로겐 원소들의 끓는점 변화를 생각해보세요."
+                },
+                {
+                    question: "공명 안정화 에너지란?",
+                    type: "short-answer",
+                    keywords: ["공명", "안정화", "에너지", "낮음"],
+                    answer: "공명 구조로 인해 실제 분자가 예상보다 낮은 에너지를 갖는 정도",
+                    explanation: "벤젠과 같은 분자는 공명으로 인해 이론적 계산보다 더 안정합니다.",
+                    hint: "벤젠의 실제 결합 에너지와 계산값의 차이를 생각해보세요."
+                },
+                {
+                    question: "분자의 비선형성과 관련된 개념은?",
+                    type: "multiple-choice",
+                    options: ["대칭성", "극성", "진동모드", "모든 내용"],
+                    correctIndex: 3,
+                    explanation: "분자의 비선형성은 대칭성, 극성, 진동모드 등 여러 성질에 영향을 줍니다.",
+                    hint: "물 분자와 이산화탄소의 차이점을 생각해보세요."
+                },
+                {
+                    question: "Born-Oppenheimer 근사란?",
+                    type: "short-answer",
+                    keywords: ["핵", "전자", "질량", "분리"],
+                    answer: "핵과 전자의 운동을 분리하여 취급하는 근사법",
+                    explanation: "핵이 전자보다 훨씬 무거워 핵의 운동과 전자의 운동을 따로 다룰 수 있다고 가정합니다.",
+                    hint: "양자화학 계산의 기본 가정입니다."
+                },
+                {
+                    question: "터널링 효과란?",
+                    type: "multiple-choice",
+                    options: ["장벽을 뛰어넘는 현상", "장벽을 뚫고 지나가는 현상", "장벽을 돌아가는 현상", "장벽을 무너뜨리는 현상"],
+                    correctIndex: 1,
+                    explanation: "양자역학적 효과로 입자가 에너지 장벽을 뚫고 지나갈 수 있는 현상입니다.",
+                    hint: "고전물리학으로는 설명할 수 없는 양자 현상입니다."
+                },
+                {
+                    question: "Zero-point energy란?",
+                    type: "short-answer",
+                    keywords: ["영점", "에너지", "진동", "최저"],
+                    answer: "절대영도에서도 분자가 갖는 최소한의 진동 에너지",
+                    explanation: "양자역학적 불확정성 원리에 의해 분자는 절대영도에서도 진동합니다.",
+                    hint: "하이젠베르크 불확정성 원리와 관련됩니다."
+                },
+                {
+                    question: "Aufbau 원리란?",
+                    type: "multiple-choice",
+                    options: ["에너지가 낮은 궤도부터 채움", "스핀이 같은 방향", "하나씩 먼저 채움", "양자수가 달라야 함"],
+                    correctIndex: 0,
+                    explanation: "전자들은 에너지가 낮은 궤도부터 차례로 채워진다는 원리입니다.",
+                    hint: "전자 배치의 기본 원리입니다."
+                },
+                {
+                    question: "분자 대칭성과 쌍극자 모멘트의 관계는?",
+                    type: "short-answer",
+                    keywords: ["대칭", "중심", "무극성", "극성"],
+                    answer: "대칭중심이 있으면 무극성, 없으면 극성일 가능성",
+                    explanation: "분자에 대칭중심(inversion center)이 있으면 쌍극자 모멘트가 0이 됩니다.",
+                    hint: "CO₂와 H₂O의 대칭성 차이를 생각해보세요."
+                },
+                {
+                    question: "Lewis 산-염기 이론에서 산의 정의는?",
+                    type: "multiple-choice",
+                    options: ["전자쌍 주개", "전자쌍 받개", "양성자 주개", "양성자 받개"],
+                    correctIndex: 1,
+                    explanation: "Lewis 산은 전자쌍을 받아들이는 물질입니다.",
+                    hint: "BF₃이 Lewis 산인 이유를 생각해보세요."
+                },
+                {
+                    question: "Slater 규칙의 목적은?",
+                    type: "short-answer",
+                    keywords: ["유효핵전하", "계산", "차폐", "효과"],
+                    answer: "다른 전자들의 차폐 효과를 고려하여 유효핵전하를 계산",
+                    explanation: "각 전자가 느끼는 실제 핵전하를 다른 전자들의 차폐 효과를 고려하여 계산하는 방법입니다.",
+                    hint: "원자가 전자가 느끼는 실제 핵의 세기를 구하는 방법입니다."
+                },
+                {
+                    question: "분자 궤도의 대칭성 분류에서 σ와 π의 차이는?",
+                    type: "multiple-choice",
+                    options: ["회전 대칭성", "거울 대칭성", "점 대칭성", "평행이동 대칭성"],
+                    correctIndex: 0,
+                    explanation: "σ 궤도는 결합축 주위로 회전해도 변하지 않지만, π 궤도는 변합니다.",
+                    hint: "결합축을 중심으로 한 회전을 생각해보세요."
                 }
             ]
         }
@@ -2099,6 +2347,7 @@ function generateProblem(difficulty) {
         console.log('선택된 문제:', problem);
         
         // 동적 요소 추가
+        problem.category = category.category; // 카테고리 정보 추가
         problem.points = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 20 : 30;
         problem.id = Date.now();
         
@@ -2182,6 +2431,7 @@ function generateTopicProblem(topic, difficulty) {
         
         if (!usedTopicProblems[topicKey].has(problemId)) {
             problem = { ...category.templates[problemIndex] };
+            problem.category = category.category; // 카테고리 정보 추가
             problem.points = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 20 : 30;
             problem.id = Date.now();
             problem.uniqueId = problemId;
@@ -2247,7 +2497,7 @@ const problemStats = {
 
 // 추가 문제 템플릿 (동적 생성용)
 const dynamicProblemGenerators = {
-    // 화학식 문제 생성기
+    // 화학식 문제 생성기 (확장됨)
     formulaProblem() {
         const compounds = [
             { formula: "H₂O", name: "물", type: "covalent" },
@@ -2256,7 +2506,15 @@ const dynamicProblemGenerators = {
             { formula: "CH₄", name: "메탄", type: "covalent" },
             { formula: "NaCl", name: "염화나트륨", type: "ionic" },
             { formula: "CaCO₃", name: "탄산칼슘", type: "ionic" },
-            { formula: "MgO", name: "산화마그네슘", type: "ionic" }
+            { formula: "MgO", name: "산화마그네슘", type: "ionic" },
+            { formula: "H₂SO₄", name: "황산", type: "covalent" },
+            { formula: "HCl", name: "염화수소", type: "covalent" },
+            { formula: "KOH", name: "수산화칼륨", type: "ionic" },
+            { formula: "CaCl₂", name: "염화칼슘", type: "ionic" },
+            { formula: "Al₂O₃", name: "산화알루미늄", type: "ionic" },
+            { formula: "C₂H₆", name: "에탄", type: "covalent" },
+            { formula: "C₂H₄", name: "에틸렌", type: "covalent" },
+            { formula: "C₂H₂", name: "아세틸렌", type: "covalent" }
         ];
         
         const compound = compounds[Math.floor(Math.random() * compounds.length)];
@@ -2270,6 +2528,264 @@ const dynamicProblemGenerators = {
             hint: compound.type === "ionic" ? "금속과 비금속의 조합입니다." : "비금속 원소들의 조합입니다."
         };
     },
+
+    // pH 계산 문제 생성기
+    pHCalculationProblem() {
+        const solutions = [
+            { concentration: 0.1, type: "HCl", pH: 1, description: "강산" },
+            { concentration: 0.01, type: "HCl", pH: 2, description: "강산" },
+            { concentration: 0.1, type: "NaOH", pH: 13, description: "강염기" },
+            { concentration: 0.01, type: "NaOH", pH: 12, description: "강염기" },
+            { concentration: 1e-7, type: "순수한 물", pH: 7, description: "중성" }
+        ];
+        
+        const solution = solutions[Math.floor(Math.random() * solutions.length)];
+        
+        return {
+            question: `${solution.concentration} M ${solution.type} 용액의 pH는?`,
+            type: "multiple-choice",
+            options: [solution.pH, solution.pH + 1, solution.pH - 1, solution.pH + 2].sort(() => Math.random() - 0.5),
+            correctIndex: 0,
+            explanation: `${solution.description}인 ${solution.type}의 ${solution.concentration} M 용액의 pH는 ${solution.pH}입니다.`,
+            category: "acid-base",
+            hint: "강산과 강염기는 완전히 이온화됩니다."
+        };
+    },
+
+    // 원자량 계산 문제 생성기
+    atomicMassProblem() {
+        const elements = [
+            { symbol: "C", mass: 12, name: "탄소" },
+            { symbol: "N", mass: 14, name: "질소" },
+            { symbol: "O", mass: 16, name: "산소" },
+            { symbol: "Na", mass: 23, name: "나트륨" },
+            { symbol: "Mg", mass: 24, name: "마그네슘" },
+            { symbol: "Al", mass: 27, name: "알루미늄" },
+            { symbol: "P", mass: 31, name: "인" },
+            { symbol: "S", mass: 32, name: "황" },
+            { symbol: "Cl", mass: 35.5, name: "염소" },
+            { symbol: "K", mass: 39, name: "칼륨" },
+            { symbol: "Ca", mass: 40, name: "칼슘" }
+        ];
+        
+        const element = elements[Math.floor(Math.random() * elements.length)];
+        
+        return {
+            question: `${element.name}(${element.symbol})의 원자량은?`,
+            type: "multiple-choice",
+            options: [element.mass, element.mass + 1, element.mass - 1, element.mass + 2].sort(() => Math.random() - 0.5),
+            correctIndex: 0,
+            explanation: `${element.name}의 원자량은 ${element.mass}입니다.`,
+            category: "basic-concepts",
+            hint: "주기율표를 참고하세요."
+        };
+    },
+
+    // 전자배치 문제 생성기 (확장됨)
+    electronConfigProblem() {
+        const elements = [
+            { symbol: "Li", config: "1s² 2s¹", electrons: 3 },
+            { symbol: "Be", config: "1s² 2s²", electrons: 4 },
+            { symbol: "B", config: "1s² 2s² 2p¹", electrons: 5 },
+            { symbol: "C", config: "1s² 2s² 2p²", electrons: 6 },
+            { symbol: "N", config: "1s² 2s² 2p³", electrons: 7 },
+            { symbol: "O", config: "1s² 2s² 2p⁴", electrons: 8 },
+            { symbol: "F", config: "1s² 2s² 2p⁵", electrons: 9 },
+            { symbol: "Ne", config: "1s² 2s² 2p⁶", electrons: 10 },
+            { symbol: "Na", config: "[Ne] 3s¹", electrons: 11 },
+            { symbol: "Mg", config: "[Ne] 3s²", electrons: 12 },
+            { symbol: "Al", config: "[Ne] 3s² 3p¹", electrons: 13 },
+            { symbol: "Si", config: "[Ne] 3s² 3p²", electrons: 14 },
+            { symbol: "P", config: "[Ne] 3s² 3p³", electrons: 15 },
+            { symbol: "S", config: "[Ne] 3s² 3p⁴", electrons: 16 },
+            { symbol: "Cl", config: "[Ne] 3s² 3p⁵", electrons: 17 },
+            { symbol: "Ar", config: "[Ne] 3s² 3p⁶", electrons: 18 }
+        ];
+        
+        const element = elements[Math.floor(Math.random() * elements.length)];
+        
+        return {
+            question: `${element.symbol} 원자의 전자배치는?`,
+            type: "multiple-choice",
+            options: [element.config, "1s² 2s² 2p⁶", "[He] 2s² 2p⁶", "[Ne] 3s² 3p⁶"].sort(() => Math.random() - 0.5),
+            correctIndex: 0,
+            explanation: `${element.symbol} 원자는 ${element.electrons}개의 전자를 가지며, 전자배치는 ${element.config}입니다.`,
+            category: "advanced-concepts",
+            hint: `${element.electrons}개의 전자를 에너지 순서대로 배치하세요.`
+        };
+    },
+
+    // 농도 계산 문제 생성기
+    concentrationProblem() {
+        const problems = [
+            { mass: 58.5, volume: 1, molarity: 1, compound: "NaCl", mw: 58.5 },
+            { mass: 117, volume: 2, molarity: 1, compound: "NaCl", mw: 58.5 },
+            { mass: 40, volume: 1, molarity: 1, compound: "NaOH", mw: 40 },
+            { mass: 80, volume: 2, molarity: 1, compound: "NaOH", mw: 40 },
+            { mass: 36.5, volume: 1, molarity: 1, compound: "HCl", mw: 36.5 }
+        ];
+        
+        const problem = problems[Math.floor(Math.random() * problems.length)];
+        
+        return {
+            question: `${problem.compound} ${problem.mass}g을 물에 녹여 ${problem.volume}L로 만든 용액의 몰농도는?`,
+            type: "multiple-choice",
+            options: [`${problem.molarity} M`, `${problem.molarity * 2} M`, `${problem.molarity / 2} M`, `${problem.molarity * 0.5} M`],
+            correctIndex: 0,
+            explanation: `몰농도 = mol/L = (${problem.mass}g ÷ ${problem.mw}g/mol) ÷ ${problem.volume}L = ${problem.molarity} M`,
+            category: "basic-concepts",
+            hint: "몰농도 = 용질의 몰수 ÷ 용액의 부피(L)"
+        };
+    },
+
+    // 기체 법칙 문제 생성기
+    gasLawProblem() {
+        const problems = [
+            { 
+                law: "보일의 법칙", 
+                description: "일정한 온도에서 기체의 부피는 압력에 반비례",
+                formula: "PV = 상수",
+                question: "온도가 일정할 때, 압력이 2배가 되면 부피는?",
+                answer: "1/2배",
+                options: ["2배", "1/2배", "4배", "1/4배"]
+            },
+            {
+                law: "샤를의 법칙",
+                description: "일정한 압력에서 기체의 부피는 절대온도에 비례",
+                formula: "V/T = 상수",
+                question: "압력이 일정할 때, 절대온도가 2배가 되면 부피는?",
+                answer: "2배",
+                options: ["2배", "1/2배", "4배", "1/4배"]
+            },
+            {
+                law: "아보가드로의 법칙",
+                description: "같은 온도, 압력에서 같은 부피의 기체는 같은 분자 수",
+                formula: "V ∝ n",
+                question: "STP에서 모든 기체 1몰의 부피는?",
+                answer: "22.4 L",
+                options: ["22.4 L", "24.5 L", "20.0 L", "25.0 L"]
+            }
+        ];
+        
+        const problem = problems[Math.floor(Math.random() * problems.length)];
+        
+        return {
+            question: `${problem.law}: ${problem.question}`,
+            type: "multiple-choice",
+            options: problem.options,
+            correctIndex: problem.options.indexOf(problem.answer),
+            explanation: `${problem.law}은 ${problem.description}입니다. ${problem.formula}`,
+            category: "basic-concepts",
+            hint: `${problem.law}의 정의를 생각해보세요.`
+        };
+    },
+
+    // 화학결합 에너지 비교 문제 생성기
+    bondEnergyComparisonProblem() {
+        const bonds = [
+            { bond: "H-H", energy: 436, type: "단일결합" },
+            { bond: "C-C", energy: 348, type: "단일결합" },
+            { bond: "C=C", energy: 614, type: "이중결합" },
+            { bond: "C≡C", energy: 839, type: "삼중결합" },
+            { bond: "N≡N", energy: 942, type: "삼중결합" },
+            { bond: "O=O", energy: 495, type: "이중결합" },
+            { bond: "H-F", energy: 567, type: "단일결합" },
+            { bond: "H-Cl", energy: 431, type: "단일결합" }
+        ];
+        
+        const bond1 = bonds[Math.floor(Math.random() * bonds.length)];
+        let bond2 = bonds[Math.floor(Math.random() * bonds.length)];
+        while (bond2 === bond1) {
+            bond2 = bonds[Math.floor(Math.random() * bonds.length)];
+        }
+        
+        const stronger = bond1.energy > bond2.energy ? bond1 : bond2;
+        
+        return {
+            question: `다음 중 결합 에너지가 더 큰 것은? ${bond1.bond} vs ${bond2.bond}`,
+            type: "multiple-choice",
+            options: [stronger.bond, bond1.bond === stronger.bond ? bond2.bond : bond1.bond, "같다", "판단불가"],
+            correctIndex: 0,
+            explanation: `${stronger.bond} 결합의 에너지(${stronger.energy} kJ/mol)가 더 큽니다.`,
+            category: "bonding",
+            hint: "결합 차수가 높을수록 결합 에너지가 큽니다."
+        };
+    },
+
+    // 산화수 계산 문제 생성기
+    oxidationStateProblem() {
+        const compounds = [
+            { formula: "H₂O", element: "H", oxidation: "+1", explanation: "물에서 수소의 산화수는 +1" },
+            { formula: "H₂O", element: "O", oxidation: "-2", explanation: "물에서 산소의 산화수는 -2" },
+            { formula: "NH₃", element: "N", oxidation: "-3", explanation: "암모니아에서 질소의 산화수는 -3" },
+            { formula: "CH₄", element: "C", oxidation: "-4", explanation: "메탄에서 탄소의 산화수는 -4" },
+            { formula: "CO₂", element: "C", oxidation: "+4", explanation: "이산화탄소에서 탄소의 산화수는 +4" },
+            { formula: "SO₂", element: "S", oxidation: "+4", explanation: "이산화황에서 황의 산화수는 +4" },
+            { formula: "H₂SO₄", element: "S", oxidation: "+6", explanation: "황산에서 황의 산화수는 +6" }
+        ];
+        
+        const compound = compounds[Math.floor(Math.random() * compounds.length)];
+        
+        return {
+            question: `${compound.formula}에서 ${compound.element}의 산화수는?`,
+            type: "multiple-choice",
+            options: [compound.oxidation, "+2", "-1", "0"].sort(() => Math.random() - 0.5),
+            correctIndex: 0,
+            explanation: compound.explanation,
+            category: "reactions",
+            hint: "산화수 규칙을 적용해보세요."
+        };
+    },
+
+    // 분자 모양 예측 문제 생성기
+    molecularGeometryProblem() {
+        const molecules = [
+            { formula: "BeF₂", shape: "직선형", angle: "180°", reason: "2개 결합전자쌍" },
+            { formula: "BF₃", shape: "삼각평면형", angle: "120°", reason: "3개 결합전자쌍" },
+            { formula: "CH₄", shape: "정사면체형", angle: "109.5°", reason: "4개 결합전자쌍" },
+            { formula: "NH₃", shape: "삼각뿔형", angle: "107°", reason: "3개 결합전자쌍 + 1개 비공유전자쌍" },
+            { formula: "H₂O", shape: "굽은형", angle: "104.5°", reason: "2개 결합전자쌍 + 2개 비공유전자쌍" },
+            { formula: "PCl₅", shape: "삼각쌍뿔형", angle: "90°, 120°", reason: "5개 결합전자쌍" },
+            { formula: "SF₆", shape: "정팔면체형", angle: "90°", reason: "6개 결합전자쌍" }
+        ];
+        
+        const molecule = molecules[Math.floor(Math.random() * molecules.length)];
+        
+        return {
+            question: `VSEPR 이론에 따라 ${molecule.formula}의 분자 모양은?`,
+            type: "multiple-choice",
+            options: [molecule.shape, "직선형", "삼각평면형", "정사면체형"].filter((v, i, a) => a.indexOf(v) === i),
+            correctIndex: 0,
+            explanation: `${molecule.formula}는 ${molecule.reason}으로 ${molecule.shape}입니다.`,
+            category: "molecular",
+            hint: "중심 원자 주위의 전자쌍 개수를 세어보세요."
+        };
+    },
+
+    // 동적 문제 생성 함수 - 랜덤하게 위의 생성기 중 하나를 호출
+    generateDynamicProblem() {
+        const generators = [
+            this.formulaProblem,
+            this.pHCalculationProblem,
+            this.atomicMassProblem,
+            this.electronConfigProblem,
+            this.concentrationProblem,
+            this.gasLawProblem,
+            this.bondEnergyComparisonProblem,
+            this.oxidationStateProblem,
+            this.molecularGeometryProblem
+        ];
+        
+        const generator = generators[Math.floor(Math.random() * generators.length)];
+        const problem = generator.call(this);
+        
+        // 동적 생성 문제임을 표시
+        problem.isDynamic = true;
+        problem.id = Date.now() + Math.random();
+        problem.uniqueId = `dynamic_${problem.category}_${Date.now()}`;
+        
+        return problem;
+    }
     
     // 결합 에너지 문제 생성기
     bondEnergyProblem() {
@@ -2375,18 +2891,26 @@ function resetUsedProblems() {
     usedProblems.hard.clear();
 }
 
-// 중복 방지 문제 생성
+// 중복 방지 문제 생성 (동적 생성 지원)
 function generateUniqueQuestion(difficulty) {
     const templates = problemTemplates[difficulty];
     if (!templates || templates.length === 0) {
-        return null;
+        // 정적 템플릿이 없으면 동적 생성 시도
+        console.log(`${difficulty} 난이도 정적 템플릿 없음 - 동적 생성 시도`);
+        return dynamicProblemGenerators.generateDynamicProblem();
     }
     
-    // 모든 문제를 다 사용했으면 초기화
+    // 모든 문제를 다 사용했으면 동적 생성과 혼합
     const totalQuestions = templates.reduce((sum, category) => sum + category.templates.length, 0);
     if (usedProblems[difficulty].size >= totalQuestions) {
-        usedProblems[difficulty].clear();
-        console.log(`${difficulty} 난이도 문제 풀이 완료 - 문제 풀이 기록 초기화`);
+        // 50% 확률로 동적 생성 사용
+        if (Math.random() < 0.5) {
+            console.log(`${difficulty} 난이도 모든 정적 문제 사용됨 - 동적 생성 사용`);
+            return dynamicProblemGenerators.generateDynamicProblem();
+        } else {
+            usedProblems[difficulty].clear();
+            console.log(`${difficulty} 난이도 문제 풀이 완료 - 문제 풀이 기록 초기화`);
+        }
     }
     
     // 사용하지 않은 문제 찾기
@@ -2419,12 +2943,20 @@ function generateUniqueQuestion(difficulty) {
         attempts++;
     }
     
+    // 정적 문제를 찾지 못하면 동적 생성
+    if (!problem) {
+        console.log(`${difficulty} 난이도 정적 문제 찾기 실패 - 동적 생성 사용`);
+        problem = dynamicProblemGenerators.generateDynamicProblem();
+    }
+    
     return problem;
 }
 
 // 전역 함수로 내보내기
 window.generateProblem = generateUniqueQuestion; // 중복 방지 버전 사용
 window.generateTopicProblem = generateTopicProblem; // 개선된 주제별 문제 생성
+window.dynamicProblemGenerators = dynamicProblemGenerators; // 동적 문제 생성기
+window.problemTemplates = problemTemplates; // 정적 문제 템플릿
 window.problemStats = problemStats;
 window.resetUsedProblems = resetUsedProblems;
 window.resetTopicProblems = resetTopicProblems;
