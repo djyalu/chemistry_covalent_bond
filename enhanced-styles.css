@@ -1,0 +1,515 @@
+/* 향상된 스타일 - 게임화 및 추가 기능 */
+
+/* 게임화 요소 */
+.level-up-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.level-up-overlay.show {
+    opacity: 1;
+}
+
+.level-up-content {
+    background: white;
+    padding: 3rem;
+    border-radius: 16px;
+    text-align: center;
+    animation: bounceIn 0.5s;
+    max-width: 400px;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.new-level {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2196F3;
+    margin: 1rem 0;
+}
+
+.rewards ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.rewards li {
+    padding: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* 업적 알림 */
+.achievement-notification {
+    position: fixed;
+    top: 20px;
+    right: -400px;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: right 0.3s;
+    z-index: 9999;
+}
+
+.achievement-notification.show {
+    right: 20px;
+}
+
+.achievement-icon {
+    font-size: 2.5rem;
+}
+
+.achievement-info h4 {
+    margin: 0;
+    color: #333;
+}
+
+.achievement-info p {
+    margin: 0.25rem 0 0;
+    color: #666;
+}
+
+.achievement-info small {
+    color: #999;
+    font-size: 0.85rem;
+}
+
+/* 매칭 문제 스타일 */
+.matching-problem {
+    padding: 1rem;
+}
+
+.matching-columns {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.match-item, .match-target {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: #f5f5f5;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.match-item:hover {
+    background: #e0e0e0;
+    transform: translateX(5px);
+}
+
+.match-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+}
+
+.match-target.drag-over {
+    background: #E3F2FD;
+    border-color: #2196F3;
+}
+
+.connection-area {
+    position: relative;
+    width: 100px;
+}
+
+#connection-canvas {
+    width: 100%;
+    height: 300px;
+}
+
+/* 드래그 앤 드롭 분류 */
+.classification-problem {
+    padding: 1rem;
+}
+
+.items-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 8px;
+    min-height: 80px;
+}
+
+.draggable-item {
+    padding: 0.5rem 1rem;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: move;
+    transition: all 0.3s;
+}
+
+.draggable-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.category-box {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.category-box h4 {
+    margin: 0 0 1rem;
+    color: #333;
+    text-align: center;
+}
+
+.drop-zone {
+    min-height: 150px;
+    background: #f9f9f9;
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-content: flex-start;
+}
+
+.drop-zone.drag-over {
+    background: #E8F5E9;
+    border-color: #4CAF50;
+}
+
+/* 시퀀스 문제 */
+.sequence-problem {
+    padding: 1rem;
+}
+
+.sequence-list {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.sequence-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: move;
+    transition: all 0.3s;
+}
+
+.sequence-item:hover {
+    background: #f5f5f5;
+}
+
+.sequence-item.dragging {
+    opacity: 0.5;
+}
+
+.sequence-item.drag-over {
+    border-top: 3px solid #2196F3;
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: #2196F3;
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+/* 분자 그리기 도구 */
+.drawing-problem {
+    padding: 1rem;
+}
+
+.drawing-tools {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.drawing-tools select,
+.drawing-tools button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
+
+.drawing-tools button:hover {
+    background: #e0e0e0;
+}
+
+.drawing-tools button.active {
+    background: #2196F3;
+    color: white;
+}
+
+#drawing-canvas {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: crosshair;
+}
+
+/* 분자 뷰어 */
+.molecule-viewer {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.molecule-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.molecule-controls button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #2196F3;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.molecule-controls button:hover {
+    background: #1976D2;
+}
+
+/* 리더보드 */
+.leaderboard {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.leaderboard-tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.leaderboard-tabs button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #f5f5f5;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.leaderboard-tabs button:hover {
+    background: #e0e0e0;
+}
+
+.leaderboard-tabs button.active {
+    background: #2196F3;
+    color: white;
+}
+
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.leaderboard-entry {
+    display: grid;
+    grid-template-columns: 60px 1fr auto auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.leaderboard-entry:hover {
+    background: #f0f0f0;
+    transform: translateX(5px);
+}
+
+.leaderboard-entry.top-rank {
+    background: linear-gradient(135deg, #FFF8E1, #FFECB3);
+    font-weight: 600;
+}
+
+.rank {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.username {
+    font-weight: 500;
+}
+
+.level {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.score {
+    font-weight: bold;
+    color: #2196F3;
+}
+
+/* 일일 도전 위젯 */
+.daily-challenge-widget {
+    background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 1rem 0;
+}
+
+.daily-challenge-widget h3 {
+    margin: 0 0 1rem;
+    color: #1565C0;
+}
+
+.challenge-progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.challenge-progress-bar {
+    flex: 1;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.challenge-progress-fill {
+    height: 100%;
+    background: #2196F3;
+    transition: width 0.5s;
+}
+
+.challenge-reward {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #0D47A1;
+}
+
+/* 연속 학습 표시 */
+.streak-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #FFF3E0;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.streak-flame {
+    font-size: 1.5rem;
+    animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* 파워업 효과 */
+.powerup-active {
+    position: relative;
+    overflow: hidden;
+}
+
+.powerup-active::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 193, 7, 0.3) 0%, transparent 70%);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(1.2); opacity: 0; }
+}
+
+/* 모바일 반응형 개선 */
+@media (max-width: 768px) {
+    .matching-columns {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .connection-area {
+        display: none;
+    }
+    
+    .categories {
+        grid-template-columns: 1fr;
+    }
+    
+    .leaderboard-entry {
+        grid-template-columns: 50px 1fr auto;
+        font-size: 0.9rem;
+    }
+    
+    .level {
+        display: none;
+    }
+}

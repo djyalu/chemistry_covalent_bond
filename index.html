@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>화학 학습 프로그램 - 공유결합과 이온화합물</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="enhanced-styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/icon-192.png">
 </head>
 <body>
     <div class="container">
@@ -148,5 +154,23 @@
     <script src="app.js"></script>
     <script src="problems.js"></script>
     <script src="content.js"></script>
+    <script src="molecule-viewer.js"></script>
+    <script src="enhanced-problems.js"></script>
+    <script src="gamification.js"></script>
+    
+    <!-- Service Worker 등록 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker 등록 성공:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker 등록 실패:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
