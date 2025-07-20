@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제풀기 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .question-container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .answer-option { margin: 10px 0; }
+        .button-group { margin: 20px 0; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .feedback { margin-top: 20px; padding: 15px; border-radius: 5px; }
+        .correct-answer { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .wrong-answer { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+    <div class="question-container">
+        <h2>문제풀기 테스트</h2>
+        
+        <div id="question-content">
+            <h3>물(H₂O) 분자에서 수소와 산소는 어떤 결합으로 연결되어 있나요?</h3>
+        </div>
+        
+        <div id="answer-section">
+            <div class="answer-option">
+                <label>
+                    <input type="radio" name="answer" value="0">
+                    공유결합
+                </label>
+            </div>
+            <div class="answer-option">
+                <label>
+                    <input type="radio" name="answer" value="1">
+                    이온결합
+                </label>
+            </div>
+            <div class="answer-option">
+                <label>
+                    <input type="radio" name="answer" value="2">
+                    금속결합
+                </label>
+            </div>
+            <div class="answer-option">
+                <label>
+                    <input type="radio" name="answer" value="3">
+                    수소결합
+                </label>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button onclick="testCheckAnswer()">정답 확인</button>
+        </div>
+        
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        // 테스트용 간단한 문제
+        const testQuestion = {
+            question: "물(H₂O) 분자에서 수소와 산소는 어떤 결합으로 연결되어 있나요?",
+            type: "multiple-choice",
+            options: ["공유결합", "이온결합", "금속결합", "수소결합"],
+            correctIndex: 0,
+            explanation: "물 분자에서 수소와 산소는 전자를 공유하는 공유결합으로 연결되어 있습니다.",
+            hint: "원자들이 전자를 공유하는 결합을 생각해보세요.",
+            points: 10,
+            id: Date.now()
+        };
+
+        function testCheckAnswer() {
+            console.log('테스트 정답확인 시작');
+            
+            const selected = document.querySelector('input[name="answer"]:checked');
+            const feedback = document.getElementById('feedback');
+            
+            if (!selected) {
+                feedback.innerHTML = '<div class="wrong-answer">답을 선택해주세요!</div>';
+                return;
+            }
+            
+            const userAnswer = parseInt(selected.value);
+            const isCorrect = userAnswer === testQuestion.correctIndex;
+            
+            console.log('사용자 답변:', userAnswer);
+            console.log('정답:', testQuestion.correctIndex);
+            console.log('정답 여부:', isCorrect);
+            
+            if (isCorrect) {
+                feedback.innerHTML = `
+                    <div class="correct-answer">
+                        <h3>🎉 정답입니다!</h3>
+                        <p>${testQuestion.explanation}</p>
+                    </div>
+                `;
+            } else {
+                feedback.innerHTML = `
+                    <div class="wrong-answer">
+                        <h3>❌ 틀렸습니다.</h3>
+                        <p>정답: ${testQuestion.options[testQuestion.correctIndex]}</p>
+                        <p>${testQuestion.explanation}</p>
+                    </div>
+                `;
+            }
+            
+            console.log('테스트 완료');
+        }
+    </script>
+</body>
+</html>

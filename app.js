@@ -10,13 +10,14 @@ let currentPracticeTopic = null; // 현재 연습 중인 주제
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
-    // 동적 학습 시스템 초기화 (enhanced-learning.js가 로드된 후)
-    setTimeout(() => {
-        if (window.dynamicLearning) {
-            learningSystem = window.dynamicLearning;
-            updateLearningDashboard();
-        }
-    }, 100);
+    // 동적 학습 시스템 초기화 (임시 비활성화)
+    // setTimeout(() => {
+    //     if (window.dynamicLearning) {
+    //         learningSystem = window.dynamicLearning;
+    //         updateLearningDashboard();
+    //     }
+    // }, 100);
+    learningSystem = null; // 명시적으로 null 설정
     
     // 네비게이션 버튼 이벤트 리스너
     document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -193,6 +194,21 @@ function displayQuestion() {
         });
         answerHTML += '</div>';
         
+    } else if (currentQuestion.type === 'matching') {
+        answerHTML = generateMatchingInterface(currentQuestion);
+        
+    } else if (currentQuestion.type === 'sequence') {
+        answerHTML = generateSequenceInterface(currentQuestion);
+        
+    } else if (currentQuestion.type === 'drag-drop') {
+        answerHTML = generateDragDropInterface(currentQuestion);
+        
+    } else if (currentQuestion.type === 'simulation') {
+        answerHTML = generateSimulationInterface(currentQuestion);
+        
+    } else if (currentQuestion.type === 'fill-dropdown') {
+        answerHTML = generateFillDropdownInterface(currentQuestion);
+        
     } else if (currentQuestion.type === 'short-answer') {
         answerHTML = '<input type="text" id="answer-input" placeholder="답을 입력하세요">';
         
@@ -206,14 +222,26 @@ function displayQuestion() {
     answerSection.innerHTML = answerHTML;
     
     // 버튼 상태 초기화
-    document.getElementById('submit-btn').style.display = 'inline-block';
-    document.getElementById('next-btn').style.display = 'none';
-    document.getElementById('feedback').innerHTML = '';
+    const submitBtn = document.getElementById('submit-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const feedbackDiv = document.getElementById('feedback');
     
-    // 시각적 설명 버튼 보이기
+    if (submitBtn) {
+        submitBtn.style.display = 'inline-block';
+        // 클릭 이벤트 다시 등록 (혹시 모를 이벤트 손실 방지)
+        submitBtn.onclick = function() {
+            console.log('submit 버튼 클릭됨!');
+            checkAnswer();
+        };
+    }
+    
+    if (nextBtn) nextBtn.style.display = 'none';
+    if (feedbackDiv) feedbackDiv.innerHTML = '';
+    
+    // 시각적 설명 버튼 숨기기 (비활성화)
     const visualBtn = document.getElementById('visual-aid-btn');
     if (visualBtn) {
-        visualBtn.style.display = 'inline-block';
+        visualBtn.style.display = 'none';
     }
     
     // 향상된 피드백 영역 숨기기
@@ -231,6 +259,8 @@ function displayQuestion() {
 
 // 문제 로드
 function loadNextQuestion() {
+    console.log('loadNextQuestion 함수 호출됨');
+    
     // DOM 요소들이 존재하는지 확인
     const questionContent = document.getElementById('question-content');
     const answerSection = document.getElementById('answer-section');
@@ -253,23 +283,24 @@ function loadNextQuestion() {
         if (currentPracticeTopic) {
             currentQuestion = generateTopicProblem(currentPracticeTopic, userSelectedDifficulty);
         }
-        // 일반 문제풀이인 경우
+        // 일반 문제풀이인 경우  
         else {
-            // 스마트 문제 생성 (사용자 선택 난이도 반영)
-            if (learningSystem && typeof learningSystem.generateSmartProblem === 'function') {
-                try {
-                    // 학습 시스템에 사용자 선택 난이도 적용
-                    learningSystem.adaptiveDifficulty = userSelectedDifficulty;
-                    currentQuestion = learningSystem.generateSmartProblem();
-                } catch (learningError) {
-                    console.warn('스마트 문제 생성 실패, 기본 문제 생성으로 전환:', learningError);
-                    currentQuestion = null;
-                }
-            }
+            // 기본 문제 생성
+            currentQuestion = generateProblem(userSelectedDifficulty);
             
-            // 스마트 문제 생성에 실패했거나 시스템이 없으면 기본 문제 생성
+            // 문제 생성 실패 시 백업 문제 사용
             if (!currentQuestion) {
-                currentQuestion = generateProblem(userSelectedDifficulty);
+                console.warn('문제 생성 실패, 백업 문제 사용');
+                currentQuestion = {
+                    question: "물(H₂O) 분자에서 수소와 산소는 어떤 결합으로 연결되어 있나요?",
+                    type: "multiple-choice",
+                    options: ["공유결합", "이온결합", "금속결합", "수소결합"],
+                    correctIndex: 0,
+                    explanation: "물 분자에서 수소와 산소는 전자를 공유하는 공유결합으로 연결되어 있습니다.",
+                    hint: "원자들이 전자를 공유하는 결합을 생각해보세요.",
+                    points: 10,
+                    id: Date.now()
+                };
             }
         }
         
@@ -315,10 +346,10 @@ function loadNextQuestion() {
         document.getElementById('enhanced-feedback').style.display = 'none';
         document.getElementById('molecule-visualization').style.display = 'none';
         
-        // 시각적 도움이 필요한 문제인지 확인
-        if (currentQuestion.visualAids && currentQuestion.visualAids.molecularModel) {
-            document.getElementById('visual-aid-btn').style.display = 'inline-block';
-        }
+        // 시각적 설명 버튼 비활성화
+        // if (currentQuestion.visualAids && currentQuestion.visualAids.molecularModel) {
+        //     document.getElementById('visual-aid-btn').style.display = 'inline-block';
+        // }
         
     } catch (error) {
         console.error('문제 로드 중 예외 발생:', error);
@@ -362,8 +393,20 @@ function createAnswerInput(type) {
 
 // 정답 확인
 function checkAnswer() {
+    console.log('=== checkAnswer 함수 시작 ===');
+    console.log('currentQuestion:', currentQuestion);
+    console.log('window.dynamicLearning:', window.dynamicLearning);
+    console.log('learningSystem:', learningSystem);
+    
+    if (!currentQuestion) {
+        console.error('currentQuestion이 없습니다!');
+        return;
+    }
+    
     let userAnswer = null;
     const feedback = document.getElementById('feedback');
+    
+    console.log('문제 유형:', currentQuestion.type);
     
     // 답변 가져오기
     switch(currentQuestion.type) {
@@ -385,16 +428,59 @@ function checkAnswer() {
                 return;
             }
             break;
+            
+        case 'matching':
+            // 매칭 문제는 initializeMatching에서 자동으로 처리됨
+            userAnswer = document.getElementById('answer-section').dataset.userAnswer;
+            if (!userAnswer) {
+                feedback.innerHTML = '<p class="warning">매칭을 완료해주세요!</p>';
+                return;
+            }
+            break;
+            
+        case 'sequence':
+            // 순서 문제는 initializeSequence에서 자동으로 처리됨
+            userAnswer = document.getElementById('answer-section').dataset.userAnswer;
+            if (!userAnswer) {
+                feedback.innerHTML = '<p class="warning">올바른 순서로 배열해주세요!</p>';
+                return;
+            }
+            break;
+            
+        case 'drag-drop':
+            // 드래그앤드롭 문제는 initializeDragDrop에서 자동으로 처리됨
+            userAnswer = document.getElementById('answer-section').dataset.userAnswer;
+            if (!userAnswer) {
+                feedback.innerHTML = '<p class="warning">모든 항목을 올바른 그룹으로 분류해주세요!</p>';
+                return;
+            }
+            break;
+            
+        case 'simulation':
+            // 시뮬레이션 답변 가져오기
+            userAnswer = document.getElementById('simulation-answer').value.trim();
+            if (!userAnswer) {
+                feedback.innerHTML = '<p class="warning">관찰된 현상을 설명해주세요!</p>';
+                return;
+            }
+            break;
+            
+        case 'fill-dropdown':
+            // 드롭다운 선택 가져오기
+            const dropdown = document.getElementById('fill-dropdown');
+            if (!dropdown || dropdown.selectedIndex <= 0) {
+                feedback.innerHTML = '<p class="warning">선택지를 선택해주세요!</p>';
+                return;
+            }
+            userAnswer = dropdown.selectedIndex - 1; // 첫 번째 옵션은 빈 값이므로 -1
+            break;
     }
     
     // 정답 확인
     const isCorrect = checkUserAnswer(userAnswer, currentQuestion);
     
-    // 동적 학습 시스템으로 답변 처리
+    // 동적 학습 시스템 비활성화 (기본 피드백만 사용)
     let enhancedFeedback = null;
-    if (learningSystem) {
-        enhancedFeedback = learningSystem.processAnswer(userAnswer, currentQuestion, isCorrect);
-    }
     
     if (isCorrect) {
         correctAnswers++;
@@ -437,10 +523,10 @@ function checkAnswer() {
             showEnhancedFeedback(enhancedFeedback);
         }
         
-        // 시각적 설명이 도움이 될 경우 버튼 표시
-        if (enhancedFeedback && enhancedFeedback.showVisualAid) {
-            document.getElementById('visual-aid-btn').style.display = 'inline-block';
-        }
+        // 시각적 설명 버튼 비활성화
+        // if (enhancedFeedback && enhancedFeedback.showVisualAid) {
+        //     document.getElementById('visual-aid-btn').style.display = 'inline-block';
+        // }
     }
     
     // 점수 업데이트
@@ -474,6 +560,27 @@ function checkUserAnswer(userAnswer, question) {
             return question.keywords.every(keyword => 
                 userAnswer.toLowerCase().includes(keyword.toLowerCase())
             );
+            
+        case 'matching':
+        case 'sequence':
+        case 'drag-drop':
+            // 이 문제 유형들은 이미 이벤트 핸들러에서 검증되어 자동으로 정답 처리됨
+            return userAnswer === 'matching_complete' || 
+                   userAnswer === 'sequence_complete' || 
+                   userAnswer === 'dragdrop_complete';
+            
+        case 'simulation':
+            // 시뮬레이션은 키워드 기반으로 확인 (선택적)
+            if (question.keywords) {
+                return question.keywords.some(keyword => 
+                    userAnswer.toLowerCase().includes(keyword.toLowerCase())
+                );
+            }
+            // 키워드가 없으면 항상 정답으로 처리 (학습 목적)
+            return true;
+            
+        case 'fill-dropdown':
+            return parseInt(userAnswer) === question.correctIndex;
             
         default:
             return false;
@@ -643,93 +750,37 @@ function showSmartHint() {
     
     hintAttempts++;
     
-    if (learningSystem && typeof learningSystem.generateSmartHint === 'function') {
-        try {
-            const smartHint = learningSystem.generateSmartHint(currentQuestion, hintAttempts);
-            const feedback = document.getElementById('feedback');
-            feedback.innerHTML = `
-                <div class="smart-hint">
-                    <h4>💡 힌트 ${smartHint.level}/${smartHint.maxLevel}</h4>
-                    <p>${smartHint.hint}</p>
-                    ${smartHint.showAnswer ? '<p><em>정답을 확인하려면 "정답 확인" 버튼을 눌러주세요.</em></p>' : ''}
-                </div>
-            `;
-        } catch (error) {
-            console.warn('스마트 힌트 생성 실패, 기본 힌트 사용:', error);
-            showHint();
-        }
-    } else {
-        // 기본 힌트 시스템 사용
-        showHint();
-    }
+    // 스마트 힌트 시스템 비활성화, 기본 힌트만 사용
+    showHint();
 }
 
-// 시각적 설명 표시
-function showVisualAid() {
+// 시각적 설명 표시 (새 버전)
+function showVisualAidNew() {
+    console.log('showVisualAid 호출됨');
+    
     if (!currentQuestion) {
         alert('현재 문제가 없습니다.');
         return;
     }
     
-    // 시각적 설명 컨테이너 찾기
-    let vizContainer = document.getElementById('molecule-visualization');
+    const vizContainer = document.getElementById('molecule-visualization');
     if (!vizContainer) {
-        console.warn('molecule-visualization 요소를 찾을 수 없습니다.');
+        alert('시각화 컨테이너를 찾을 수 없습니다.');
         return;
     }
     
-    // 문제에서 분자/화합물 추출
-    const molecule = extractMoleculeFromQuestion(currentQuestion.question);
+    // 간단한 기본 설명
+    const explanation = currentQuestion.explanation || '이 문제에 대한 추가 설명을 제공합니다.';
+    const hint = currentQuestion.hint || '';
     
-    // 시각적 설명 콘텐츠 생성
-    let visualContent;
-    if (!molecule) {
-        visualContent = `
-            <div class="explanation-section">
-                <h5>💡 개념 설명</h5>
-                <p>${currentQuestion.explanation || '이 문제에 대한 추가 설명을 제공합니다.'}</p>
-                ${currentQuestion.hint ? `<p><strong>힌트:</strong> ${currentQuestion.hint}</p>` : ''}
-            </div>
-        `;
-    } else {
-        const visualExplanations = {
-            'H₂O': `<div class="molecule-display"><h5>💧 물(H₂O) 분자</h5><div class="ascii-molecule"><pre>        H
-         \\
-          O -- H
-         /
-    (굽은형)</pre></div><ul><li>🔗 산소와 수소가 <strong>공유결합</strong></li><li>📐 결합각: 약 104.5°</li><li>⚡ 극성 분자 (부분적 음전하와 양전하)</li><li>🧊 수소결합으로 인한 높은 끓는점</li></ul></div>`,
-            'CO₂': `<div class="molecule-display"><h5>💨 이산화탄소(CO₂) 분자</h5><div class="ascii-molecule"><pre>    O = C = O
-   (직선형)</pre></div><ul><li>🔗 탄소와 산소가 <strong>이중결합</strong></li><li>📐 결합각: 180° (직선형)</li><li>⚖️ 무극성 분자 (대칭 구조)</li><li>🌡️ 상온에서 기체</li></ul></div>`,
-            'CH₄': `<div class="molecule-display"><h5>🔥 메탄(CH₄) 분자</h5><div class="ascii-molecule"><pre>        H
-        |
-    H - C - H
-        |
-        H
-   (정사면체)</pre></div><ul><li>🔗 탄소와 수소가 <strong>단일결합</strong></li><li>📐 결합각: 109.5° (정사면체)</li><li>⚖️ 무극성 분자</li><li>⛽ 천연가스의 주성분</li></ul></div>`,
-            'NH₃': `<div class="molecule-display"><h5>🧪 암모니아(NH₃) 분자</h5><div class="ascii-molecule"><pre>      N
-     /|\\
-    H H H
-  (삼각뿔형)</pre></div><ul><li>🔗 질소와 수소가 <strong>단일결합</strong></li><li>📐 결합각: 약 107° (삼각뿔형)</li><li>👥 비공유 전자쌍 1개</li><li>⚡ 극성 분자</li></ul></div>`,
-            'NaCl': `<div class="molecule-display"><h5>🧂 소금(NaCl)</h5><div class="ascii-molecule"><pre>    Na⁺  Cl⁻
-     \\  /
-      이온결합</pre></div><ul><li>⚡ <strong>이온결합</strong> (정전기적 인력)</li><li>➕ Na⁺ (나트륨 양이온)</li><li>➖ Cl⁻ (염소 음이온)</li><li>🔥 높은 녹는점 (801°C)</li><li>💧 물에 잘 녹음</li></ul></div>`
-        };
-        
-        const key = molecule.formula.includes('₂') ? molecule.formula : molecule.formula.replace(/2/g, '₂').replace(/3/g, '₃');
-        visualContent = visualExplanations[key] || `
-            <div class="explanation-section">
-                <h5>📋 ${molecule.name}(${molecule.formula}) 설명</h5>
-                <p>${currentQuestion.explanation || '이 화합물에 대한 자세한 정보를 준비 중입니다.'}</p>
-                ${currentQuestion.hint ? `<p><strong>힌트:</strong> ${currentQuestion.hint}</p>` : ''}
-            </div>
-        `;
-    }
-    
-    // 시각적 설명 표시
     vizContainer.innerHTML = `
         <h4>🔬 시각적 설명</h4>
         <div class="visual-content">
-            ${visualContent}
+            <div class="explanation-section">
+                <h5>💡 문제 해설</h5>
+                <p>${explanation}</p>
+                ${hint ? `<p><strong>힌트:</strong> ${hint}</p>` : ''}
+            </div>
         </div>
         <div class="viz-controls">
             <button onclick="hideVisualization()">닫기</button>
@@ -738,11 +789,12 @@ function showVisualAid() {
     
     vizContainer.style.display = 'block';
     
-    // 시각적 설명 버튼 숨기기
     const visualBtn = document.getElementById('visual-aid-btn');
     if (visualBtn) {
         visualBtn.style.display = 'none';
     }
+    
+    console.log('시각적 설명 표시 완료');
 }
 
 // 시각화 숨기기
@@ -784,134 +836,16 @@ function extractMoleculeFromQuestion(questionText) {
     
     for (const [formula, name] of Object.entries(molecules)) {
         if (questionText.includes(formula) || questionText.includes(name)) {
-            return { formula: formula.replace(/[₀-₉]/g, match => String.fromCharCode(48 + match.charCodeAt(0) - 8304)), name };
+            return { 
+                formula: formula, 
+                name: name 
+            };
         }
     }
     
     return null;
 }
 
-// 시각적 설명 생성
-function generateVisualExplanation(molecule, question) {
-    if (!molecule) {
-        return `
-            <div class="explanation-section">
-                <h5>💡 개념 설명</h5>
-                <p>${question.explanation || '이 문제에 대한 추가 설명을 제공합니다.'}</p>
-                ${question.hint ? `<p><strong>힌트:</strong> ${question.hint}</p>` : ''}
-            </div>
-        `;
-    }
-    
-    const visualExplanations = {
-        'H₂O': `
-            <div class="molecule-display">
-                <h5>💧 물(H₂O) 분자</h5>
-                <div class="ascii-molecule">
-                    <pre>
-        H
-         \\
-          O -- H
-         /
-    (굽은형)
-                    </pre>
-                </div>
-                <ul>
-                    <li>🔗 산소와 수소가 <strong>공유결합</strong></li>
-                    <li>📐 결합각: 약 104.5°</li>
-                    <li>⚡ 극성 분자 (부분적 음전하와 양전하)</li>
-                    <li>🧊 수소결합으로 인한 높은 끓는점</li>
-                </ul>
-            </div>
-        `,
-        'CO₂': `
-            <div class="molecule-display">
-                <h5>💨 이산화탄소(CO₂) 분자</h5>
-                <div class="ascii-molecule">
-                    <pre>
-    O = C = O
-   (직선형)
-                    </pre>
-                </div>
-                <ul>
-                    <li>🔗 탄소와 산소가 <strong>이중결합</strong></li>
-                    <li>📐 결합각: 180° (직선형)</li>
-                    <li>⚖️ 무극성 분자 (대칭 구조)</li>
-                    <li>🌡️ 상온에서 기체</li>
-                </ul>
-            </div>
-        `,
-        'CH₄': `
-            <div class="molecule-display">
-                <h5>🔥 메탄(CH₄) 분자</h5>
-                <div class="ascii-molecule">
-                    <pre>
-        H
-        |
-    H - C - H
-        |
-        H
-   (정사면체)
-                    </pre>
-                </div>
-                <ul>
-                    <li>🔗 탄소와 수소가 <strong>단일결합</strong></li>
-                    <li>📐 결합각: 109.5° (정사면체)</li>
-                    <li>⚖️ 무극성 분자</li>
-                    <li>⛽ 천연가스의 주성분</li>
-                </ul>
-            </div>
-        `,
-        'NH₃': `
-            <div class="molecule-display">
-                <h5>🧪 암모니아(NH₃) 분자</h5>
-                <div class="ascii-molecule">
-                    <pre>
-      N
-     /|\\
-    H H H
-  (삼각뿔형)
-                    </pre>
-                </div>
-                <ul>
-                    <li>🔗 질소와 수소가 <strong>단일결합</strong></li>
-                    <li>📐 결합각: 약 107° (삼각뿔형)</li>
-                    <li>👥 비공유 전자쌍 1개</li>
-                    <li>⚡ 극성 분자</li>
-                </ul>
-            </div>
-        `,
-        'NaCl': `
-            <div class="molecule-display">
-                <h5>🧂 소금(NaCl)</h5>
-                <div class="ascii-molecule">
-                    <pre>
-    Na⁺  Cl⁻
-     \\  /
-      이온결합
-                    </pre>
-                </div>
-                <ul>
-                    <li>⚡ <strong>이온결합</strong> (정전기적 인력)</li>
-                    <li>➕ Na⁺ (나트륨 양이온)</li>
-                    <li>➖ Cl⁻ (염소 음이온)</li>
-                    <li>🔥 높은 녹는점 (801°C)</li>
-                    <li>💧 물에 잘 녹음</li>
-                </ul>
-            </div>
-        `
-    };
-    
-    const key = molecule.formula.includes('₂') ? molecule.formula : molecule.formula.replace(/2/g, '₂').replace(/3/g, '₃');
-    
-    return visualExplanations[key] || `
-        <div class="explanation-section">
-            <h5>📋 ${molecule.name}(${molecule.formula}) 설명</h5>
-            <p>${question.explanation || '이 화합물에 대한 자세한 정보를 준비 중입니다.'}</p>
-            ${question.hint ? `<p><strong>힌트:</strong> ${question.hint}</p>` : ''}
-        </div>
-    `;
-}
 
 // 향상된 피드백 표시
 function showEnhancedFeedback(enhancedFeedback) {
@@ -951,7 +885,8 @@ function showEnhancedFeedback(enhancedFeedback) {
 
 // 학습 대시보드 업데이트
 function updateLearningDashboard() {
-    if (learningSystem) {
+    // 동적 학습 시스템 비활성화로 인해 기본값 사용
+    if (false && learningSystem) {
         try {
             const report = learningSystem.generateProgressReport();
             
@@ -976,6 +911,22 @@ function updateLearningDashboard() {
         } catch (error) {
             console.warn('학습 대시보드 업데이트 실패:', error);
         }
+    } else {
+        // 기본값으로 대시보드 업데이트
+        const levelElement = document.getElementById('current-level');
+        if (levelElement) levelElement.textContent = '1';
+        
+        const accuracyElement = document.getElementById('current-accuracy');
+        if (accuracyElement) {
+            const accuracy = correctAnswers > 0 ? Math.round((correctAnswers / questionCount) * 100) : 0;
+            accuracyElement.textContent = `${accuracy}%`;
+        }
+        
+        const streakElement = document.getElementById('current-streak');
+        if (streakElement) streakElement.textContent = `연속 정답: ${score / 10}`;
+        
+        const weakElement = document.getElementById('weak-area');
+        if (weakElement) weakElement.textContent = '-';
     }
 }
 
@@ -1046,4 +997,393 @@ function resetPracticeTopic() {
         practiceHeader.textContent = '문제 풀어보기';
     }
     console.log('🔄 일반 문제풀이 모드로 전환');
+}
+
+// === 새로운 문제 유형 인터페이스 생성 함수들 ===
+
+// 매칭 문제 인터페이스
+function generateMatchingInterface(question) {
+    let html = '<div class="matching-container">';
+    html += '<div class="matching-instruction">왼쪽과 오른쪽을 연결선으로 매칭하세요</div>';
+    html += '<div class="matching-pairs">';
+    
+    // 왼쪽 항목들을 섞어서 표시
+    const leftItems = question.pairs.map((pair, index) => ({ ...pair, index }));
+    const rightItems = [...question.pairs].sort(() => Math.random() - 0.5);
+    
+    html += '<div class="left-items">';
+    leftItems.forEach((item, index) => {
+        html += `<div class="match-item left-item" data-index="${item.index}">${item.left}</div>`;
+    });
+    html += '</div>';
+    
+    html += '<div class="right-items">';
+    rightItems.forEach((item, index) => {
+        html += `<div class="match-item right-item" data-value="${item.right}">${item.right}</div>`;
+    });
+    html += '</div>';
+    
+    html += '</div>';
+    html += '<div class="matching-result"><p>매칭을 완성하면 여기에 결과가 표시됩니다.</p></div>';
+    html += '</div>';
+    
+    // 매칭 이벤트 리스너는 나중에 추가
+    setTimeout(() => initializeMatching(), 100);
+    
+    return html;
+}
+
+// 순서 배열 문제 인터페이스
+function generateSequenceInterface(question) {
+    let html = '<div class="sequence-container">';
+    html += '<div class="sequence-instruction">올바른 순서로 드래그하여 배열하세요</div>';
+    html += '<div class="sequence-items">';
+    
+    // 단계들을 섞어서 표시
+    const shuffledSteps = [...question.steps].sort(() => Math.random() - 0.5);
+    
+    shuffledSteps.forEach((step, index) => {
+        const originalIndex = question.steps.indexOf(step);
+        html += `<div class="sequence-item" data-original="${originalIndex}" draggable="true">${step}</div>`;
+    });
+    
+    html += '</div>';
+    html += '<div class="sequence-result">단계를 올바른 순서로 배열해주세요</div>';
+    html += '</div>';
+    
+    setTimeout(() => initializeSequence(), 100);
+    
+    return html;
+}
+
+// 드래그 앤 드롭 분류 문제 인터페이스
+function generateDragDropInterface(question) {
+    let html = '<div class="drag-drop-container">';
+    html += '<div class="drag-drop-instruction">아래 항목들을 올바른 그룹으로 드래그하세요</div>';
+    
+    html += '<div class="drag-items">';
+    question.items.forEach((item, index) => {
+        html += `<div class="drag-item" data-item="${item}" draggable="true">${item}</div>`;
+    });
+    html += '</div>';
+    
+    html += '<div class="drop-zones">';
+    Object.keys(question.categories).forEach(category => {
+        html += `<div class="drop-zone" data-category="${category}">
+            <h4>${category}</h4>
+            <div class="drop-area"></div>
+        </div>`;
+    });
+    html += '</div>';
+    
+    html += '</div>';
+    
+    setTimeout(() => initializeDragDrop(), 100);
+    
+    return html;
+}
+
+// === 새로운 문제 유형 이벤트 핸들러들 ===
+
+// 매칭 문제 초기화
+function initializeMatching() {
+    let selectedLeft = null;
+    let selectedRight = null;
+    let matches = [];
+    
+    const leftItems = document.querySelectorAll('.left-item');
+    const rightItems = document.querySelectorAll('.right-item');
+    const resultDiv = document.querySelector('.matching-result');
+    
+    // 왼쪽 항목 클릭 이벤트
+    leftItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // 이전 선택 해제
+            leftItems.forEach(li => li.classList.remove('selected'));
+            
+            // 현재 항목 선택
+            item.classList.add('selected');
+            selectedLeft = item;
+            
+            // 매칭 확인
+            checkMatching();
+        });
+    });
+    
+    // 오른쪽 항목 클릭 이벤트
+    rightItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // 이전 선택 해제
+            rightItems.forEach(ri => ri.classList.remove('selected'));
+            
+            // 현재 항목 선택
+            item.classList.add('selected');
+            selectedRight = item;
+            
+            // 매칭 확인
+            checkMatching();
+        });
+    });
+    
+    function checkMatching() {
+        if (selectedLeft && selectedRight) {
+            const leftIndex = parseInt(selectedLeft.dataset.index);
+            const rightValue = selectedRight.dataset.value;
+            
+            // 정답 확인 (pairs 배열에서 해당 인덱스의 right 값과 비교)
+            const correctPair = currentQuestion.pairs[leftIndex];
+            const isCorrect = correctPair.right === rightValue;
+            
+            if (isCorrect) {
+                // 정답일 때
+                selectedLeft.classList.add('success');
+                selectedRight.classList.add('success');
+                selectedLeft.style.pointerEvents = 'none';
+                selectedRight.style.pointerEvents = 'none';
+                
+                matches.push({ left: leftIndex, right: rightValue });
+                
+                // 모든 매칭 완료 확인
+                if (matches.length === currentQuestion.pairs.length) {
+                    resultDiv.innerHTML = '<p style="color: #28a745; font-weight: bold;">🎉 모든 매칭을 완료했습니다!</p>';
+                    
+                    // 자동으로 정답 처리
+                    setTimeout(() => {
+                        document.getElementById('answer-section').dataset.userAnswer = 'matching_complete';
+                        checkAnswer();
+                    }, 1000);
+                }
+            } else {
+                // 오답일 때
+                resultDiv.innerHTML = '<p style="color: #dc3545;">❌ 잘못된 매칭입니다. 다시 시도해보세요.</p>';
+                
+                // 선택 해제
+                setTimeout(() => {
+                    selectedLeft.classList.remove('selected');
+                    selectedRight.classList.remove('selected');
+                    selectedLeft = null;
+                    selectedRight = null;
+                    resultDiv.innerHTML = '<p>매칭을 완성하면 여기에 결과가 표시됩니다.</p>';
+                }, 1500);
+            }
+        }
+    }
+}
+
+// 순서 배열 문제 초기화
+function initializeSequence() {
+    const sequenceItems = document.querySelectorAll('.sequence-item');
+    const resultDiv = document.querySelector('.sequence-result');
+    let draggedElement = null;
+    
+    sequenceItems.forEach(item => {
+        // 드래그 시작
+        item.addEventListener('dragstart', (e) => {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        });
+        
+        // 드래그 종료
+        item.addEventListener('dragend', (e) => {
+            e.target.classList.remove('dragging');
+            checkSequenceOrder();
+        });
+        
+        // 드래그 오버
+        item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        });
+        
+        // 드롭
+        item.addEventListener('drop', (e) => {
+            e.preventDefault();
+            
+            if (draggedElement !== e.target) {
+                const container = e.target.parentNode;
+                const allItems = [...container.children];
+                
+                const draggedIndex = allItems.indexOf(draggedElement);
+                const targetIndex = allItems.indexOf(e.target);
+                
+                if (draggedIndex < targetIndex) {
+                    container.insertBefore(draggedElement, e.target.nextSibling);
+                } else {
+                    container.insertBefore(draggedElement, e.target);
+                }
+                
+                checkSequenceOrder();
+            }
+        });
+    });
+    
+    function checkSequenceOrder() {
+        const currentOrder = [...document.querySelectorAll('.sequence-item')].map(item => 
+            parseInt(item.dataset.original)
+        );
+        
+        const correctOrder = currentQuestion.steps.map((_, index) => index);
+        const isCorrect = JSON.stringify(currentOrder) === JSON.stringify(correctOrder);
+        
+        if (isCorrect) {
+            resultDiv.innerHTML = '<p style="color: #28a745; font-weight: bold;">🎉 올바른 순서입니다!</p>';
+            
+            // 자동으로 정답 처리
+            setTimeout(() => {
+                document.getElementById('answer-section').dataset.userAnswer = 'sequence_complete';
+                checkAnswer();
+            }, 1000);
+        } else {
+            resultDiv.innerHTML = '<p style="color: #6c757d;">순서를 조정해보세요...</p>';
+        }
+    }
+}
+
+// 드래그 앤 드롭 분류 문제 초기화
+function initializeDragDrop() {
+    const dragItems = document.querySelectorAll('.drag-item');
+    const dropAreas = document.querySelectorAll('.drop-area');
+    let completedItems = 0;
+    
+    dragItems.forEach(item => {
+        // 드래그 시작
+        item.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', e.target.dataset.item);
+            e.target.classList.add('dragging');
+        });
+        
+        // 드래그 종료
+        item.addEventListener('dragend', (e) => {
+            e.target.classList.remove('dragging');
+        });
+    });
+    
+    dropAreas.forEach(area => {
+        // 드래그 오버
+        area.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            area.classList.add('drag-over');
+        });
+        
+        // 드래그 리브
+        area.addEventListener('dragleave', (e) => {
+            area.classList.remove('drag-over');
+        });
+        
+        // 드롭
+        area.addEventListener('drop', (e) => {
+            e.preventDefault();
+            area.classList.remove('drag-over');
+            
+            const itemText = e.dataTransfer.getData('text/plain');
+            const category = area.parentNode.dataset.category;
+            
+            // 정답 확인
+            const correctCategory = currentQuestion.categories[category];
+            const isCorrect = correctCategory.includes(itemText);
+            
+            if (isCorrect) {
+                // 정답일 때 - 드래그된 항목을 드롭 영역으로 이동
+                const draggedItem = document.querySelector(`[data-item="${itemText}"]`);
+                if (draggedItem) {
+                    draggedItem.classList.add('success');
+                    draggedItem.draggable = false;
+                    area.appendChild(draggedItem);
+                    completedItems++;
+                    
+                    // 모든 항목이 완료되었는지 확인
+                    if (completedItems === currentQuestion.items.length) {
+                        setTimeout(() => {
+                            document.getElementById('answer-section').dataset.userAnswer = 'dragdrop_complete';
+                            checkAnswer();
+                        }, 1000);
+                    }
+                }
+            } else {
+                // 오답일 때 - 피드백 표시
+                const feedback = document.getElementById('feedback');
+                feedback.innerHTML = '<div class="wrong-feedback">❌ 올바른 그룹이 아닙니다!</div>';
+                setTimeout(() => {
+                    feedback.innerHTML = '';
+                }, 2000);
+            }
+        });
+    });
+}
+
+// 시뮬레이션 단계 활성화
+function activateStep(stepIndex) {
+    const steps = document.querySelectorAll('.simulation-step');
+    const stepButton = steps[stepIndex].querySelector('.step-button');
+    const resultDiv = document.querySelector('.simulation-result');
+    
+    // 버튼 상태 변경
+    stepButton.textContent = '완료';
+    stepButton.classList.add('activated');
+    stepButton.disabled = true;
+    
+    // 완료된 단계에 대한 피드백
+    if (currentQuestion && currentQuestion.stepFeedback && currentQuestion.stepFeedback[stepIndex]) {
+        resultDiv.innerHTML = `<p><strong>단계 ${stepIndex + 1} 완료:</strong> ${currentQuestion.stepFeedback[stepIndex]}</p>`;
+    } else {
+        resultDiv.innerHTML = `<p><strong>단계 ${stepIndex + 1}이 완료되었습니다.</strong> 다음 단계를 진행하세요.</p>`;
+    }
+    
+    // 모든 단계가 완료되었는지 확인
+    const completedSteps = document.querySelectorAll('.step-button.activated').length;
+    const totalSteps = currentQuestion.steps.length;
+    
+    if (completedSteps === totalSteps) {
+        resultDiv.innerHTML += '<p style="color: #28a745; font-weight: bold;">🎉 모든 실험 단계를 완료했습니다! 이제 관찰된 현상을 설명해주세요.</p>';
+    }
+}
+
+// 시뮬레이션 문제 인터페이스
+function generateSimulationInterface(question) {
+    let html = '<div class="simulation-container">';
+    html += `<div class="simulation-scenario">${question.scenario}</div>`;
+    html += '<div class="simulation-steps">';
+    
+    question.steps.forEach((step, index) => {
+        html += `<div class="simulation-step" data-step="${index}">
+            <span class="step-number">${index + 1}</span>
+            <span class="step-text">${step}</span>
+            <button class="step-button" onclick="activateStep(${index})">실행</button>
+        </div>`;
+    });
+    
+    html += '</div>';
+    html += '<div class="simulation-result">실험 단계를 순서대로 실행해보세요</div>';
+    html += '<textarea id="simulation-answer" placeholder="관찰된 현상을 설명해주세요" rows="3"></textarea>';
+    html += '</div>';
+    
+    return html;
+}
+
+// 드롭다운 빈칸 문제 인터페이스
+function generateFillDropdownInterface(question) {
+    let html = '<div class="fill-dropdown-container">';
+    html += `<div class="fill-question">${question.question.replace('___', '<select id="fill-dropdown">')}</select></div>`;
+    html += '<script>';
+    html += 'const dropdown = document.getElementById("fill-dropdown");';
+    question.options.forEach((option, index) => {
+        html += `dropdown.innerHTML += '<option value="${index}">${option}</option>';`;
+    });
+    html += '</script>';
+    html += '</div>';
+    
+    setTimeout(() => {
+        const dropdown = document.getElementById('fill-dropdown');
+        if (dropdown) {
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('option');
+                optionElement.value = index;
+                optionElement.textContent = option;
+                dropdown.appendChild(optionElement);
+            });
+        }
+    }, 100);
+    
+    return html;
 }

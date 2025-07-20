@@ -236,7 +236,11 @@ class DynamicLearningSystem {
         return {
             praise: praises[Math.floor(Math.random() * praises.length)],
             insight: insights[Math.floor(Math.random() * insights.length)],
-            reinforcement: this.generateConceptReinforcement(problem)
+            reinforcement: {
+                concept: problem.category || "기본 개념",
+                explanation: problem.explanation || "추가 설명이 필요합니다.",
+                examples: ["예시 1", "예시 2"]
+            }
         };
     }
     
@@ -659,7 +663,43 @@ class DynamicLearningSystem {
             ctx.fillText('H', pos.x, pos.y + 3);
         });
     }
+    
+    // === 누락된 함수들 구현 ===
+    
+    // 틀린 답변 분석
+    analyzeWrongAnswer(userAnswer, problem) {
+        return {
+            type: "개념 이해 부족",
+            description: "다시 한번 개념을 정리해보세요.",
+            suggestion: "관련 학습 자료를 복습하는 것이 도움이 될 것입니다."
+        };
+    }
+    
+    // 단계별 설명 생성
+    generateStepByStepExplanation(problem) {
+        return problem.explanation || "단계별 설명이 준비되지 않았습니다.";
+    }
+    
+    // 일반적인 실수 가져오기
+    getCommonMistakes(problem) {
+        return ["개념 혼동", "계산 실수", "문제 이해 부족"];
+    }
+    
+    // 연습 추천
+    recommendPractice(problem) {
+        return "비슷한 유형의 문제를 더 풀어보는 것을 추천합니다.";
+    }
+    
+    // 개념 강화 생성
+    generateConceptReinforcement(problem) {
+        return {
+            concept: problem.category || "기본 개념",
+            explanation: problem.explanation || "추가 설명이 필요합니다.",
+            examples: ["예시 1", "예시 2"]
+        };
+    }
 }
 
-// 전역 인스턴스 생성
-window.dynamicLearning = new DynamicLearningSystem();
+// 전역 인스턴스 생성 (임시 비활성화)
+// window.dynamicLearning = new DynamicLearningSystem();
+console.log('enhanced-learning.js 로드됨 (비활성화 상태)');

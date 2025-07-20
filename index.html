@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>화학 학습 프로그램 - 공유결합과 이온화합물</title>
+    <title>화학 학습 프로그램 - 공유결합과 이온화합물 v2.0</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="enhanced-styles.css">
     <link rel="stylesheet" href="dynamic-learning-styles.css">
+    <link rel="stylesheet" href="interactive-problems.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2196F3">
     <meta name="mobile-web-app-capable" content="yes">
@@ -120,7 +121,7 @@
                         <button id="submit-btn" class="submit-btn" onclick="checkAnswer()">정답 확인</button>
                         <button id="next-btn" class="next-btn" onclick="loadNextQuestion()" style="display:none;">다음 문제</button>
                         <button id="hint-btn" class="hint-btn" onclick="showSmartHint()">스마트 힌트</button>
-                        <button id="visual-aid-btn" class="visual-btn" onclick="showVisualAid()" style="display:none;">시각적 설명</button>
+                        <button id="visual-aid-btn" class="visual-btn" onclick="showSimpleVisualAid()" style="display:none !important;">시각적 설명</button>
                     </div>
                     
                     <div id="feedback" class="feedback"></div>
@@ -137,7 +138,7 @@
                         <h4>분자 구조 시각화</h4>
                         <canvas id="molecule-display" width="400" height="300"></canvas>
                         <div class="viz-controls">
-                            <button onclick="hideVisualization()">닫기</button>
+                            <button onclick="hideVisualExplanation()">닫기</button>
                         </div>
                     </div>
                 </div>
@@ -193,25 +194,72 @@
     <!-- 분자 시각화를 위한 캔버스 -->
     <canvas id="molecule-canvas" style="display:none;"></canvas>
     
-    <script src="app.js"></script>
-    <script src="problems.js"></script>
-    <script src="content.js"></script>
-    <script src="molecule-viewer.js"></script>
-    <script src="enhanced-problems.js"></script>
-    <script src="gamification.js"></script>
-    <script src="enhanced-learning.js"></script>
+    <script src="app.js?v=6"></script>
+    <script src="problems.js?v=6"></script>
+    <script src="content.js?v=6"></script>
+    <script src="molecule-viewer.js?v=6"></script>
+    <script src="enhanced-problems.js?v=6"></script>
+    <script src="gamification.js?v=6"></script>
+    <!-- enhanced-learning.js 완전 비활성화 -->
+    <script src="visual-aid.js?v=6"></script>
     
-    <!-- Service Worker 등록 -->
+    <!-- 인라인 시각적 설명 함수 -->
     <script>
+        function showSimpleVisualAid() {
+            console.log('간단한 시각적 설명 호출됨');
+            
+            const container = document.getElementById('molecule-visualization');
+            if (!container) {
+                alert('시각화 영역을 찾을 수 없습니다.');
+                return;
+            }
+            
+            let explanation = '이 문제에 대한 추가 설명입니다.';
+            let hint = '';
+            
+            if (window.currentQuestion) {
+                explanation = window.currentQuestion.explanation || explanation;
+                hint = window.currentQuestion.hint || '';
+            }
+            
+            container.innerHTML = `
+                <h4>🔬 시각적 설명</h4>
+                <div class="visual-content">
+                    <div class="explanation-section">
+                        <h5>💡 문제 해설</h5>
+                        <p>${explanation}</p>
+                        ${hint ? `<p><strong>힌트:</strong> ${hint}</p>` : ''}
+                    </div>
+                </div>
+                <div class="viz-controls">
+                    <button onclick="hideSimpleVisualAid()">닫기</button>
+                </div>
+            `;
+            
+            container.style.display = 'block';
+            
+            const btn = document.getElementById('visual-aid-btn');
+            if (btn) btn.style.display = 'none';
+        }
+        
+        function hideSimpleVisualAid() {
+            const container = document.getElementById('molecule-visualization');
+            if (container) container.style.display = 'none';
+            
+            const btn = document.getElementById('visual-aid-btn');
+            if (btn) btn.style.display = 'inline-block';
+        }
+    </script>
+
+    <!-- Service Worker 제거 스크립트 -->
+    <script>
+        // 기존 Service Worker 등록 해제
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('Service Worker 등록 성공:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.error('Service Worker 등록 실패:', error);
-                    });
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                    console.log('Service Worker 등록 해제됨');
+                }
             });
         }
     </script>
