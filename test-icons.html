@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이콘 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .icon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
+        .icon-item { text-align: center; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+        .icon-item img { max-width: 100px; max-height: 100px; }
+        .topic-images { margin-top: 40px; }
+        .topic-images img { max-width: 200px; height: 150px; margin: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>아이콘 테스트 페이지</h1>
+    
+    <h2>PWA 아이콘들</h2>
+    <div class="icon-grid">
+        <div class="icon-item">
+            <img src="/icon-72.svg" alt="72x72">
+            <p>72x72</p>
+        </div>
+        <div class="icon-item">
+            <img src="/icon-96.svg" alt="96x96">
+            <p>96x96</p>
+        </div>
+        <div class="icon-item">
+            <img src="/icon-128.svg" alt="128x128">
+            <p>128x128</p>
+        </div>
+        <div class="icon-item">
+            <img src="/icon-192.svg" alt="192x192">
+            <p>192x192</p>
+        </div>
+    </div>
+
+    <h2>알림 아이콘들</h2>
+    <div class="icon-grid">
+        <div class="icon-item">
+            <img src="/badge-72.svg" alt="Badge">
+            <p>Badge</p>
+        </div>
+        <div class="icon-item">
+            <img src="/checkmark.svg" alt="Checkmark">
+            <p>Checkmark</p>
+        </div>
+        <div class="icon-item">
+            <img src="/xmark.svg" alt="X Mark">
+            <p>X Mark</p>
+        </div>
+    </div>
+
+    <h2>화학 주제 이미지들</h2>
+    <div class="topic-images">
+        <img src="/covalent-bonds.svg" alt="공유결합">
+        <img src="/ionic-compounds.svg" alt="이온화합물">
+        <img src="/molecular-structure.svg" alt="분자구조">
+        <img src="/bond-strength.svg" alt="결합세기">
+    </div>
+
+    <script>
+        // 이미지 로드 에러 처리
+        document.querySelectorAll('img').forEach(img => {
+            img.onerror = function() {
+                this.style.border = '2px solid red';
+                this.alt = '로드 실패: ' + this.src;
+            };
+            img.onload = function() {
+                this.style.border = '2px solid green';
+            };
+        });
+    </script>
+</body>
+</html>

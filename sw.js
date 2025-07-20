@@ -1,5 +1,5 @@
 // Service Worker for offline support
-const CACHE_NAME = 'chemistry-app-v1';
+const CACHE_NAME = 'chemistry-app-v2';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -10,14 +10,19 @@ const urlsToCache = [
     '/molecule-viewer.js',
     '/enhanced-problems.js',
     '/gamification.js',
+    '/enhanced-styles.css',
     '/api/progress.json',
     // 폰트 및 아이콘
     'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap',
-    // 플레이스홀더 이미지들
-    'https://via.placeholder.com/200x150/4CAF50/FFFFFF?text=공유결합',
-    'https://via.placeholder.com/200x150/2196F3/FFFFFF?text=이온화합물',
-    'https://via.placeholder.com/200x150/FF9800/FFFFFF?text=분자구조',
-    'https://via.placeholder.com/200x150/9C27B0/FFFFFF?text=결합세기'
+    // 아이콘 및 이미지
+    '/icon-192.svg',
+    '/badge-72.svg',
+    '/checkmark.svg',
+    '/xmark.svg',
+    '/covalent-bonds.svg',
+    '/ionic-compounds.svg',
+    '/molecular-structure.svg',
+    '/bond-strength.svg'
 ];
 
 // 설치 이벤트
@@ -143,8 +148,8 @@ async function syncProgress() {
 self.addEventListener('push', event => {
     const options = {
         body: event.data ? event.data.text() : '새로운 화학 문제가 준비되었습니다!',
-        icon: '/icon-192.png',
-        badge: '/badge-72.png',
+        icon: '/icon-192.svg',
+        badge: '/badge-72.svg',
         vibrate: [100, 50, 100],
         data: {
             dateOfArrival: Date.now(),
@@ -154,12 +159,12 @@ self.addEventListener('push', event => {
             {
                 action: 'explore',
                 title: '학습하기',
-                icon: '/checkmark.png'
+                icon: '/checkmark.svg'
             },
             {
                 action: 'close',
                 title: '닫기',
-                icon: '/xmark.png'
+                icon: '/xmark.svg'
             }
         ]
     };
