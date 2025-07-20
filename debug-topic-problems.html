@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>주제별 문제 분석</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .topic-section { margin: 20px 0; padding: 15px; border: 2px solid #ddd; border-radius: 8px; }
+        .problem-list { margin: 10px 0; }
+        .problem-item { padding: 8px; margin: 5px 0; background: #f5f5f5; border-radius: 4px; }
+        .category-info { font-weight: bold; color: #2196F3; }
+        .problem-count { background: #4CAF50; color: white; padding: 4px 8px; border-radius: 12px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>주제별 문제 분석</h1>
+    <p>각 주제별로 어떤 문제들이 포함되는지 확인합니다.</p>
+    
+    <div id="analysis-results"></div>
+    
+    <script src="problems.js"></script>
+    <script>
+        function analyzeTopicProblems() {
+            const results = document.getElementById('analysis-results');
+            const difficulties = ['easy', 'medium', 'hard'];
+            const topics = ['covalent', 'ionic', 'molecular', 'bonding'];
+            
+            topics.forEach(topic => {
+                const topicDiv = document.createElement('div');
+                topicDiv.className = 'topic-section';
+                topicDiv.innerHTML = `<h2>🔍 ${topic.toUpperCase()} 주제 분석</h2>`;
+                
+                difficulties.forEach(difficulty => {
+                    const templates = problemTemplates[difficulty];
+                    
+                    // 주제 매핑
+                    const topicMapping = {
+                        'covalent': ['covalent', 'basic-concepts'],
+                        'ionic': ['ionic'],
+                        'molecular': ['molecular', 'advanced-concepts'],
+                        'bonding': ['bonding', 'reactions']
+                    };
+                    
+                    const allowedCategories = topicMapping[topic] || [topic];
+                    const topicTemplates = templates.filter(t => allowedCategories.includes(t.category));
+                    
+                    const difficultyDiv = document.createElement('div');
+                    difficultyDiv.innerHTML = `
+                        <h3>${difficulty} 난이도 <span class="problem-count">${topicTemplates.reduce((sum, cat) => sum + cat.templates.length, 0)}개 문제</span></h3>
+                        <p class="category-info">포함 카테고리: ${allowedCategories.join(', ')}</p>
+                    `;
+                    
+                    const problemList = document.createElement('div');
+                    problemList.className = 'problem-list';
+                    
+                    topicTemplates.forEach(category => {
+                        category.templates.forEach((problem, index) => {
+                            const problemDiv = document.createElement('div');
+                            problemDiv.className = 'problem-item';
+                            problemDiv.innerHTML = `
+                                <strong>[${category.category}]</strong> ${problem.question.substring(0, 80)}...
+                            `;
+                            problemList.appendChild(problemDiv);
+                        });
+                    });
+                    
+                    difficultyDiv.appendChild(problemList);
+                    topicDiv.appendChild(difficultyDiv);
+                });
+                
+                results.appendChild(topicDiv);
+            });
+        }
+        
+        // 분석 실행
+        analyzeTopicProblems();
+    </script>
+</body>
+</html>

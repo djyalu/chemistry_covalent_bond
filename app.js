@@ -6,6 +6,7 @@ let correctAnswers = 0;
 let startTime = Date.now();
 let hintAttempts = 0;
 let learningSystem = null;
+let currentPracticeTopic = null; // 현재 연습 중인 주제
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,6 +24,27 @@ document.addEventListener('DOMContentLoaded', () => {
             switchSection(e.target.dataset.section);
         });
     });
+
+    // 난이도 선택 이벤트 리스너 추가
+    const difficultySelect = document.getElementById('difficulty');
+    if (difficultySelect) {
+        difficultySelect.addEventListener('change', (e) => {
+            const newDifficulty = e.target.value;
+            console.log(`난이도 변경: ${newDifficulty}`);
+            
+            // 현재 practice 섹션이 활성화되어 있으면 새 문제 로드
+            const practiceSection = document.getElementById('practice');
+            if (practiceSection && practiceSection.classList.contains('active')) {
+                // 난이도 표시 업데이트
+                updateDifficultyDisplay(newDifficulty);
+                
+                // 새로운 난이도로 문제 로드
+                setTimeout(() => {
+                    loadNextQuestion();
+                }, 100);
+            }
+        });
+    }
 
     // 진도 데이터 로드
     loadProgress();
@@ -68,6 +90,133 @@ function showTopic(topicId) {
     topicContent.scrollIntoView({ behavior: 'smooth' });
 }
 
+// 주제별 문제풀이 시작
+function startTopicPractice(topic) {
+    // 현재 주제 설정
+    currentPracticeTopic = topic;
+    
+    // practice 섹션으로 전환
+    switchSection('practice');
+    
+    // 주제별 메시지 표시
+    const topicNames = {
+        'covalent': '공유결합',
+        'ionic': '이온화합물', 
+        'molecular': '분자구조',
+        'bonding': '결합세기'
+    };
+    
+    // 섹션 제목 업데이트
+    setTimeout(() => {
+        const practiceHeader = document.querySelector('#practice .practice-header h2');
+        if (practiceHeader) {
+            practiceHeader.textContent = `${topicNames[topic]} 문제 풀어보기`;
+        }
+        
+        // 주제별 문제 로드
+        loadTopicQuestion(topic);
+    }, 100);
+}
+
+// 주제별 문제 로드
+function loadTopicQuestion(topic) {
+    const questionContent = document.getElementById('question-content');
+    const answerSection = document.getElementById('answer-section');
+    const questionNumber = document.getElementById('question-number');
+    
+    if (!questionContent || !answerSection) {
+        console.error('필수 DOM 요소를 찾을 수 없습니다.');
+        return;
+    }
+    
+    questionCount++;
+    hintAttempts = 0;
+    
+    try {
+        // 주제별 문제 생성
+        currentQuestion = generateTopicProblem(topic, 'medium');
+        
+        // 주제별 문제가 없으면 일반 문제 생성
+        if (!currentQuestion) {
+            console.warn(`${topic} 주제 문제가 없어서 일반 문제로 대체합니다.`);
+            currentQuestion = generateProblem('medium');
+        }
+        
+        if (!currentQuestion) {
+            questionContent.innerHTML = '문제를 불러올 수 없습니다.';
+            return;
+        }
+        
+        displayQuestion();
+        
+    } catch (error) {
+        console.error('주제별 문제 로드 오류:', error);
+        questionContent.innerHTML = '문제 로드 중 오류가 발생했습니다.';
+    }
+}
+
+// 문제 표시 공통 함수
+function displayQuestion() {
+    if (!currentQuestion) return;
+    
+    const questionContent = document.getElementById('question-content');
+    const answerSection = document.getElementById('answer-section');
+    const questionNumber = document.getElementById('question-number');
+    
+    // 문제 번호 업데이트
+    questionNumber.textContent = `문제 ${questionCount}`;
+    
+    // 문제 내용 표시
+    if (currentQuestion.isTargeted) {
+        questionContent.innerHTML = `
+            <div class="targeted-question-banner">
+                🎯 ${currentQuestion.targetReason}
+            </div>
+            <h3>${currentQuestion.question}</h3>
+        `;
+    } else {
+        questionContent.innerHTML = `<h3>${currentQuestion.question}</h3>`;
+    }
+    
+    // 답변 섹션 생성
+    let answerHTML = '';
+    
+    if (currentQuestion.type === 'multiple-choice') {
+        answerHTML = '<div class="options">';
+        currentQuestion.options.forEach((option, index) => {
+            answerHTML += `
+                <label class="option">
+                    <input type="radio" name="answer" value="${index}">
+                    ${option}
+                </label>
+            `;
+        });
+        answerHTML += '</div>';
+        
+    } else if (currentQuestion.type === 'short-answer') {
+        answerHTML = '<input type="text" id="answer-input" placeholder="답을 입력하세요">';
+        
+    } else if (currentQuestion.type === 'fill-blank') {
+        answerHTML = '<input type="text" id="answer-input" placeholder="빈칸에 들어갈 내용을 입력하세요">';
+        
+    } else {
+        answerHTML = '<input type="text" id="answer-input" placeholder="답을 입력하세요">';
+    }
+    
+    answerSection.innerHTML = answerHTML;
+    
+    // 버튼 상태 초기화
+    document.getElementById('submit-btn').style.display = 'inline-block';
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('feedback').innerHTML = '';
+    
+    // 향상된 피드백 영역 숨기기
+    const enhancedFeedback = document.getElementById('enhanced-feedback');
+    if (enhancedFeedback) {
+        enhancedFeedback.style.display = 'none';
+    }
+}
+
 // 문제 로드
 function loadNextQuestion() {
     // DOM 요소들이 존재하는지 확인
@@ -84,21 +233,32 @@ function loadNextQuestion() {
     hintAttempts = 0; // 힌트 시도 횟수 초기화
     
     try {
-        // 스마트 문제 생성 (동적 학습 시스템 사용)
-        if (learningSystem && typeof learningSystem.generateSmartProblem === 'function') {
-            try {
-                currentQuestion = learningSystem.generateSmartProblem();
-            } catch (learningError) {
-                console.warn('스마트 문제 생성 실패, 기본 문제 생성으로 전환:', learningError);
-                currentQuestion = null;
-            }
-        }
+        // 사용자 선택 난이도 가져오기
+        const difficultyElement = document.getElementById('difficulty');
+        const userSelectedDifficulty = difficultyElement ? difficultyElement.value : 'medium';
         
-        // 스마트 문제 생성에 실패했거나 시스템이 없으면 기본 문제 생성
-        if (!currentQuestion) {
-            const difficultyElement = document.getElementById('difficulty');
-            const difficulty = difficultyElement ? difficultyElement.value : 'medium';
-            currentQuestion = generateProblem(difficulty);
+        // 주제별 문제풀이인 경우
+        if (currentPracticeTopic) {
+            currentQuestion = generateTopicProblem(currentPracticeTopic, userSelectedDifficulty);
+        }
+        // 일반 문제풀이인 경우
+        else {
+            // 스마트 문제 생성 (사용자 선택 난이도 반영)
+            if (learningSystem && typeof learningSystem.generateSmartProblem === 'function') {
+                try {
+                    // 학습 시스템에 사용자 선택 난이도 적용
+                    learningSystem.adaptiveDifficulty = userSelectedDifficulty;
+                    currentQuestion = learningSystem.generateSmartProblem();
+                } catch (learningError) {
+                    console.warn('스마트 문제 생성 실패, 기본 문제 생성으로 전환:', learningError);
+                    currentQuestion = null;
+                }
+            }
+            
+            // 스마트 문제 생성에 실패했거나 시스템이 없으면 기본 문제 생성
+            if (!currentQuestion) {
+                currentQuestion = generateProblem(userSelectedDifficulty);
+            }
         }
         
         // 디버깅: 문제 데이터 검증
@@ -494,22 +654,41 @@ function showSmartHint() {
 
 // 시각적 설명 표시
 function showVisualAid() {
-    if (!currentQuestion) return;
+    if (!currentQuestion) {
+        alert('현재 문제가 없습니다.');
+        return;
+    }
     
-    const vizContainer = document.getElementById('molecule-visualization');
-    if (vizContainer) {
-        vizContainer.style.display = 'block';
-        
-        // 분자 시각화 표시
-        if (learningSystem && typeof learningSystem.showMolecularVisualization === 'function') {
-            try {
-                // 문제에서 분자 정보 추출
-                const moleculeFormula = extractMoleculeFromQuestion(currentQuestion.question);
-                learningSystem.showMolecularVisualization(moleculeFormula);
-            } catch (error) {
-                console.warn('분자 시각화 실패:', error);
-            }
-        }
+    // 시각적 설명 컨테이너 찾기
+    let vizContainer = document.getElementById('molecule-visualization');
+    if (!vizContainer) {
+        console.warn('molecule-visualization 요소를 찾을 수 없습니다.');
+        return;
+    }
+    
+    // 문제에서 분자/화합물 추출
+    const molecule = extractMoleculeFromQuestion(currentQuestion.question);
+    
+    // 시각적 설명 콘텐츠 생성
+    const visualContent = generateVisualExplanation(molecule, currentQuestion);
+    
+    // 시각적 설명 표시
+    vizContainer.innerHTML = `
+        <h4>🔬 시각적 설명</h4>
+        <div class="visual-content">
+            ${visualContent}
+        </div>
+        <div class="viz-controls">
+            <button onclick="hideVisualization()">닫기</button>
+        </div>
+    `;
+    
+    vizContainer.style.display = 'block';
+    
+    // 시각적 설명 버튼 숨기기
+    const visualBtn = document.getElementById('visual-aid-btn');
+    if (visualBtn) {
+        visualBtn.style.display = 'none';
     }
 }
 
@@ -628,4 +807,30 @@ function extractMoleculeFromQuestion(question) {
         }
     }
     return 'H2O'; // 기본값
+}
+
+// 난이도 표시 업데이트
+function updateDifficultyDisplay(difficulty) {
+    const difficultyElement = document.getElementById('adaptive-difficulty');
+    if (difficultyElement) {
+        const difficultyNames = {
+            'easy': '쉬움 📗',
+            'medium': '보통 📘', 
+            'hard': '어려움 📕'
+        };
+        difficultyElement.textContent = `선택된 난이도: ${difficultyNames[difficulty] || difficulty}`;
+    }
+    
+    // 콘솔에 난이도 변경 로그
+    console.log(`🎯 난이도 업데이트: ${difficulty}`);
+}
+
+// 현재 주제 초기화 (일반 문제풀이로 전환)
+function resetPracticeTopic() {
+    currentPracticeTopic = null;
+    const practiceHeader = document.querySelector('#practice .practice-header h2');
+    if (practiceHeader) {
+        practiceHeader.textContent = '문제 풀어보기';
+    }
+    console.log('🔄 일반 문제풀이 모드로 전환');
 }

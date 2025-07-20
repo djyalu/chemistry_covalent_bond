@@ -76,7 +76,7 @@ const topicContents = {
             </div>
             
             <div class="quiz-prompt">
-                <p>학습을 마쳤나요? <button onclick="switchSection('practice')">문제 풀어보기 →</button></p>
+                <p>학습을 마쳤나요? <button onclick="startTopicPractice('covalent')">공유결합 문제 풀어보기 →</button></p>
             </div>
         </div>
     `,
@@ -155,7 +155,7 @@ const topicContents = {
             </div>
             
             <div class="quiz-prompt">
-                <p>학습을 마쳤나요? <button onclick="switchSection('practice')">문제 풀어보기 →</button></p>
+                <p>학습을 마쳤나요? <button onclick="startTopicPractice('ionic')">이온화합물 문제 풀어보기 →</button></p>
             </div>
         </div>
     `,
@@ -248,7 +248,7 @@ const topicContents = {
             </div>
             
             <div class="quiz-prompt">
-                <p>학습을 마쳤나요? <button onclick="switchSection('practice')">문제 풀어보기 →</button></p>
+                <p>학습을 마쳤나요? <button onclick="startTopicPractice('molecular')">분자구조 문제 풀어보기 →</button></p>
             </div>
         </div>
     `,
@@ -355,7 +355,7 @@ const topicContents = {
             </div>
             
             <div class="quiz-prompt">
-                <p>학습을 마쳤나요? <button onclick="switchSection('practice')">문제 풀어보기 →</button></p>
+                <p>학습을 마쳤나요? <button onclick="startTopicPractice('bonding')">결합세기 문제 풀어보기 →</button></p>
             </div>
         </div>
     `

@@ -354,18 +354,95 @@ function shuffleOptions(problem) {
     return problem;
 }
 
-// 특정 주제의 문제 생성
+// 주제별 중복 방지를 위한 사용된 문제 추적
+const usedTopicProblems = {};
+
+// 특정 주제의 문제 생성 (개선됨)
 function generateTopicProblem(topic, difficulty) {
     const templates = problemTemplates[difficulty];
-    const topicTemplates = templates.filter(t => t.category === topic);
+    
+    // 주제 매핑 (각 주제별 카테고리 명확히 구분)
+    const topicMapping = {
+        'covalent': ['covalent'],
+        'ionic': ['ionic'], 
+        'molecular': ['molecular'],
+        'bonding': ['bonding', 'reactions']
+    };
+    
+    const allowedCategories = topicMapping[topic] || [topic];
+    const topicTemplates = templates.filter(t => allowedCategories.includes(t.category));
+    
+    // 디버깅 로그
+    console.log(`주제: ${topic}, 난이도: ${difficulty}`);
+    console.log(`허용된 카테고리:`, allowedCategories);
+    console.log(`찾은 템플릿 개수: ${topicTemplates.length}`);
+    console.log(`템플릿 카테고리들:`, topicTemplates.map(t => t.category));
     
     if (topicTemplates.length === 0) {
-        return generateProblem(difficulty); // 폴백
+        console.warn(`주제 '${topic}'에 대한 문제가 없습니다. 일반 문제로 대체합니다.`);
+        return generateUniqueQuestion(difficulty); // 폴백
     }
     
-    const template = topicTemplates[0];
-    const problemIndex = Math.floor(Math.random() * template.templates.length);
-    return { ...template.templates[problemIndex] };
+    // 중복 방지 키 생성
+    const topicKey = `${topic}_${difficulty}`;
+    if (!usedTopicProblems[topicKey]) {
+        usedTopicProblems[topicKey] = new Set();
+    }
+    
+    // 모든 주제별 문제를 다 사용했으면 초기화
+    const totalTopicQuestions = topicTemplates.reduce((sum, cat) => sum + cat.templates.length, 0);
+    if (usedTopicProblems[topicKey].size >= totalTopicQuestions) {
+        usedTopicProblems[topicKey].clear();
+        console.log(`${topic} 주제 문제 풀이 완료 - 주제별 문제 기록 초기화`);
+    }
+    
+    // 사용하지 않은 주제별 문제 찾기
+    let attempts = 0;
+    let problem = null;
+    
+    while (attempts < 30) {
+        const categoryIndex = Math.floor(Math.random() * topicTemplates.length);
+        const category = topicTemplates[categoryIndex];
+        const problemIndex = Math.floor(Math.random() * category.templates.length);
+        
+        const problemId = `${category.category}_${problemIndex}`;
+        
+        if (!usedTopicProblems[topicKey].has(problemId)) {
+            problem = { ...category.templates[problemIndex] };
+            problem.points = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 20 : 30;
+            problem.id = Date.now();
+            problem.uniqueId = problemId;
+            problem.topicFocused = true; // 주제 특화 문제임을 표시
+            
+            // 선택지 섞기
+            if (problem.type === 'multiple-choice') {
+                problem = shuffleOptions(problem);
+            }
+            
+            // 사용된 문제로 기록
+            usedTopicProblems[topicKey].add(problemId);
+            break;
+        }
+        
+        attempts++;
+    }
+    
+    // 찾지 못했으면 일반 문제 생성
+    if (!problem) {
+        console.warn(`${topic} 주제의 새로운 문제를 찾지 못해 일반 문제로 대체합니다.`);
+        return generateUniqueQuestion(difficulty);
+    }
+    
+    return problem;
+}
+
+// 주제별 문제 기록 초기화
+function resetTopicProblems(topic) {
+    Object.keys(usedTopicProblems).forEach(key => {
+        if (key.startsWith(topic + '_')) {
+            usedTopicProblems[key].clear();
+        }
+    });
 }
 
 // 문제 풀이 통계
@@ -570,7 +647,9 @@ function generateUniqueQuestion(difficulty) {
 
 // 전역 함수로 내보내기
 window.generateProblem = generateUniqueQuestion; // 중복 방지 버전 사용
-window.generateTopicProblem = generateTopicProblem;
+window.generateTopicProblem = generateTopicProblem; // 개선된 주제별 문제 생성
 window.problemStats = problemStats;
 window.resetUsedProblems = resetUsedProblems;
+window.resetTopicProblems = resetTopicProblems;
 window.usedProblems = usedProblems;
+window.usedTopicProblems = usedTopicProblems;
