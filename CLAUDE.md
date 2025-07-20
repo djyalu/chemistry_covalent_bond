@@ -1,49 +1,67 @@
-# Chemistry Learning Program - 개발 가이드
+# Chemistry Learning Program - CLAUDE.md
 
 ## 프로젝트 개요
-중학생을 위한 화학 학습 프로그램 - 공유결합과 이온화합물
+중학생을 위한 화학 학습 프로그램 (공유결합과 이온화합물)
 
-## 현재 상태 (2025-01-20)
-- 기본 학습 콘텐츠 구현 완료
-- 문제풀기 시스템 구현 완료
-- 주제별 문제풀이 기능 구현 완료
-- 중복 문제 방지 시스템 구현 완료
-- 시각적 설명 기능 비활성화됨
-- enhanced-learning.js 동적 학습 시스템 비활성화됨
+## 현재 상태 (2025-07-20)
 
-## 핵심 파일들
-- `index.html`: 메인 HTML 구조
-- `app.js`: 핵심 애플리케이션 로직
-- `problems.js`: 문제 생성 및 관리
-- `content.js`: 학습 콘텐츠 데이터
-- `styles.css`: 기본 스타일링
+### ✅ 완료된 기능
+1. **인터랙티브 문제 유형 구현**
+   - 매칭 문제 (matching)
+   - 순서 배열 문제 (sequence)
+   - 드래그앤드롭 분류 (drag-drop)
+   - 시뮬레이션 문제 (simulation)
+   - 드롭다운 빈칸 문제 (fill-dropdown)
 
-## 중요 기능들
-1. **문제풀기 시스템**: 정상 작동 중
-2. **주제별 문제풀이**: `startTopicPractice(topic)` 함수로 구현
-3. **중복 방지**: `usedProblems` Set으로 관리
-4. **난이도 선택**: 사용자가 직접 선택 가능
+2. **문제풀기 정답확인 버그 수정**
+   - enhanced-learning.js 에러 해결
+   - learningSystem 비활성화
+   - 기본 피드백 시스템 정상 작동
 
-## 비활성화된 기능들
-- 시각적 설명 버튼 (에러 발생으로 인해 숨김 처리)
-- enhanced-learning.js 동적 학습 시스템 (함수 누락 에러로 인해 비활성화)
+3. **학습 컨텐츠**
+   - 공유결합, 이온화합물, 분자구조, 결합의 세기
+   - 총 25개 이상 문제 구현
 
-## 개발 규칙
-1. 기존에 정상 작동하는 기능은 수정하지 말 것
-2. 에러 발생 시 기능 비활성화를 통한 안정성 우선
-3. 브라우저 캐시 문제 방지를 위해 버전 파라미터 사용
-4. GitHub 배포 시 checkpoint 기록
+### 🔧 기술 스택
+- 순수 JavaScript (프레임워크 없음)
+- HTML5, CSS3
+- 로컬 스토리지 활용
+- Service Worker 비활성화 상태
 
-## 현재 해결해야 할 문제
-- ~~enhanced-learning.js 에러 완전 제거~~ ✅ 해결됨 (2025-01-20)
-- ~~브라우저 캐시 문제 해결~~ ✅ 해결됨 (2025-01-20)
+### ⚠️ 주의사항
+1. **enhanced-learning.js 비활성화 상태 유지**
+   - HTML에서 주석 처리됨
+   - window.dynamicLearning 인스턴스 생성 비활성화
 
-## 최근 변경사항 (2025-01-20)
-- enhanced-learning.js 파일 로드 비활성화로 에러 해결
-- 모든 JS 파일에 버전 파라미터(v=6) 추가하여 캐시 문제 해결
-- 시각적 설명 버튼 완전 비활성화
-- Service Worker 등록 해제 코드 추가
-- 핵심 문제풀기 기능은 모두 정상 작동 중
+2. **테스트 시 캐시 문제**
+   - 버전 번호 업데이트 필요 (현재 v6)
+   - 브라우저 캐시 강제 새로고침 필요
 
-## Git Checkpoint
-- Commit: 34734c3 - Fix enhanced-learning.js errors and stabilize core functionality
+### 📝 TODO
+- [ ] 학습 컨텐츠 확장 (실험 시뮬레이션, 애니메이션)
+- [ ] 문제 은행 확대 (각 주제별 50개 이상)
+- [ ] 3D 분자 모델링
+- [ ] 화학반응 시뮬레이션
+
+### 🚀 실행 방법
+```bash
+# 로컬 서버 실행
+python3 -m http.server 8080
+
+# 브라우저에서 접속
+http://localhost:8080
+```
+
+### 📌 최근 변경사항
+- 2025-07-20: 인터랙티브 문제 유형 구현 완료
+- 2025-07-20: enhanced-learning.js 에러 해결
+- 2025-07-20: 문제풀기 정답확인 기능 정상화
+
+### 🐛 알려진 이슈
+- Service Worker 관련 경고 (비활성화됨)
+- 시각적 설명 버튼 비활성화 상태
+
+### 💻 개발 환경
+- Windows WSL2
+- Python 3.12
+- Claude Code
