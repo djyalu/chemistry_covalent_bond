@@ -3,107 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문제 풀기 디버그 테스트</title>
+    <title>문제풀기 디버그 테스트</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .debug-info { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
-        .error { color: red; }
-        .success { color: green; }
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .nav-btn { padding: 10px 20px; margin: 5px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .nav-btn.active { background: #1976D2; }
+        .question-content { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .answer-section { margin: 15px 0; }
+        button { padding: 8px 16px; margin: 5px; border: none; border-radius: 3px; cursor: pointer; }
+        .submit-btn { background: #4CAF50; color: white; }
+        .next-btn { background: #FF9800; color: white; }
+        .hint-btn { background: #9C27B0; color: white; }
+        .feedback { margin: 15px 0; padding: 10px; border-radius: 5px; }
+        .feedback.correct { background: #d4edda; color: #155724; }
+        .feedback.incorrect { background: #f8d7da; color: #721c24; }
+        .debug-info { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; font-family: monospace; font-size: 12px; }
     </style>
 </head>
 <body>
-    <h1>문제 풀기 디버그 테스트</h1>
+    <h1>🧪 문제풀기 기능 디버그 테스트</h1>
     
-    <div class="debug-info">
-        <h3>테스트 결과:</h3>
-        <div id="test-results"></div>
+    <nav>
+        <button class="nav-btn" data-section="learn">학습하기</button>
+        <button class="nav-btn active" data-section="practice">문제풀기</button>
+        <button class="nav-btn" data-section="progress">학습진도</button>
+    </nav>
+
+    <div id="debug-log" class="debug-info">
+        <strong>디버그 로그:</strong><br>
+        페이지 로드됨...<br>
     </div>
-    
-    <div class="debug-info">
-        <h3>콘솔 로그:</h3>
-        <p>브라우저 개발자 도구의 콘솔 탭을 확인하세요.</p>
-    </div>
-    
-    <button onclick="testProblemGeneration()">문제 생성 테스트</button>
-    <button onclick="testAllDifficulties()">모든 난이도 테스트</button>
-    
-    <script src="problems.js"></script>
-    <script>
-        function testProblemGeneration() {
-            const results = document.getElementById('test-results');
-            results.innerHTML = '';
+
+    <!-- 학습 섹션 -->
+    <section id="learn" class="section">
+        <h2>학습 내용</h2>
+        <p>학습 섹션입니다.</p>
+    </section>
+
+    <!-- 문제 풀기 섹션 -->
+    <section id="practice" class="section active">
+        <h2>문제 풀어보기</h2>
+        
+        <div class="difficulty-selector">
+            <label>난이도:</label>
+            <select id="difficulty">
+                <option value="easy">쉬움</option>
+                <option value="medium" selected>보통</option>
+                <option value="hard">어려움</option>
+            </select>
+        </div>
+        
+        <div id="question-container">
+            <div class="question-header">
+                <span id="question-number">문제 1</span>
+                <span id="score">점수: 0</span>
+            </div>
             
-            console.clear();
-            console.log('=== 문제 생성 테스트 시작 ===');
+            <div id="question-content" class="question-content">
+                문제 로딩 중...
+            </div>
+            
+            <div id="answer-section" class="answer-section">
+                <!-- 답변 입력 영역 -->
+            </div>
+            
+            <div class="button-group">
+                <button id="submit-btn" class="submit-btn" onclick="checkAnswer()">정답 확인</button>
+                <button id="next-btn" class="next-btn" onclick="loadNextQuestion()" style="display:none;">다음 문제</button>
+                <button id="hint-btn" class="hint-btn" onclick="showSmartHint()">스마트 힌트</button>
+            </div>
+            
+            <div id="feedback" class="feedback"></div>
+        </div>
+    </section>
+
+    <!-- 학습 진도 섹션 -->
+    <section id="progress" class="section">
+        <h2>학습 진도</h2>
+        <p>진도 섹션입니다.</p>
+    </section>
+
+    <!-- 스크립트 로드 -->
+    <script src="problems.js"></script>
+    <script src="content.js"></script>
+    
+    <script>
+        // 전역 변수
+        let currentQuestion = null;
+        let score = 0;
+        let questionCount = 0;
+        let correctAnswers = 0;
+        
+        function debugLog(message) {
+            const debugDiv = document.getElementById('debug-log');
+            debugDiv.innerHTML += message + '<br>';
+            console.log('DEBUG:', message);
+        }
+        
+        // 페이지 로드 시
+        document.addEventListener('DOMContentLoaded', () => {
+            debugLog('DOM 로드 완료');
+            
+            // 네비게이션 이벤트
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    switchSection(e.target.dataset.section);
+                });
+            });
+            
+            // 초기 문제 로드 시도
+            debugLog('초기 문제 로드 시도...');
+            setTimeout(() => {
+                loadNextQuestion();
+            }, 500);
+        });
+        
+        // 섹션 전환
+        function switchSection(sectionName) {
+            debugLog(`섹션 전환: ${sectionName}`);
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(sectionName).classList.add('active');
+            document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+            
+            if (sectionName === 'practice') {
+                debugLog('문제풀기 섹션 활성화 - 문제 로드 시도');
+                setTimeout(() => {
+                    loadNextQuestion();
+                }, 100);
+            }
+        }
+        
+        // 문제 로드 함수
+        function loadNextQuestion() {
+            debugLog('loadNextQuestion 호출됨');
+            
+            const questionContent = document.getElementById('question-content');
+            const answerSection = document.getElementById('answer-section');
+            const questionNumber = document.getElementById('question-number');
+            
+            if (!questionContent || !answerSection) {
+                debugLog('ERROR: DOM 요소를 찾을 수 없음');
+                return;
+            }
+            
+            debugLog('DOM 요소 확인 완료');
+            
+            // generateProblem 함수 확인
+            if (typeof generateProblem !== 'function') {
+                debugLog('ERROR: generateProblem 함수가 없음');
+                questionContent.innerHTML = 'generateProblem 함수가 로드되지 않았습니다.';
+                return;
+            }
+            
+            debugLog('generateProblem 함수 확인 완료');
+            
+            questionCount++;
+            const difficulty = document.getElementById('difficulty').value;
+            
+            debugLog(`문제 생성 시도: 난이도 = ${difficulty}`);
             
             try {
-                // generateProblem 함수가 전역에 있는지 확인
-                if (typeof generateProblem !== 'function') {
-                    results.innerHTML += '<p class="error">❌ generateProblem 함수를 찾을 수 없습니다.</p>';
-                    return;
-                }
+                currentQuestion = generateProblem(difficulty);
+                debugLog(`문제 생성 결과: ${currentQuestion ? '성공' : '실패'}`);
                 
-                // medium 난이도로 문제 생성 테스트
-                const problem = generateProblem('medium');
-                
-                if (problem) {
-                    results.innerHTML += '<p class="success">✅ 문제가 성공적으로 생성되었습니다!</p>';
-                    results.innerHTML += `<p><strong>문제:</strong> ${problem.question}</p>`;
-                    results.innerHTML += `<p><strong>타입:</strong> ${problem.type}</p>`;
-                    
-                    if (problem.type === 'multiple-choice' && problem.options) {
-                        results.innerHTML += `<p><strong>선택지:</strong> ${problem.options.join(', ')}</p>`;
-                        results.innerHTML += `<p><strong>정답 인덱스:</strong> ${problem.correctIndex}</p>`;
-                    }
-                } else {
-                    results.innerHTML += '<p class="error">❌ 문제 생성이 실패했습니다.</p>';
+                if (currentQuestion) {
+                    debugLog(`문제 내용: ${currentQuestion.question ? '있음' : '없음'}`);
+                    debugLog(`문제 타입: ${currentQuestion.type}`);
                 }
                 
             } catch (error) {
-                results.innerHTML += `<p class="error">❌ 오류 발생: ${error.message}</p>`;
-                console.error('테스트 중 오류:', error);
+                debugLog(`ERROR: 문제 생성 중 오류 - ${error.message}`);
+                questionContent.innerHTML = `문제 생성 오류: ${error.message}`;
+                return;
             }
-        }
-        
-        function testAllDifficulties() {
-            const results = document.getElementById('test-results');
-            results.innerHTML = '<h4>모든 난이도 테스트:</h4>';
             
-            const difficulties = ['easy', 'medium', 'hard'];
+            if (!currentQuestion) {
+                debugLog('ERROR: 생성된 문제가 null');
+                questionContent.innerHTML = '문제를 생성할 수 없습니다.';
+                return;
+            }
             
-            difficulties.forEach(difficulty => {
-                try {
-                    const problem = generateProblem(difficulty);
-                    
-                    if (problem) {
-                        results.innerHTML += `<p class="success">✅ ${difficulty}: OK</p>`;
-                    } else {
-                        results.innerHTML += `<p class="error">❌ ${difficulty}: 실패</p>`;
-                    }
-                } catch (error) {
-                    results.innerHTML += `<p class="error">❌ ${difficulty}: 오류 - ${error.message}</p>`;
+            if (!currentQuestion.question) {
+                debugLog('ERROR: 문제에 question 필드가 없음');
+                questionContent.innerHTML = '문제 데이터가 불완전합니다.';
+                return;
+            }
+            
+            // 문제 표시
+            debugLog('문제 표시 시작');
+            questionNumber.textContent = `문제 ${questionCount}`;
+            questionContent.innerHTML = `<h3>${currentQuestion.question}</h3>`;
+            
+            // 답변 섹션 생성
+            let answerHTML = '';
+            
+            if (currentQuestion.type === 'multiple-choice') {
+                debugLog(`객관식 문제 - 선택지 ${currentQuestion.options ? currentQuestion.options.length : 0}개`);
+                
+                if (currentQuestion.options && currentQuestion.options.length > 0) {
+                    answerHTML = '<div class="options">';
+                    currentQuestion.options.forEach((option, index) => {
+                        answerHTML += `
+                            <label class="option">
+                                <input type="radio" name="answer" value="${index}">
+                                ${option}
+                            </label>
+                        `;
+                    });
+                    answerHTML += '</div>';
+                } else {
+                    debugLog('ERROR: 선택지가 없음');
+                    answerHTML = '<p>선택지를 불러올 수 없습니다.</p>';
                 }
-            });
+                
+            } else if (currentQuestion.type === 'short-answer') {
+                debugLog('단답형 문제');
+                answerHTML = '<input type="text" id="answer-input" placeholder="답을 입력하세요">';
+                
+            } else {
+                debugLog(`기타 문제 타입: ${currentQuestion.type}`);
+                answerHTML = '<input type="text" id="answer-input" placeholder="답을 입력하세요">';
+            }
+            
+            answerSection.innerHTML = answerHTML;
+            
+            // 버튼 상태 초기화
+            document.getElementById('submit-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('feedback').innerHTML = '';
+            
+            debugLog('문제 표시 완료');
         }
         
-        // 페이지 로드 시 자동 테스트
-        window.addEventListener('load', () => {
-            console.log('페이지 로드 완료, problems.js 로드 상태 확인');
+        // 정답 확인
+        function checkAnswer() {
+            debugLog('정답 확인 시작');
             
-            // problemTemplates 객체 확인
-            if (typeof problemTemplates !== 'undefined') {
-                console.log('problemTemplates 로드됨:', Object.keys(problemTemplates));
-            } else {
-                console.error('problemTemplates가 로드되지 않음');
+            if (!currentQuestion) {
+                debugLog('ERROR: 현재 문제가 없음');
+                return;
             }
             
-            // generateProblem 함수 확인
-            if (typeof generateProblem === 'function') {
-                console.log('generateProblem 함수 로드됨');
+            let userAnswer = '';
+            
+            if (currentQuestion.type === 'multiple-choice') {
+                const selected = document.querySelector('input[name="answer"]:checked');
+                if (!selected) {
+                    alert('답을 선택해주세요.');
+                    return;
+                }
+                userAnswer = selected.value;
+                debugLog(`사용자 답: ${userAnswer}, 정답: ${currentQuestion.correctIndex}`);
+                
             } else {
-                console.error('generateProblem 함수가 로드되지 않음');
+                const input = document.getElementById('answer-input');
+                if (!input) {
+                    debugLog('ERROR: 답변 입력 필드를 찾을 수 없음');
+                    return;
+                }
+                userAnswer = input.value.trim();
+                debugLog(`사용자 답: "${userAnswer}"`);
             }
-        });
+            
+            // 정답 확인
+            let isCorrect = false;
+            
+            if (currentQuestion.type === 'multiple-choice') {
+                isCorrect = parseInt(userAnswer) === currentQuestion.correctIndex;
+            } else {
+                // 단답형은 키워드 매칭으로 확인
+                if (currentQuestion.keywords) {
+                    isCorrect = currentQuestion.keywords.some(keyword => 
+                        userAnswer.includes(keyword)
+                    );
+                } else {
+                    isCorrect = userAnswer.toLowerCase() === currentQuestion.answer.toLowerCase();
+                }
+            }
+            
+            debugLog(`정답 여부: ${isCorrect}`);
+            
+            // 피드백 표시
+            const feedback = document.getElementById('feedback');
+            if (isCorrect) {
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = '🎉 정답입니다! ' + (currentQuestion.explanation || '');
+                score += currentQuestion.points || 10;
+                correctAnswers++;
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = '❌ 틀렸습니다. ' + (currentQuestion.explanation || '');
+            }
+            
+            // 점수 업데이트
+            document.getElementById('score').textContent = `점수: ${score}`;
+            
+            // 버튼 상태 변경
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'inline-block';
+            
+            debugLog('정답 확인 완료');
+        }
+        
+        // 힌트 표시
+        function showSmartHint() {
+            debugLog('힌트 요청');
+            
+            if (!currentQuestion || !currentQuestion.hint) {
+                alert('이 문제에는 힌트가 없습니다.');
+                return;
+            }
+            
+            alert('💡 힌트: ' + currentQuestion.hint);
+        }
     </script>
 </body>
 </html>

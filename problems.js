@@ -507,7 +507,70 @@ function generateElectronOptions(correct) {
     return options.sort(() => Math.random() - 0.5);
 }
 
+// 사용된 문제 추적
+const usedProblems = {
+    easy: new Set(),
+    medium: new Set(),
+    hard: new Set()
+};
+
+// 문제 사용 기록 초기화
+function resetUsedProblems() {
+    usedProblems.easy.clear();
+    usedProblems.medium.clear();
+    usedProblems.hard.clear();
+}
+
+// 중복 방지 문제 생성
+function generateUniqueQuestion(difficulty) {
+    const templates = problemTemplates[difficulty];
+    if (!templates || templates.length === 0) {
+        return null;
+    }
+    
+    // 모든 문제를 다 사용했으면 초기화
+    const totalQuestions = templates.reduce((sum, category) => sum + category.templates.length, 0);
+    if (usedProblems[difficulty].size >= totalQuestions) {
+        usedProblems[difficulty].clear();
+        console.log(`${difficulty} 난이도 문제 풀이 완료 - 문제 풀이 기록 초기화`);
+    }
+    
+    // 사용하지 않은 문제 찾기
+    let attempts = 0;
+    let problem = null;
+    
+    while (attempts < 50) { // 무한 루프 방지
+        const categoryIndex = Math.floor(Math.random() * templates.length);
+        const category = templates[categoryIndex];
+        const problemIndex = Math.floor(Math.random() * category.templates.length);
+        
+        const problemId = `${category.category}_${problemIndex}`;
+        
+        if (!usedProblems[difficulty].has(problemId)) {
+            problem = { ...category.templates[problemIndex] };
+            problem.points = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 20 : 30;
+            problem.id = Date.now();
+            problem.uniqueId = problemId;
+            
+            // 선택지 섞기
+            if (problem.type === 'multiple-choice') {
+                problem = shuffleOptions(problem);
+            }
+            
+            // 사용된 문제로 기록
+            usedProblems[difficulty].add(problemId);
+            break;
+        }
+        
+        attempts++;
+    }
+    
+    return problem;
+}
+
 // 전역 함수로 내보내기
-window.generateProblem = generateProblem;
+window.generateProblem = generateUniqueQuestion; // 중복 방지 버전 사용
 window.generateTopicProblem = generateTopicProblem;
 window.problemStats = problemStats;
+window.resetUsedProblems = resetUsedProblems;
+window.usedProblems = usedProblems;
