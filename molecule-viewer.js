@@ -7,8 +7,8 @@ class MoleculeViewer {
                 name: '물',
                 atoms: [
                     { element: 'O', position: [0, 0, 0], color: 0xFF0000 },
-                    { element: 'H', position: [1, 0.5, 0], color: 0xFFFFFF },
-                    { element: 'H', position: [-1, 0.5, 0], color: 0xFFFFFF }
+                    { element: 'H', position: [0.76, 0.59, 0], color: 0xFFFFFF },
+                    { element: 'H', position: [-0.76, 0.59, 0], color: 0xFFFFFF }
                 ],
                 bonds: [
                     { start: 0, end: 1, type: 'single' },

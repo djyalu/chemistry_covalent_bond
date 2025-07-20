@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>화학 콘텐츠 과학적 정확성 검증</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f8f9fa; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
+        .validation-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .correct { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .incorrect { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .warning { background: #fff3cd; border-color: #ffeeba; color: #856404; }
+        .info { background: #cce7ff; border-color: #b3d9ff; color: #004085; }
+        h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
+        th { background: #007bff; color: white; }
+        .formula { font-family: 'Courier New', monospace; font-weight: bold; }
+        .explanation { font-style: italic; color: #666; margin-top: 5px; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 화학 콘텐츠 과학적 정확성 검증 보고서</h1>
+        <p>생성 시간: <span id="validation-time"></span></p>
+
+        <!-- 화학식 정확성 검증 -->
+        <div class="validation-section">
+            <h2>1. 화학식 및 분자 구조 정확성</h2>
+            <div id="formula-validation"></div>
+        </div>
+
+        <!-- 문제 내용 정확성 검증 -->
+        <div class="validation-section">
+            <h2>2. 문제 내용의 과학적 정확성</h2>
+            <div id="problem-content-validation"></div>
+        </div>
+
+        <!-- 학습 자료 정확성 검증 -->
+        <div class="validation-section">
+            <h2>3. 학습 자료 내용 검증</h2>
+            <div id="content-accuracy-validation"></div>
+        </div>
+
+        <!-- 물리화학적 데이터 검증 -->
+        <div class="validation-section">
+            <h2>4. 물리화학적 데이터 검증</h2>
+            <div id="physical-data-validation"></div>
+        </div>
+
+        <!-- 중학생 수준 적합성 검증 -->
+        <div class="validation-section">
+            <h2>5. 중학생 수준 적합성</h2>
+            <div id="grade-level-validation"></div>
+        </div>
+
+        <!-- 종합 평가 -->
+        <div class="validation-section">
+            <h2>종합 평가 및 권장사항</h2>
+            <div id="overall-assessment"></div>
+        </div>
+    </div>
+
+    <script src="problems.js"></script>
+    <script src="content.js"></script>
+    <script src="molecule-viewer.js"></script>
+    
+    <script>
+        document.getElementById('validation-time').textContent = new Date().toLocaleString('ko-KR');
+
+        // 1. 화학식 및 분자 구조 정확성 검증
+        function validateFormulas() {
+            const results = [];
+            
+            // 알려진 올바른 화학식과 구조
+            const knownMolecules = {
+                'H2O': {
+                    name: '물',
+                    atoms: 3,
+                    bonds: 2,
+                    geometry: 'bent',
+                    bondAngle: 104.5,
+                    polarityInfo: '극성 분자'
+                },
+                'CH4': {
+                    name: '메탄',
+                    atoms: 5,
+                    bonds: 4,
+                    geometry: 'tetrahedral',
+                    bondAngle: 109.5,
+                    polarityInfo: '무극성 분자'
+                },
+                'CO2': {
+                    name: '이산화탄소',
+                    atoms: 3,
+                    bonds: 2,
+                    geometry: 'linear',
+                    bondAngle: 180,
+                    polarityInfo: '무극성 분자'
+                },
+                'NH3': {
+                    name: '암모니아',
+                    atoms: 4,
+                    bonds: 3,
+                    geometry: 'trigonal pyramidal',
+                    bondAngle: 107,
+                    polarityInfo: '극성 분자'
+                },
+                'NaCl': {
+                    name: '염화나트륨',
+                    atoms: 2,
+                    bonds: 1,
+                    geometry: 'ionic',
+                    bondType: 'ionic',
+                    polarityInfo: '이온 화합물'
+                }
+            };
+
+            const viewer = new MoleculeViewer('temp');
+            
+            Object.entries(knownMolecules).forEach(([formula, expected]) => {
+                const molecule = viewer.molecules[formula];
+                if (molecule) {
+                    let status = 'correct';
+                    let issues = [];
+                    
+                    // 원자 수 확인
+                    if (molecule.atoms.length !== expected.atoms) {
+                        status = 'incorrect';
+                        issues.push(`원자 수 오류: 예상 ${expected.atoms}, 실제 ${molecule.atoms.length}`);
+                    }
+                    
+                    // 결합 수 확인
+                    if (molecule.bonds.length !== expected.bonds) {
+                        status = 'incorrect';
+                        issues.push(`결합 수 오류: 예상 ${expected.bonds}, 실제 ${molecule.bonds.length}`);
+                    }
+                    
+                    // 결합 유형 확인 (이온 결합)
+                    if (expected.bondType === 'ionic') {
+                        const hasIonicBond = molecule.bonds.some(b => b.type === 'ionic');
+                        if (!hasIonicBond) {
+                            status = 'warning';
+                            issues.push('이온 결합 표시 누락');
+                        }
+                    }
+                    
+                    results.push({
+                        formula: formula,
+                        name: expected.name,
+                        status: status,
+                        issues: issues,
+                        expected: expected,
+                        actual: {
+                            atoms: molecule.atoms.length,
+                            bonds: molecule.bonds.length
+                        }
+                    });
+                } else {
+                    results.push({
+                        formula: formula,
+                        name: expected.name,
+                        status: 'incorrect',
+                        issues: ['분자 데이터 없음'],
+                        expected: expected,
+                        actual: null
+                    });
+                }
+            });
+            
+            return results;
+        }
+
+        // 2. 문제 내용의 과학적 정확성 검증
+        function validateProblemContent() {
+            const validationResults = [];
+            
+            // 각 난이도별로 여러 문제 생성하여 검증
+            ['easy', 'medium', 'hard'].forEach(difficulty => {
+                for (let i = 0; i < 10; i++) {
+                    const problem = generateProblem(difficulty);
+                    const validation = validateSingleProblem(problem, difficulty);
+                    if (validation.issues.length > 0) {
+                        validationResults.push(validation);
+                    }
+                }
+            });
+            
+            return validationResults;
+        }
+        
+        function validateSingleProblem(problem, difficulty) {
+            const issues = [];
+            
+            // 기본 구조 검증
+            if (!problem.question || problem.question.length < 10) {
+                issues.push('문제 내용이 너무 짧음');
+            }
+            
+            if (!problem.explanation) {
+                issues.push('설명이 없음');
+            }
+            
+            // 과학적 정확성 검증
+            const scientificChecks = [
+                {
+                    pattern: /설탕.*이온/,
+                    error: '설탕을 이온화합물로 잘못 분류'
+                },
+                {
+                    pattern: /물.*이온결합/,
+                    error: '물을 이온결합으로 잘못 설명'
+                },
+                {
+                    pattern: /소금.*공유결합/,
+                    error: '소금을 공유결합으로 잘못 설명'
+                },
+                {
+                    pattern: /금속.*공유결합/,
+                    error: '금속을 공유결합으로 잘못 설명'
+                }
+            ];
+            
+            const fullText = problem.question + ' ' + (problem.explanation || '');
+            scientificChecks.forEach(check => {
+                if (check.pattern.test(fullText)) {
+                    issues.push(check.error);
+                }
+            });
+            
+            // 화학식 표기 검증
+            const formulaRegex = /[A-Z][a-z]?[0-9]/g;
+            const formulas = fullText.match(formulaRegex);
+            if (formulas) {
+                formulas.forEach(formula => {
+                    // 아래첨자 표기 확인
+                    if (!/[₀-₉]/.test(fullText) && /[0-9]/.test(formula)) {
+                        issues.push(`화학식 ${formula}의 아래첨자 표기 미사용`);
+                    }
+                });
+            }
+            
+            return {
+                question: problem.question.substring(0, 50) + '...',
+                difficulty: difficulty,
+                type: problem.type,
+                issues: issues
+            };
+        }
+
+        // 3. 학습 자료 내용 검증
+        function validateLearningContent() {
+            const topics = ['covalent', 'ionic', 'molecular', 'bonding'];
+            const validationResults = [];
+            
+            topics.forEach(topic => {
+                const content = getTopicContent(topic);
+                const issues = [];
+                
+                // 필수 과학 개념 확인
+                const requiredConcepts = {
+                    covalent: [
+                        { term: '전자 공유', importance: 'critical' },
+                        { term: '비금속', importance: 'high' },
+                        { term: '분자', importance: 'high' },
+                        { term: '단일결합', importance: 'medium' },
+                        { term: '이중결합', importance: 'medium' }
+                    ],
+                    ionic: [
+                        { term: '양이온', importance: 'critical' },
+                        { term: '음이온', importance: 'critical' },
+                        { term: '정전기적 인력', importance: 'high' },
+                        { term: '금속', importance: 'high' },
+                        { term: '비금속', importance: 'high' },
+                        { term: '전자 이동', importance: 'medium' }
+                    ],
+                    molecular: [
+                        { term: 'VSEPR', importance: 'critical' },
+                        { term: '3차원', importance: 'high' },
+                        { term: '전자쌍', importance: 'high' },
+                        { term: '정사면체', importance: 'medium' },
+                        { term: '직선형', importance: 'medium' }
+                    ],
+                    bonding: [
+                        { term: '결합 에너지', importance: 'critical' },
+                        { term: '결합 길이', importance: 'high' },
+                        { term: '삼중결합', importance: 'medium' },
+                        { term: 'kJ/mol', importance: 'low' }
+                    ]
+                };
+                
+                const topicConcepts = requiredConcepts[topic] || [];
+                const missingCritical = [];
+                const missingHigh = [];
+                
+                topicConcepts.forEach(concept => {
+                    if (!content.includes(concept.term)) {
+                        if (concept.importance === 'critical') {
+                            missingCritical.push(concept.term);
+                        } else if (concept.importance === 'high') {
+                            missingHigh.push(concept.term);
+                        }
+                    }
+                });
+                
+                if (missingCritical.length > 0) {
+                    issues.push(`핵심 개념 누락: ${missingCritical.join(', ')}`);
+                }
+                if (missingHigh.length > 0) {
+                    issues.push(`중요 개념 누락: ${missingHigh.join(', ')}`);
+                }
+                
+                // 과학적 오류 검증
+                const errorChecks = [
+                    {
+                        pattern: /설탕.*이온화합물/,
+                        error: '설탕을 이온화합물로 잘못 분류'
+                    },
+                    {
+                        pattern: /공유결합.*금속/,
+                        error: '금속의 공유결합 설명 오류'
+                    },
+                    {
+                        pattern: /이온결합.*전자 공유/,
+                        error: '이온결합과 전자 공유 개념 혼동'
+                    }
+                ];
+                
+                errorChecks.forEach(check => {
+                    if (check.pattern.test(content)) {
+                        issues.push(check.error);
+                    }
+                });
+                
+                validationResults.push({
+                    topic: topic,
+                    contentLength: content.length,
+                    issues: issues,
+                    conceptCoverage: {
+                        total: topicConcepts.length,
+                        covered: topicConcepts.length - missingCritical.length - missingHigh.length
+                    }
+                });
+            });
+            
+            return validationResults;
+        }
+
+        // 4. 물리화학적 데이터 검증
+        function validatePhysicalData() {
+            const dataChecks = [];
+            
+            // 결합 에너지 데이터 확인
+            const bondEnergyContent = getTopicContent('bonding');
+            
+            const knownBondEnergies = {
+                'C-C': { range: [340, 360], unit: 'kJ/mol' },
+                'C=C': { range: [600, 620], unit: 'kJ/mol' },
+                'C≡C': { range: [830, 850], unit: 'kJ/mol' },
+                'H-F': { range: [560, 570], unit: 'kJ/mol' }
+            };
+            
+            Object.entries(knownBondEnergies).forEach(([bond, data]) => {
+                const bondRegex = new RegExp(bond.replace(/[=≡]/g, '[=≡]') + '.*?(\\d+).*?kJ', 'i');
+                const match = bondEnergyContent.match(bondRegex);
+                
+                if (match) {
+                    const value = parseInt(match[1]);
+                    const inRange = value >= data.range[0] && value <= data.range[1];
+                    
+                    dataChecks.push({
+                        bond: bond,
+                        reported: value,
+                        expected: data.range,
+                        status: inRange ? 'correct' : 'incorrect',
+                        issue: inRange ? null : `값이 예상 범위(${data.range[0]}-${data.range[1]})를 벗어남`
+                    });
+                } else {
+                    dataChecks.push({
+                        bond: bond,
+                        reported: null,
+                        expected: data.range,
+                        status: 'missing',
+                        issue: '데이터 없음'
+                    });
+                }
+            });
+            
+            return dataChecks;
+        }
+
+        // 5. 중학생 수준 적합성 검증
+        function validateGradeLevel() {
+            const issues = [];
+            const recommendations = [];
+            
+            // 어휘 수준 검사
+            const difficultTerms = [
+                '전기음성도', '궤도 혼성화', '공명 구조', '분자 궤도', 
+                '반데르발스 힘', '쌍극자 모멘트', '엔탈피', '자유 에너지'
+            ];
+            
+            const topics = ['covalent', 'ionic', 'molecular', 'bonding'];
+            topics.forEach(topic => {
+                const content = getTopicContent(topic);
+                const foundDifficult = difficultTerms.filter(term => content.includes(term));
+                
+                if (foundDifficult.length > 0) {
+                    issues.push(`${topic} 주제에서 고등학교/대학 수준 용어 발견: ${foundDifficult.join(', ')}`);
+                }
+            });
+            
+            // 문제 복잡도 검사
+            const problems = [];
+            for (let i = 0; i < 20; i++) {
+                problems.push(generateProblem('hard'));
+            }
+            
+            const complexProblems = problems.filter(p => {
+                const text = p.question + (p.explanation || '');
+                return text.length > 200 || 
+                       (text.match(/[,;]/g) || []).length > 3 ||
+                       text.includes('계산하시오') ||
+                       text.includes('유도하시오');
+            });
+            
+            if (complexProblems.length > problems.length * 0.3) {
+                issues.push('어려운 문제의 복잡도가 중학생 수준을 초과할 수 있음');
+            }
+            
+            // 권장사항 생성
+            if (issues.length === 0) {
+                recommendations.push('콘텐츠가 중학생 수준에 적합합니다.');
+            } else {
+                recommendations.push('일부 내용의 난이도 조정이 필요합니다.');
+                recommendations.push('고등학교 수준 용어는 각주나 간단한 설명을 추가하세요.');
+            }
+            
+            return { issues, recommendations };
+        }
+
+        // 결과 표시 함수들
+        function displayFormulaValidation() {
+            const results = validateFormulas();
+            const container = document.getElementById('formula-validation');
+            
+            let html = '<table><tr><th>분자식</th><th>이름</th><th>상태</th><th>검증 결과</th></tr>';
+            
+            results.forEach(result => {
+                const statusClass = result.status === 'correct' ? 'correct' : 
+                                   result.status === 'warning' ? 'warning' : 'incorrect';
+                const statusText = result.status === 'correct' ? '정확' : 
+                                  result.status === 'warning' ? '경고' : '오류';
+                
+                html += `
+                    <tr class="${statusClass}">
+                        <td class="formula">${result.formula}</td>
+                        <td>${result.name}</td>
+                        <td>${statusText}</td>
+                        <td>${result.issues.length === 0 ? '문제없음' : result.issues.join(', ')}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</table>';
+            container.innerHTML = html;
+        }
+
+        function displayProblemValidation() {
+            const results = validateProblemContent();
+            const container = document.getElementById('problem-content-validation');
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div class="correct">✓ 모든 문제의 과학적 내용이 정확합니다.</div>';
+                return;
+            }
+            
+            let html = '<div class="warning">다음 문제들에서 개선이 필요한 부분이 발견되었습니다:</div>';
+            html += '<table><tr><th>문제</th><th>난이도</th><th>유형</th><th>발견된 문제</th></tr>';
+            
+            results.slice(0, 10).forEach(result => { // 최대 10개만 표시
+                html += `
+                    <tr>
+                        <td>${result.question}</td>
+                        <td>${result.difficulty}</td>
+                        <td>${result.type}</td>
+                        <td>${result.issues.join(', ')}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</table>';
+            if (results.length > 10) {
+                html += `<p>... 및 ${results.length - 10}개 추가 문제</p>`;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function displayContentValidation() {
+            const results = validateLearningContent();
+            const container = document.getElementById('content-accuracy-validation');
+            
+            let html = '<table><tr><th>주제</th><th>콘텐츠 길이</th><th>개념 포함률</th><th>발견된 문제</th></tr>';
+            
+            results.forEach(result => {
+                const coverage = (result.conceptCoverage.covered / result.conceptCoverage.total * 100).toFixed(1);
+                const statusClass = result.issues.length === 0 ? 'correct' : 'warning';
+                
+                html += `
+                    <tr class="${statusClass}">
+                        <td>${result.topic}</td>
+                        <td>${result.contentLength} 문자</td>
+                        <td>${coverage}% (${result.conceptCoverage.covered}/${result.conceptCoverage.total})</td>
+                        <td>${result.issues.length === 0 ? '문제없음' : result.issues.join(', ')}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</table>';
+            container.innerHTML = html;
+        }
+
+        function displayPhysicalDataValidation() {
+            const results = validatePhysicalData();
+            const container = document.getElementById('physical-data-validation');
+            
+            let html = '<table><tr><th>결합</th><th>보고된 값</th><th>예상 범위</th><th>상태</th><th>비고</th></tr>';
+            
+            results.forEach(result => {
+                const statusClass = result.status === 'correct' ? 'correct' : 
+                                   result.status === 'missing' ? 'warning' : 'incorrect';
+                const statusText = result.status === 'correct' ? '정확' : 
+                                  result.status === 'missing' ? '누락' : '부정확';
+                
+                html += `
+                    <tr class="${statusClass}">
+                        <td class="formula">${result.bond}</td>
+                        <td>${result.reported || 'N/A'} kJ/mol</td>
+                        <td>${result.expected[0]}-${result.expected[1]} kJ/mol</td>
+                        <td>${statusText}</td>
+                        <td>${result.issue || '문제없음'}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</table>';
+            container.innerHTML = html;
+        }
+
+        function displayGradeLevelValidation() {
+            const results = validateGradeLevel();
+            const container = document.getElementById('grade-level-validation');
+            
+            let html = '';
+            
+            if (results.issues.length > 0) {
+                html += '<div class="warning"><h4>발견된 문제:</h4><ul>';
+                results.issues.forEach(issue => {
+                    html += `<li>${issue}</li>`;
+                });
+                html += '</ul></div>';
+            }
+            
+            html += '<div class="info"><h4>권장사항:</h4><ul>';
+            results.recommendations.forEach(rec => {
+                html += `<li>${rec}</li>`;
+            });
+            html += '</ul></div>';
+            
+            container.innerHTML = html;
+        }
+
+        function displayOverallAssessment() {
+            const container = document.getElementById('overall-assessment');
+            
+            // 각 섹션의 결과를 종합
+            const formulaResults = validateFormulas();
+            const problemResults = validateProblemContent();
+            const contentResults = validateLearningContent();
+            const physicalResults = validatePhysicalData();
+            const gradeResults = validateGradeLevel();
+            
+            const totalIssues = problemResults.length + 
+                               contentResults.reduce((sum, r) => sum + r.issues.length, 0) +
+                               physicalResults.filter(r => r.status !== 'correct').length +
+                               gradeResults.issues.length;
+            
+            let assessmentLevel, color, recommendations;
+            
+            if (totalIssues === 0) {
+                assessmentLevel = '우수';
+                color = '#28a745';
+                recommendations = [
+                    '모든 과학적 내용이 정확하고 중학생 수준에 적합합니다.',
+                    '현재 상태를 유지하며 지속적으로 모니터링하세요.'
+                ];
+            } else if (totalIssues <= 5) {
+                assessmentLevel = '양호';
+                color = '#ffc107';
+                recommendations = [
+                    '대부분의 내용이 정확하나 일부 개선이 필요합니다.',
+                    '발견된 문제들을 순차적으로 수정하세요.',
+                    '정기적인 내용 검토를 권장합니다.'
+                ];
+            } else {
+                assessmentLevel = '개선 필요';
+                color = '#dc3545';
+                recommendations = [
+                    '여러 과학적 오류가 발견되었습니다.',
+                    '우선순위를 정하여 체계적으로 수정하세요.',
+                    '전문가 검토를 고려해보세요.'
+                ];
+            }
+            
+            const html = `
+                <div style="border: 3px solid ${color}; padding: 20px; border-radius: 10px; background: ${color}15;">
+                    <h3 style="color: ${color}; margin-top: 0;">종합 평가: ${assessmentLevel}</h3>
+                    <p><strong>발견된 총 문제 수:</strong> ${totalIssues}개</p>
+                    
+                    <h4>세부 결과:</h4>
+                    <ul>
+                        <li>분자 구조 정확성: ${formulaResults.filter(r => r.status === 'correct').length}/${formulaResults.length} 정확</li>
+                        <li>문제 내용 오류: ${problemResults.length}개 문제 발견</li>
+                        <li>학습 자료 검증: ${contentResults.filter(r => r.issues.length === 0).length}/${contentResults.length} 주제 양호</li>
+                        <li>물리화학 데이터: ${physicalResults.filter(r => r.status === 'correct').length}/${physicalResults.length} 정확</li>
+                        <li>중학생 수준 적합성: ${gradeResults.issues.length === 0 ? '적합' : '일부 조정 필요'}</li>
+                    </ul>
+                    
+                    <h4>권장사항:</h4>
+                    <ul>
+                        ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        // 모든 검증 실행
+        setTimeout(() => {
+            displayFormulaValidation();
+            displayProblemValidation();
+            displayContentValidation();
+            displayPhysicalDataValidation();
+            displayGradeLevelValidation();
+            displayOverallAssessment();
+        }, 100);
+    </script>
+</body>
+</html>

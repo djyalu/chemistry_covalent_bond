@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>화학 학습 프로그램 오류 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { color: green; }
+        .fail { color: red; }
+        pre { background: #f4f4f4; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>화학 학습 프로그램 오류 테스트</h1>
+    
+    <div class="test-section">
+        <h2>1. 화학식 테스트</h2>
+        <div id="formula-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. 문제 생성 테스트</h2>
+        <div id="problem-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. 분자 데이터 테스트</h2>
+        <div id="molecule-test"></div>
+    </div>
+
+    <script src="problems.js"></script>
+    <script src="molecule-viewer.js"></script>
+    <script src="enhanced-problems.js"></script>
+    
+    <script>
+        // 1. 화학식 테스트
+        const formulaTest = document.getElementById('formula-test');
+        try {
+            const problem = dynamicProblemGenerators.formulaProblem();
+            formulaTest.innerHTML = `
+                <p class="pass">✓ 화학식 문제 생성 성공</p>
+                <pre>${JSON.stringify(problem, null, 2)}</pre>
+                <p>답변: ${problem.answer}</p>
+            `;
+        } catch (error) {
+            formulaTest.innerHTML = `<p class="fail">✗ 오류: ${error.message}</p>`;
+        }
+        
+        // 2. 문제 생성 테스트
+        const problemTest = document.getElementById('problem-test');
+        try {
+            const easyProblem = generateProblem('easy');
+            const mediumProblem = generateProblem('medium');
+            const hardProblem = generateProblem('hard');
+            
+            problemTest.innerHTML = `
+                <p class="pass">✓ 문제 생성 성공</p>
+                <h3>쉬운 문제:</h3>
+                <p>${easyProblem.question}</p>
+                <h3>중간 문제:</h3>
+                <p>${mediumProblem.question}</p>
+                <h3>어려운 문제:</h3>
+                <p>${hardProblem.question}</p>
+            `;
+        } catch (error) {
+            problemTest.innerHTML = `<p class="fail">✗ 오류: ${error.message}</p>`;
+        }
+        
+        // 3. 분자 데이터 테스트
+        const moleculeTest = document.getElementById('molecule-test');
+        try {
+            const viewer = new MoleculeViewer('molecule-test');
+            const molecules = ['H2O', 'CH4', 'CO2', 'NH3', 'NaCl'];
+            
+            moleculeTest.innerHTML = '<p class="pass">✓ 분자 데이터 로드 성공</p>';
+            molecules.forEach(mol => {
+                const data = viewer.molecules[mol];
+                if (data) {
+                    moleculeTest.innerHTML += `<p>- ${mol} (${data.name}): ${data.atoms.length}개 원자, ${data.bonds.length}개 결합</p>`;
+                }
+            });
+        } catch (error) {
+            moleculeTest.innerHTML = `<p class="fail">✗ 오류: ${error.message}</p>`;
+        }
+        
+        // 수정된 내용 요약
+        document.body.innerHTML += `
+            <div class="test-section">
+                <h2>수정된 오류 목록</h2>
+                <ol>
+                    <li>problems.js:42 - "설탕의 상태" → "소금의 상태"로 수정 (설탕은 공유결합 화합물)</li>
+                    <li>problems.js:207 - 화학식 아래첨자 변환 버그 수정</li>
+                    <li>molecule-viewer.js:10-11 - H₂O 분자의 원자 위치를 실제 굽은형 구조에 맞게 조정</li>
+                    <li>problems.js:255-258 - 전역 함수 내보내기 추가</li>
+                </ol>
+            </div>
+        `;
+    </script>
+</body>
+</html>

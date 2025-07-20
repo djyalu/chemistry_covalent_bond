@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
-    <rect width="400" height="300" fill="#FCE4EC"/>
-    <circle cx="120" cy="150" r="40" fill="#E91E63"/>
-    <text x="120" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#FFF">Na+</text>
-    <circle cx="280" cy="150" r="40" fill="#4CAF50"/>
-    <text x="280" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#FFF">Cl-</text>
-    <text x="200" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#424242">이온화합물</text>
-  </svg>

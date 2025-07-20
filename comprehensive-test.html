@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>화학 학습 프로그램 종합 테스트</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background-color: #f0f0f0;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section { 
+            margin: 20px 0; 
+            padding: 15px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px;
+            background: #fafafa;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .pass { 
+            background-color: #d4edda; 
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .fail { 
+            background-color: #f8d7da; 
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        pre { 
+            background: #f4f4f4; 
+            padding: 10px; 
+            overflow-x: auto;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #2196F3;
+            padding-bottom: 10px;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            flex: 1;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .stat-box h3 {
+            margin: 0;
+            color: #1976d2;
+        }
+        .error-list {
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .error-list ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        .content-preview {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .molecule-display {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2196F3;
+            color: white;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #4caf50;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 화학 학습 프로그램 종합 테스트 보고서</h1>
+        <p>생성 시간: <span id="test-time"></span></p>
+        
+        <div class="stats" id="test-summary">
+            <!-- 테스트 요약 통계가 여기 표시됩니다 -->
+        </div>
+
+        <!-- 1. 문제 생성 시스템 테스트 -->
+        <div class="test-section">
+            <h2>1. 문제 생성 시스템 테스트</h2>
+            <div id="problem-generation-test"></div>
+        </div>
+
+        <!-- 2. 학습 컨텐츠 검증 -->
+        <div class="test-section">
+            <h2>2. 학습 컨텐츠 검증</h2>
+            <div id="content-validation-test"></div>
+        </div>
+
+        <!-- 3. 분자 데이터 정확성 -->
+        <div class="test-section">
+            <h2>3. 분자 데이터 정확성 검사</h2>
+            <div id="molecule-accuracy-test"></div>
+        </div>
+
+        <!-- 4. 향상된 문제 유형 테스트 -->
+        <div class="test-section">
+            <h2>4. 향상된 문제 유형 테스트</h2>
+            <div id="enhanced-problems-test"></div>
+        </div>
+
+        <!-- 5. 게임화 시스템 테스트 -->
+        <div class="test-section">
+            <h2>5. 게임화 시스템 테스트</h2>
+            <div id="gamification-test"></div>
+        </div>
+
+        <!-- 6. 전체 시스템 통합 테스트 -->
+        <div class="test-section">
+            <h2>6. 전체 시스템 통합 테스트</h2>
+            <div id="integration-test"></div>
+        </div>
+
+        <!-- 최종 보고서 -->
+        <div class="test-section">
+            <h2>최종 테스트 보고서</h2>
+            <div id="final-report"></div>
+        </div>
+    </div>
+
+    <!-- 스크립트 로드 -->
+    <script src="app.js"></script>
+    <script src="problems.js"></script>
+    <script src="content.js"></script>
+    <script src="molecule-viewer.js"></script>
+    <script src="enhanced-problems.js"></script>
+    <script src="gamification.js"></script>
+    
+    <script>
+        // 테스트 결과 저장
+        let testResults = {
+            total: 0,
+            passed: 0,
+            failed: 0,
+            warnings: 0,
+            errors: []
+        };
+
+        // 현재 시간 표시
+        document.getElementById('test-time').textContent = new Date().toLocaleString('ko-KR');
+
+        // 테스트 유틸리티 함수
+        function runTest(testName, testFunction, container) {
+            testResults.total++;
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'test-result';
+            
+            try {
+                const result = testFunction();
+                if (result.status === 'pass') {
+                    testResults.passed++;
+                    resultDiv.className += ' pass';
+                    resultDiv.innerHTML = `<strong>✓ ${testName}</strong><br>${result.message}`;
+                } else if (result.status === 'warning') {
+                    testResults.warnings++;
+                    resultDiv.className += ' warning';
+                    resultDiv.innerHTML = `<strong>⚠ ${testName}</strong><br>${result.message}`;
+                } else {
+                    testResults.failed++;
+                    resultDiv.className += ' fail';
+                    resultDiv.innerHTML = `<strong>✗ ${testName}</strong><br>${result.message}`;
+                    testResults.errors.push({ test: testName, error: result.message });
+                }
+                
+                if (result.details) {
+                    resultDiv.innerHTML += `<pre>${JSON.stringify(result.details, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                testResults.failed++;
+                resultDiv.className += ' fail';
+                resultDiv.innerHTML = `<strong>✗ ${testName}</strong><br>오류 발생: ${error.message}`;
+                testResults.errors.push({ test: testName, error: error.message });
+            }
+            
+            container.appendChild(resultDiv);
+        }
+
+        // 1. 문제 생성 시스템 테스트
+        const problemTestContainer = document.getElementById('problem-generation-test');
+        
+        // 난이도별 문제 생성 테스트
+        ['easy', 'medium', 'hard'].forEach(difficulty => {
+            runTest(`${difficulty} 난이도 문제 생성`, () => {
+                const problems = [];
+                for (let i = 0; i < 5; i++) {
+                    problems.push(generateProblem(difficulty));
+                }
+                
+                // 문제 유형 다양성 확인
+                const types = new Set(problems.map(p => p.type));
+                if (types.size < 2) {
+                    return { 
+                        status: 'warning', 
+                        message: `문제 유형 다양성 부족 (${types.size}개 유형만 생성됨)`,
+                        details: { generatedTypes: Array.from(types) }
+                    };
+                }
+                
+                // 필수 속성 확인
+                const invalidProblems = problems.filter(p => 
+                    !p.question || !p.type || p.points === undefined
+                );
+                
+                if (invalidProblems.length > 0) {
+                    return { 
+                        status: 'fail', 
+                        message: `${invalidProblems.length}개 문제에 필수 속성 누락`,
+                        details: invalidProblems
+                    };
+                }
+                
+                return { 
+                    status: 'pass', 
+                    message: `${problems.length}개 문제 생성 성공 (${types.size}개 유형)`,
+                    details: { 
+                        sampleProblem: problems[0],
+                        types: Array.from(types)
+                    }
+                };
+            }, problemTestContainer);
+        });
+
+        // 주제별 문제 생성 테스트
+        ['covalent', 'ionic', 'molecular', 'bonding'].forEach(topic => {
+            runTest(`${topic} 주제 문제 생성`, () => {
+                try {
+                    const problem = generateTopicProblem(topic, 'medium');
+                    if (!problem || !problem.question) {
+                        return { status: 'fail', message: '문제 생성 실패' };
+                    }
+                    return { 
+                        status: 'pass', 
+                        message: '주제별 문제 생성 성공',
+                        details: { question: problem.question }
+                    };
+                } catch (error) {
+                    return { status: 'fail', message: error.message };
+                }
+            }, problemTestContainer);
+        });
+
+        // 2. 학습 컨텐츠 검증
+        const contentTestContainer = document.getElementById('content-validation-test');
+        
+        // 각 주제 컨텐츠 확인
+        ['covalent', 'ionic', 'molecular', 'bonding'].forEach(topic => {
+            runTest(`${topic} 학습 컨텐츠`, () => {
+                const content = getTopicContent(topic);
+                
+                if (!content || content.includes('준비 중')) {
+                    return { status: 'fail', message: '컨텐츠 없음 또는 미완성' };
+                }
+                
+                // HTML 구조 검증
+                const hasTitle = content.includes('<h2>');
+                const hasContent = content.includes('<p>') || content.includes('<ul>');
+                const hasButton = content.includes('문제 풀어보기');
+                
+                if (!hasTitle || !hasContent) {
+                    return { status: 'warning', message: '컨텐츠 구조 불완전' };
+                }
+                
+                // 과학적 정확성 키워드 체크
+                const scientificTerms = {
+                    covalent: ['전자', '공유', '비금속'],
+                    ionic: ['양이온', '음이온', '정전기'],
+                    molecular: ['VSEPR', '3차원', '구조'],
+                    bonding: ['결합 에너지', '단일결합', '이중결합']
+                };
+                
+                const expectedTerms = scientificTerms[topic];
+                const foundTerms = expectedTerms.filter(term => content.includes(term));
+                
+                if (foundTerms.length < expectedTerms.length * 0.7) {
+                    return { 
+                        status: 'warning', 
+                        message: '핵심 과학 용어 부족',
+                        details: { 
+                            expected: expectedTerms,
+                            found: foundTerms
+                        }
+                    };
+                }
+                
+                return { 
+                    status: 'pass', 
+                    message: '컨텐츠 구조 및 내용 적절',
+                    details: { 
+                        contentLength: content.length,
+                        hasQuizLink: hasButton
+                    }
+                };
+            }, contentTestContainer);
+        });
+
+        // 3. 분자 데이터 정확성 검사
+        const moleculeTestContainer = document.getElementById('molecule-accuracy-test');
+        
+        runTest('분자 시각화 시스템', () => {
+            const viewer = new MoleculeViewer('test-viewer');
+            const molecules = Object.keys(viewer.molecules);
+            
+            if (molecules.length < 5) {
+                return { status: 'fail', message: '분자 데이터 부족' };
+            }
+            
+            // 각 분자 데이터 검증
+            const validationResults = molecules.map(molName => {
+                const mol = viewer.molecules[molName];
+                return {
+                    name: molName,
+                    valid: mol.atoms && mol.bonds && mol.name,
+                    atomCount: mol.atoms ? mol.atoms.length : 0,
+                    bondCount: mol.bonds ? mol.bonds.length : 0
+                };
+            });
+            
+            const invalidMolecules = validationResults.filter(r => !r.valid);
+            
+            if (invalidMolecules.length > 0) {
+                return { 
+                    status: 'fail', 
+                    message: `${invalidMolecules.length}개 분자 데이터 오류`,
+                    details: invalidMolecules
+                };
+            }
+            
+            // 화학적 정확성 검사
+            const chemicalChecks = {
+                'H2O': { expectedAtoms: 3, expectedBonds: 2 },
+                'CH4': { expectedAtoms: 5, expectedBonds: 4 },
+                'CO2': { expectedAtoms: 3, expectedBonds: 2 },
+                'NH3': { expectedAtoms: 4, expectedBonds: 3 }
+            };
+            
+            const chemicalErrors = [];
+            Object.entries(chemicalChecks).forEach(([molName, expected]) => {
+                const mol = viewer.molecules[molName];
+                if (mol) {
+                    if (mol.atoms.length !== expected.expectedAtoms) {
+                        chemicalErrors.push(`${molName}: 원자 수 오류`);
+                    }
+                    if (mol.bonds.length !== expected.expectedBonds) {
+                        chemicalErrors.push(`${molName}: 결합 수 오류`);
+                    }
+                }
+            });
+            
+            if (chemicalErrors.length > 0) {
+                return { 
+                    status: 'fail', 
+                    message: '화학적 오류 발견',
+                    details: chemicalErrors
+                };
+            }
+            
+            return { 
+                status: 'pass', 
+                message: `${molecules.length}개 분자 데이터 검증 완료`,
+                details: validationResults
+            };
+        }, moleculeTestContainer);
+
+        // 4. 향상된 문제 유형 테스트
+        const enhancedTestContainer = document.getElementById('enhanced-problems-test');
+        
+        ['matching', 'drag-drop', 'sequence', 'simulation', 'drawing'].forEach(type => {
+            runTest(`${type} 문제 유형`, () => {
+                try {
+                    const problem = generateEnhancedProblem(type, 'medium');
+                    
+                    if (!problem || !problem.type) {
+                        return { status: 'fail', message: '문제 생성 실패' };
+                    }
+                    
+                    // 필수 속성 확인
+                    const requiredFields = {
+                        'matching': ['leftItems', 'rightItems', 'correctPairs'],
+                        'drag-drop': ['question'],
+                        'sequence': ['steps', 'correctOrder'],
+                        'simulation': ['question'],
+                        'drawing': ['targetMolecule', 'requiredElements']
+                    };
+                    
+                    const required = requiredFields[type] || ['question'];
+                    const missing = required.filter(field => !problem[field]);
+                    
+                    if (missing.length > 0) {
+                        return { 
+                            status: 'fail', 
+                            message: `필수 필드 누락: ${missing.join(', ')}`,
+                            details: problem
+                        };
+                    }
+                    
+                    return { 
+                        status: 'pass', 
+                        message: '향상된 문제 생성 성공',
+                        details: { 
+                            type: problem.type,
+                            points: problem.points,
+                            hasQuestion: !!problem.question
+                        }
+                    };
+                } catch (error) {
+                    return { status: 'fail', message: error.message };
+                }
+            }, enhancedTestContainer);
+        });
+
+        // 5. 게임화 시스템 테스트
+        const gamificationTestContainer = document.getElementById('gamification-test');
+        
+        runTest('게임 시스템 초기화', () => {
+            if (!gameSystem) {
+                return { status: 'fail', message: 'gameSystem 객체 없음' };
+            }
+            
+            const playerData = gameSystem.playerData;
+            if (!playerData || !playerData.username) {
+                return { status: 'fail', message: '플레이어 데이터 초기화 실패' };
+            }
+            
+            return { 
+                status: 'pass', 
+                message: '게임 시스템 초기화 성공',
+                details: {
+                    username: playerData.username,
+                    level: playerData.level,
+                    experience: playerData.experience
+                }
+            };
+        }, gamificationTestContainer);
+        
+        runTest('레벨 시스템', () => {
+            const levelSystem = gameSystem.levelSystem;
+            if (!levelSystem || !levelSystem.levels) {
+                return { status: 'fail', message: '레벨 시스템 없음' };
+            }
+            
+            // 레벨 1-10 검증
+            const level10 = levelSystem.levels.find(l => l.level === 10);
+            if (!level10 || !level10.rewards) {
+                return { status: 'fail', message: '레벨 데이터 불완전' };
+            }
+            
+            return { 
+                status: 'pass', 
+                message: '레벨 시스템 정상',
+                details: {
+                    totalLevels: levelSystem.levels.length,
+                    level10Rewards: level10.rewards
+                }
+            };
+        }, gamificationTestContainer);
+        
+        runTest('업적 시스템', () => {
+            const achievements = gameSystem.achievements.achievements;
+            if (!achievements || achievements.length < 5) {
+                return { status: 'fail', message: '업적 데이터 부족' };
+            }
+            
+            const hasAllTypes = achievements.some(a => a.id === 'first_correct') &&
+                               achievements.some(a => a.id === 'chemistry_master');
+            
+            if (!hasAllTypes) {
+                return { status: 'warning', message: '핵심 업적 누락' };
+            }
+            
+            return { 
+                status: 'pass', 
+                message: `${achievements.length}개 업적 확인`,
+                details: {
+                    achievementIds: achievements.map(a => a.id)
+                }
+            };
+        }, gamificationTestContainer);
+
+        // 6. 전체 시스템 통합 테스트
+        const integrationTestContainer = document.getElementById('integration-test');
+        
+        runTest('전역 함수 접근성', () => {
+            const requiredFunctions = [
+                'generateProblem',
+                'generateTopicProblem',
+                'getTopicContent',
+                'generateEnhancedProblem',
+                'addGameExperience',
+                'addGameCoins'
+            ];
+            
+            const missing = requiredFunctions.filter(fn => typeof window[fn] !== 'function');
+            
+            if (missing.length > 0) {
+                return { 
+                    status: 'fail', 
+                    message: `누락된 전역 함수: ${missing.join(', ')}`
+                };
+            }
+            
+            return { 
+                status: 'pass', 
+                message: '모든 필수 전역 함수 사용 가능'
+            };
+        }, integrationTestContainer);
+        
+        runTest('문제 풀이 시뮬레이션', () => {
+            try {
+                // 문제 생성
+                const problem = generateProblem('easy');
+                
+                // 정답 확인 시뮬레이션
+                if (problem.type === 'multiple-choice') {
+                    const userAnswer = problem.correctIndex;
+                    const isCorrect = checkUserAnswer(userAnswer.toString(), problem);
+                    
+                    if (typeof isCorrect !== 'boolean') {
+                        return { status: 'fail', message: '정답 확인 함수 오류' };
+                    }
+                    
+                    return { 
+                        status: 'pass', 
+                        message: '문제 풀이 시뮬레이션 성공',
+                        details: {
+                            problemType: problem.type,
+                            question: problem.question.substring(0, 50) + '...',
+                            correctlyAnswered: isCorrect
+                        }
+                    };
+                }
+                
+                return { status: 'pass', message: '문제 생성 성공' };
+            } catch (error) {
+                return { status: 'fail', message: error.message };
+            }
+        }, integrationTestContainer);
+
+        // 화학 공식 및 표기 검증
+        runTest('화학식 표기 정확성', () => {
+            const formulas = [
+                { formula: 'H₂O', name: '물' },
+                { formula: 'CO₂', name: '이산화탄소' },
+                { formula: 'NH₃', name: '암모니아' },
+                { formula: 'CH₄', name: '메탄' },
+                { formula: 'NaCl', name: '염화나트륨' }
+            ];
+            
+            const errors = [];
+            
+            // 문제에서 화학식 확인
+            const problem = dynamicProblemGenerators.formulaProblem();
+            if (problem && problem.answer) {
+                // 아래첨자가 올바르게 처리되는지 확인
+                const hasSubscript = problem.explanation && problem.explanation.includes('₂');
+                if (!hasSubscript && problem.explanation.includes('H2O')) {
+                    errors.push('화학식 아래첨자 표기 오류');
+                }
+            }
+            
+            if (errors.length > 0) {
+                return { 
+                    status: 'warning', 
+                    message: '화학식 표기 개선 필요',
+                    details: errors
+                };
+            }
+            
+            return { 
+                status: 'pass', 
+                message: '화학식 표기 정확'
+            };
+        }, integrationTestContainer);
+
+        // 최종 보고서 생성
+        setTimeout(() => {
+            const finalReport = document.getElementById('final-report');
+            const successRate = (testResults.passed / testResults.total * 100).toFixed(1);
+            
+            // 요약 통계 표시
+            document.getElementById('test-summary').innerHTML = `
+                <div class="stat-box">
+                    <h3>${testResults.total}</h3>
+                    <p>전체 테스트</p>
+                </div>
+                <div class="stat-box" style="background: #c8e6c9;">
+                    <h3>${testResults.passed}</h3>
+                    <p>성공</p>
+                </div>
+                <div class="stat-box" style="background: #fff9c4;">
+                    <h3>${testResults.warnings}</h3>
+                    <p>경고</p>
+                </div>
+                <div class="stat-box" style="background: #ffcdd2;">
+                    <h3>${testResults.failed}</h3>
+                    <p>실패</p>
+                </div>
+            `;
+            
+            // 성공률 진행 막대
+            const progressBar = `
+                <div style="margin: 20px 0;">
+                    <h3>전체 성공률: ${successRate}%</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${successRate}%;"></div>
+                    </div>
+                </div>
+            `;
+            
+            // 오류 목록
+            let errorSection = '';
+            if (testResults.errors.length > 0) {
+                errorSection = `
+                    <div class="error-list">
+                        <h3>발견된 오류 (${testResults.errors.length}개)</h3>
+                        <ul>
+                            ${testResults.errors.map(e => 
+                                `<li><strong>${e.test}:</strong> ${e.error}</li>`
+                            ).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            // 권장사항
+            const recommendations = [];
+            if (testResults.warnings > 0) {
+                recommendations.push('경고 사항들을 검토하여 개선하시기 바랍니다.');
+            }
+            if (testResults.failed > 0) {
+                recommendations.push('실패한 테스트들을 우선적으로 수정해야 합니다.');
+            }
+            if (successRate < 80) {
+                recommendations.push('전체적인 시스템 안정성 개선이 필요합니다.');
+            } else if (successRate === 100) {
+                recommendations.push('모든 테스트를 통과했습니다! 🎉');
+            }
+            
+            finalReport.innerHTML = `
+                ${progressBar}
+                ${errorSection}
+                <div style="margin-top: 20px;">
+                    <h3>권장사항</h3>
+                    <ul>
+                        ${recommendations.map(r => `<li>${r}</li>`).join('')}
+                    </ul>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #e1f5fe; border-radius: 5px;">
+                    <h4>테스트 요약</h4>
+                    <p>화학 학습 프로그램의 주요 구성 요소들을 종합적으로 테스트한 결과, 
+                    전체 ${testResults.total}개 테스트 중 ${testResults.passed}개가 성공했습니다.</p>
+                    <p>프로그램은 ${successRate >= 80 ? '안정적으로 작동' : '일부 개선이 필요'}하며, 
+                    중학생들이 화학을 학습하는 데 ${successRate >= 90 ? '매우 적합' : '적합'}한 상태입니다.</p>
+                </div>
+            `;
+        }, 100);
+    </script>
+</body>
+</html>

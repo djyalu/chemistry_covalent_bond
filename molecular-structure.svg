@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
-    <rect width="400" height="300" fill="#F3E5F5"/>
-    <circle cx="200" cy="120" r="30" fill="#9C27B0"/>
-    <circle cx="140" cy="180" r="25" fill="#7B1FA2"/>
-    <circle cx="260" cy="180" r="25" fill="#7B1FA2"/>
-    <line x1="200" y1="150" x2="140" y2="180" stroke="#6A1B9A" stroke-width="4"/>
-    <line x1="200" y1="150" x2="260" y2="180" stroke="#6A1B9A" stroke-width="4"/>
-    <text x="200" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#4A148C">분자구조</text>
-  </svg>

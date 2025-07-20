@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>화학 학습 프로그램 - 전체 테스트 실행</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .test-dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        .test-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #2196F3;
+        }
+        .test-card h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .test-card .icon {
+            font-size: 1.5rem;
+        }
+        .test-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .test-button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .test-button:hover {
+            background: linear-gradient(135deg, #45a049, #3d8b40);
+            transform: scale(1.02);
+        }
+        .test-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .status-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .status-indicator.running {
+            background: #ff9800;
+            animation: pulse 1.5s infinite;
+        }
+        .status-indicator.passed {
+            background: #4CAF50;
+        }
+        .status-indicator.failed {
+            background: #f44336;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .results-section {
+            margin: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+        .results-section.show {
+            display: block;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .stat-box h4 {
+            margin: 0 0 10px 0;
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .stat-box .number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        .stat-box.total .number { color: #2196F3; }
+        .stat-box.passed .number { color: #4CAF50; }
+        .stat-box.warnings .number { color: #ff9800; }
+        .stat-box.failed .number { color: #f44336; }
+        .test-log {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #ddd;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        .log-entry.info { background: #e3f2fd; color: #1565c0; }
+        .log-entry.success { background: #e8f5e9; color: #2e7d32; }
+        .log-entry.warning { background: #fff3e0; color: #ef6c00; }
+        .log-entry.error { background: #ffebee; color: #c62828; }
+        .run-all-section {
+            margin: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .run-all-button {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        .run-all-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(33,150,243,0.4);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-dashboard">
+        <div class="header">
+            <h1>🧪 화학 학습 프로그램 테스트 대시보드</h1>
+            <p>모든 시스템 구성 요소를 종합적으로 검증합니다</p>
+            <div id="overall-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <p id="progress-text">테스트 준비 완료</p>
+            </div>
+        </div>
+
+        <div class="run-all-section">
+            <h2>🚀 전체 테스트 실행</h2>
+            <p>모든 테스트를 한 번에 실행하고 종합 보고서를 생성합니다</p>
+            <button class="run-all-button" onclick="runAllTests()">전체 테스트 실행</button>
+            <button class="run-all-button" onclick="exportResults()">결과 내보내기</button>
+        </div>
+
+        <div class="test-grid">
+            <div class="test-card" id="card-basic">
+                <div class="status-indicator" id="status-basic"></div>
+                <h3><span class="icon">⚙️</span>기본 시스템 테스트</h3>
+                <p>핵심 함수들과 기본 구조의 정상 작동을 확인합니다</p>
+                <button class="test-button" onclick="runTest('basic')">테스트 실행</button>
+            </div>
+
+            <div class="test-card" id="card-problems">
+                <div class="status-indicator" id="status-problems"></div>
+                <h3><span class="icon">📝</span>문제 생성 시스템</h3>
+                <p>난이도별 문제 생성과 정답 확인 로직을 검증합니다</p>
+                <button class="test-button" onclick="runTest('problems')">테스트 실행</button>
+            </div>
+
+            <div class="test-card" id="card-content">
+                <div class="status-indicator" id="status-content"></div>
+                <h3><span class="icon">📚</span>학습 콘텐츠 검증</h3>
+                <p>각 주제별 학습 자료의 과학적 정확성을 검사합니다</p>
+                <button class="test-button" onclick="runTest('content')">테스트 실행</button>
+            </div>
+
+            <div class="test-card" id="card-molecules">
+                <div class="status-indicator" id="status-molecules"></div>
+                <h3><span class="icon">🔬</span>분자 데이터 정확성</h3>
+                <p>분자 구조와 시각화 데이터의 화학적 정확성을 확인합니다</p>
+                <button class="test-button" onclick="runTest('molecules')">테스트 실행</button>
+            </div>
+
+            <div class="test-card" id="card-enhanced">
+                <div class="status-indicator" id="status-enhanced"></div>
+                <h3><span class="icon">✨</span>향상된 문제 유형</h3>
+                <p>매칭, 드래그앤드롭 등 고급 문제 유형들을 테스트합니다</p>
+                <button class="test-button" onclick="runTest('enhanced')">테스트 실행</button>
+            </div>
+
+            <div class="test-card" id="card-gamification">
+                <div class="status-indicator" id="status-gamification"></div>
+                <h3><span class="icon">🎮</span>게임화 시스템</h3>
+                <p>레벨링, 업적, 보상 시스템의 정상 작동을 확인합니다</p>
+                <button class="test-button" onclick="runTest('gamification')">테스트 실행</button>
+            </div>
+
+            <div class="test-card" id="card-integration">
+                <div class="status-indicator" id="status-integration"></div>
+                <h3><span class="icon">🔗</span>통합 테스트</h3>
+                <p>전체 시스템의 연동성과 실제 사용 시나리오를 검증합니다</p>
+                <button class="test-button" onclick="runTest('integration')">테스트 실행</button>
+            </div>
+
+            <div class="test-card" id="card-science">
+                <div class="status-indicator" id="status-science"></div>
+                <h3><span class="icon">🧬</span>과학적 정확성</h3>
+                <p>모든 화학 정보의 과학적 정확성을 심층 검증합니다</p>
+                <button class="test-button" onclick="runTest('science')">테스트 실행</button>
+            </div>
+        </div>
+
+        <div class="results-section" id="results-section">
+            <h2>📊 테스트 결과 요약</h2>
+            <div class="summary-stats">
+                <div class="stat-box total">
+                    <h4>전체 테스트</h4>
+                    <p class="number" id="total-tests">0</p>
+                </div>
+                <div class="stat-box passed">
+                    <h4>성공</h4>
+                    <p class="number" id="passed-tests">0</p>
+                </div>
+                <div class="stat-box warnings">
+                    <h4>경고</h4>
+                    <p class="number" id="warning-tests">0</p>
+                </div>
+                <div class="stat-box failed">
+                    <h4>실패</h4>
+                    <p class="number" id="failed-tests">0</p>
+                </div>
+            </div>
+            
+            <h3>📝 테스트 로그</h3>
+            <div class="test-log" id="test-log"></div>
+        </div>
+    </div>
+
+    <!-- 모든 스크립트 로드 -->
+    <script src="app.js"></script>
+    <script src="problems.js"></script>
+    <script src="content.js"></script>
+    <script src="molecule-viewer.js"></script>
+    <script src="enhanced-problems.js"></script>
+    <script src="gamification.js"></script>
+
+    <script>
+        // 테스트 상태 관리
+        const testResults = {
+            basic: null,
+            problems: null,
+            content: null,
+            molecules: null,
+            enhanced: null,
+            gamification: null,
+            integration: null,
+            science: null
+        };
+
+        const testStats = {
+            total: 0,
+            passed: 0,
+            warnings: 0,
+            failed: 0
+        };
+
+        // 로깅 함수
+        function addToLog(message, type = 'info') {
+            const log = document.getElementById('test-log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // 상태 업데이트 함수
+        function updateStatus(testName, status) {
+            const indicator = document.getElementById(`status-${testName}`);
+            indicator.className = `status-indicator ${status}`;
+            
+            if (status !== 'running') {
+                testResults[testName] = status;
+                updateOverallProgress();
+            }
+        }
+
+        // 전체 진행률 업데이트
+        function updateOverallProgress() {
+            const completed = Object.values(testResults).filter(r => r !== null).length;
+            const total = Object.keys(testResults).length;
+            const progress = (completed / total) * 100;
+            
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = 
+                `진행률: ${Math.round(progress)}% (${completed}/${total})`;
+
+            if (completed === total) {
+                generateFinalReport();
+            }
+        }
+
+        // 통계 업데이트
+        function updateStats(passed, warnings, failed) {
+            testStats.total += passed + warnings + failed;
+            testStats.passed += passed;
+            testStats.warnings += warnings;
+            testStats.failed += failed;
+
+            document.getElementById('total-tests').textContent = testStats.total;
+            document.getElementById('passed-tests').textContent = testStats.passed;
+            document.getElementById('warning-tests').textContent = testStats.warnings;
+            document.getElementById('failed-tests').textContent = testStats.failed;
+
+            document.getElementById('results-section').classList.add('show');
+        }
+
+        // 개별 테스트 실행 함수들
+        function runTest(testName) {
+            addToLog(`${testName} 테스트 시작`, 'info');
+            updateStatus(testName, 'running');
+            
+            // 버튼 비활성화
+            const button = document.querySelector(`#card-${testName} .test-button`);
+            button.disabled = true;
+            button.textContent = '실행 중...';
+
+            setTimeout(() => {
+                try {
+                    let result;
+                    switch(testName) {
+                        case 'basic':
+                            result = runBasicTests();
+                            break;
+                        case 'problems':
+                            result = runProblemTests();
+                            break;
+                        case 'content':
+                            result = runContentTests();
+                            break;
+                        case 'molecules':
+                            result = runMoleculeTests();
+                            break;
+                        case 'enhanced':
+                            result = runEnhancedTests();
+                            break;
+                        case 'gamification':
+                            result = runGamificationTests();
+                            break;
+                        case 'integration':
+                            result = runIntegrationTests();
+                            break;
+                        case 'science':
+                            result = runScienceTests();
+                            break;
+                    }
+
+                    // 결과 처리
+                    const status = result.failed > 0 ? 'failed' : 
+                                  result.warnings > 0 ? 'warning' : 'passed';
+                    
+                    updateStatus(testName, status);
+                    updateStats(result.passed, result.warnings, result.failed);
+                    
+                    addToLog(
+                        `${testName} 테스트 완료 - 성공: ${result.passed}, 경고: ${result.warnings}, 실패: ${result.failed}`,
+                        status === 'failed' ? 'error' : status === 'warning' ? 'warning' : 'success'
+                    );
+
+                } catch (error) {
+                    updateStatus(testName, 'failed');
+                    addToLog(`${testName} 테스트 오류: ${error.message}`, 'error');
+                    updateStats(0, 0, 1);
+                } finally {
+                    // 버튼 재활성화
+                    button.disabled = false;
+                    button.textContent = '테스트 실행';
+                }
+            }, 1000 + Math.random() * 2000); // 시뮬레이션 지연
+        }
+
+        // 기본 시스템 테스트
+        function runBasicTests() {
+            let passed = 0, warnings = 0, failed = 0;
+
+            // 필수 함수 존재 확인
+            const requiredFunctions = [
+                'generateProblem', 'generateTopicProblem', 'getTopicContent',
+                'checkUserAnswer', 'switchSection', 'showTopic'
+            ];
+
+            requiredFunctions.forEach(funcName => {
+                if (typeof window[funcName] === 'function') {
+                    passed++;
+                } else {
+                    failed++;
+                    addToLog(`필수 함수 누락: ${funcName}`, 'error');
+                }
+            });
+
+            // 전역 객체 확인
+            if (typeof gameSystem !== 'undefined') {
+                passed++;
+            } else {
+                failed++;
+                addToLog('gameSystem 객체 누락', 'error');
+            }
+
+            return { passed, warnings, failed };
+        }
+
+        // 문제 생성 테스트
+        function runProblemTests() {
+            let passed = 0, warnings = 0, failed = 0;
+
+            try {
+                // 각 난이도별 문제 생성 테스트
+                ['easy', 'medium', 'hard'].forEach(difficulty => {
+                    const problem = generateProblem(difficulty);
+                    if (problem && problem.question && problem.type) {
+                        passed++;
+                    } else {
+                        failed++;
+                        addToLog(`${difficulty} 난이도 문제 생성 실패`, 'error');
+                    }
+                });
+
+                // 주제별 문제 생성 테스트
+                ['covalent', 'ionic', 'molecular', 'bonding'].forEach(topic => {
+                    try {
+                        const problem = generateTopicProblem(topic, 'medium');
+                        if (problem && problem.question) {
+                            passed++;
+                        } else {
+                            warnings++;
+                            addToLog(`${topic} 주제 문제 생성 불완전`, 'warning');
+                        }
+                    } catch (error) {
+                        failed++;
+                        addToLog(`${topic} 주제 문제 생성 오류: ${error.message}`, 'error');
+                    }
+                });
+
+                // 정답 확인 테스트
+                const testProblem = generateProblem('easy');
+                if (testProblem.type === 'multiple-choice') {
+                    const isCorrect = checkUserAnswer(testProblem.correctIndex.toString(), testProblem);
+                    if (isCorrect === true) {
+                        passed++;
+                    } else {
+                        failed++;
+                        addToLog('정답 확인 로직 오류', 'error');
+                    }
+                }
+
+            } catch (error) {
+                failed++;
+                addToLog(`문제 생성 시스템 오류: ${error.message}`, 'error');
+            }
+
+            return { passed, warnings, failed };
+        }
+
+        // 학습 콘텐츠 테스트
+        function runContentTests() {
+            let passed = 0, warnings = 0, failed = 0;
+
+            const topics = ['covalent', 'ionic', 'molecular', 'bonding'];
+            
+            topics.forEach(topic => {
+                const content = getTopicContent(topic);
+                
+                if (!content || content.includes('준비 중')) {
+                    failed++;
+                    addToLog(`${topic} 콘텐츠 누락`, 'error');
+                    return;
+                }
+
+                // 기본 구조 확인
+                if (content.includes('<h2>') && content.includes('<p>')) {
+                    passed++;
+                } else {
+                    warnings++;
+                    addToLog(`${topic} 콘텐츠 구조 불완전`, 'warning');
+                }
+
+                // 과학 용어 확인
+                const scientificTerms = {
+                    covalent: ['전자', '공유', '결합'],
+                    ionic: ['이온', '양이온', '음이온'],
+                    molecular: ['분자', '구조', 'VSEPR'],
+                    bonding: ['결합', '에너지', '세기']
+                };
+
+                const terms = scientificTerms[topic];
+                const foundTerms = terms.filter(term => content.includes(term));
+                
+                if (foundTerms.length >= terms.length * 0.8) {
+                    passed++;
+                } else {
+                    warnings++;
+                    addToLog(`${topic} 주요 용어 부족`, 'warning');
+                }
+            });
+
+            return { passed, warnings, failed };
+        }
+
+        // 분자 데이터 테스트
+        function runMoleculeTests() {
+            let passed = 0, warnings = 0, failed = 0;
+
+            try {
+                const viewer = new MoleculeViewer('test');
+                const molecules = Object.keys(viewer.molecules);
+
+                if (molecules.length >= 5) {
+                    passed++;
+                } else {
+                    failed++;
+                    addToLog('분자 데이터 부족', 'error');
+                }
+
+                // 각 분자 데이터 검증
+                const expectedData = {
+                    'H2O': { atoms: 3, bonds: 2 },
+                    'CH4': { atoms: 5, bonds: 4 },
+                    'CO2': { atoms: 3, bonds: 2 },
+                    'NH3': { atoms: 4, bonds: 3 }
+                };
+
+                Object.entries(expectedData).forEach(([molName, expected]) => {
+                    const mol = viewer.molecules[molName];
+                    if (mol) {
+                        if (mol.atoms.length === expected.atoms && mol.bonds.length === expected.bonds) {
+                            passed++;
+                        } else {
+                            failed++;
+                            addToLog(`${molName} 구조 데이터 오류`, 'error');
+                        }
+                    } else {
+                        failed++;
+                        addToLog(`${molName} 분자 데이터 없음`, 'error');
+                    }
+                });
+
+            } catch (error) {
+                failed++;
+                addToLog(`분자 시스템 오류: ${error.message}`, 'error');
+            }
+
+            return { passed, warnings, failed };
+        }
+
+        // 향상된 문제 유형 테스트
+        function runEnhancedTests() {
+            let passed = 0, warnings = 0, failed = 0;
+
+            const problemTypes = ['matching', 'drag-drop', 'sequence', 'simulation', 'drawing'];
+            
+            problemTypes.forEach(type => {
+                try {
+                    const problem = generateEnhancedProblem(type, 'medium');
+                    if (problem && problem.type && problem.question) {
+                        passed++;
+                    } else {
+                        failed++;
+                        addToLog(`${type} 문제 생성 실패`, 'error');
+                    }
+                } catch (error) {
+                    failed++;
+                    addToLog(`${type} 문제 오류: ${error.message}`, 'error');
+                }
+            });
+
+            return { passed, warnings, failed };
+        }
+
+        // 게임화 시스템 테스트
+        function runGamificationTests() {
+            let passed = 0, warnings = 0, failed = 0;
+
+            try {
+                if (gameSystem && gameSystem.playerData) {
+                    passed++;
+                } else {
+                    failed++;
+                    addToLog('게임 시스템 초기화 실패', 'error');
+                }
+
+                if (gameSystem.levelSystem && gameSystem.levelSystem.levels) {
+                    passed++;
+                } else {
+                    failed++;
+                    addToLog('레벨 시스템 없음', 'error');
+                }
+
+                if (gameSystem.achievements && gameSystem.achievements.achievements) {
+                    passed++;
+                } else {
+                    failed++;
+                    addToLog('업적 시스템 없음', 'error');
+                }
+
+                // 경험치 추가 테스트
+                const initialExp = gameSystem.playerData.experience;
+                gameSystem.addExperience(10);
+                if (gameSystem.playerData.experience === initialExp + 10) {
+                    passed++;
+                } else {
+                    failed++;
+                    addToLog('경험치 시스템 오류', 'error');
+                }
+
+            } catch (error) {
+                failed++;
+                addToLog(`게임화 시스템 오류: ${error.message}`, 'error');
+            }
+
+            return { passed, warnings, failed };
+        }
+
+        // 통합 테스트
+        function runIntegrationTests() {
+            let passed = 0, warnings = 0, failed = 0;
+
+            try {
+                // 문제 풀이 시뮬레이션
+                const problem = generateProblem('easy');
+                if (problem.type === 'multiple-choice') {
+                    const result = checkUserAnswer(problem.correctIndex.toString(), problem);
+                    if (result === true) {
+                        passed++;
+                    } else {
+                        failed++;
+                        addToLog('문제 풀이 통합 실패', 'error');
+                    }
+                }
+
+                // 게임 시스템 연동
+                if (typeof addGameExperience === 'function') {
+                    addGameExperience(5);
+                    passed++;
+                } else {
+                    warnings++;
+                    addToLog('게임 경험치 함수 없음', 'warning');
+                }
+
+                // 분자 뷰어 연동
+                const viewer = new MoleculeViewer('integration-test');
+                viewer.displayMolecule('H2O');
+                passed++;
+
+            } catch (error) {
+                failed++;
+                addToLog(`통합 테스트 오류: ${error.message}`, 'error');
+            }
+
+            return { passed, warnings, failed };
+        }
+
+        // 과학적 정확성 테스트
+        function runScienceTests() {
+            let passed = 0, warnings = 0, failed = 0;
+
+            // 화학식 검증
+            const formulas = ['H₂O', 'CO₂', 'NH₃', 'CH₄', 'NaCl'];
+            formulas.forEach(formula => {
+                // 모든 콘텐츠에서 해당 화학식 검색
+                const topics = ['covalent', 'ionic', 'molecular', 'bonding'];
+                let found = false;
+                
+                topics.forEach(topic => {
+                    const content = getTopicContent(topic);
+                    if (content.includes(formula)) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    passed++;
+                } else {
+                    warnings++;
+                    addToLog(`화학식 ${formula} 사용 확인 필요`, 'warning');
+                }
+            });
+
+            // 과학적 오류 검사
+            const errorPatterns = [
+                { pattern: /설탕.*이온/, error: '설탕을 이온화합물로 잘못 분류' },
+                { pattern: /물.*이온결합/, error: '물을 이온결합으로 잘못 설명' }
+            ];
+
+            const allContent = ['covalent', 'ionic', 'molecular', 'bonding']
+                .map(topic => getTopicContent(topic))
+                .join(' ');
+
+            errorPatterns.forEach(check => {
+                if (check.pattern.test(allContent)) {
+                    failed++;
+                    addToLog(check.error, 'error');
+                } else {
+                    passed++;
+                }
+            });
+
+            return { passed, warnings, failed };
+        }
+
+        // 전체 테스트 실행
+        function runAllTests() {
+            addToLog('전체 테스트 시작', 'info');
+            
+            // 모든 테스트 초기화
+            Object.keys(testResults).forEach(key => {
+                testResults[key] = null;
+                updateStatus(key, 'running');
+            });
+
+            // 순차적으로 테스트 실행
+            const testNames = Object.keys(testResults);
+            let currentIndex = 0;
+
+            function runNextTest() {
+                if (currentIndex < testNames.length) {
+                    const testName = testNames[currentIndex];
+                    runTest(testName);
+                    currentIndex++;
+                    setTimeout(runNextTest, 2000); // 2초 간격으로 실행
+                }
+            }
+
+            runNextTest();
+        }
+
+        // 최종 보고서 생성
+        function generateFinalReport() {
+            const successRate = (testStats.passed / testStats.total * 100).toFixed(1);
+            
+            addToLog('='.repeat(50), 'info');
+            addToLog('전체 테스트 완료', 'success');
+            addToLog(`성공률: ${successRate}%`, 'info');
+            addToLog(`전체: ${testStats.total}, 성공: ${testStats.passed}, 경고: ${testStats.warnings}, 실패: ${testStats.failed}`, 'info');
+            
+            if (testStats.failed === 0) {
+                addToLog('🎉 모든 핵심 기능이 정상 작동합니다!', 'success');
+            } else if (testStats.failed <= 3) {
+                addToLog('⚠️ 일부 개선이 필요하지만 전반적으로 양호합니다.', 'warning');
+            } else {
+                addToLog('❌ 여러 문제가 발견되었습니다. 수정이 필요합니다.', 'error');
+            }
+        }
+
+        // 결과 내보내기
+        function exportResults() {
+            const report = {
+                timestamp: new Date().toISOString(),
+                testResults: testResults,
+                statistics: testStats,
+                logs: Array.from(document.querySelectorAll('.log-entry')).map(entry => entry.textContent)
+            };
+
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `chemistry-test-report-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            addToLog('테스트 보고서를 내보냈습니다', 'success');
+        }
+
+        // 초기화
+        addToLog('테스트 대시보드 준비 완료', 'success');
+        addToLog('개별 테스트를 실행하거나 "전체 테스트 실행" 버튼을 클릭하세요', 'info');
+    </script>
+</body>
+</html>

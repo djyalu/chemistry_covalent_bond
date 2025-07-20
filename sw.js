@@ -1,5 +1,5 @@
 // Service Worker for offline support
-const CACHE_NAME = 'chemistry-app-v2';
+const CACHE_NAME = 'chemistry-app-v3';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -12,17 +12,8 @@ const urlsToCache = [
     '/gamification.js',
     '/enhanced-styles.css',
     '/api/progress.json',
-    // 폰트 및 아이콘
-    'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap',
-    // 아이콘 및 이미지
-    '/icon-192.svg',
-    '/badge-72.svg',
-    '/checkmark.svg',
-    '/xmark.svg',
-    '/covalent-bonds.svg',
-    '/ionic-compounds.svg',
-    '/molecular-structure.svg',
-    '/bond-strength.svg'
+    // 폰트
+    'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap'
 ];
 
 // 설치 이벤트
@@ -148,8 +139,8 @@ async function syncProgress() {
 self.addEventListener('push', event => {
     const options = {
         body: event.data ? event.data.text() : '새로운 화학 문제가 준비되었습니다!',
-        icon: '/icon-192.svg',
-        badge: '/badge-72.svg',
+        icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>",
+        badge: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔔</text></svg>",
         vibrate: [100, 50, 100],
         data: {
             dateOfArrival: Date.now(),
@@ -159,12 +150,12 @@ self.addEventListener('push', event => {
             {
                 action: 'explore',
                 title: '학습하기',
-                icon: '/checkmark.svg'
+                icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>"
             },
             {
                 action: 'close',
                 title: '닫기',
-                icon: '/xmark.svg'
+                icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❌</text></svg>"
             }
         ]
     };

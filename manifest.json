@@ -9,45 +9,10 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon-72.svg",
-      "sizes": "72x72",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/icon-96.svg",
-      "sizes": "96x96",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/icon-128.svg",
-      "sizes": "128x128",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/icon-144.svg",
-      "sizes": "144x144",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/icon-152.svg",
-      "sizes": "152x152",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/icon-192.svg",
-      "sizes": "192x192",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>",
+      "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-384.svg",
-      "sizes": "384x384",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/icon-512.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml"
     }
   ],
   "categories": ["education", "kids"],
@@ -69,14 +34,14 @@
       "short_name": "문제",
       "description": "바로 문제 풀기 시작",
       "url": "/?section=practice",
-      "icons": [{ "src": "/icon-96.svg", "sizes": "96x96" }]
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>", "sizes": "any" }]
     },
     {
       "name": "학습하기",
       "short_name": "학습",
       "description": "학습 콘텐츠 보기",
       "url": "/?section=learn",
-      "icons": [{ "src": "/icon-96.svg", "sizes": "96x96" }]
+      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>", "sizes": "any" }]
     }
   ],
   "prefer_related_applications": false

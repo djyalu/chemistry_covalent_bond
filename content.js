@@ -266,15 +266,15 @@ const topicContents = {
                     <div class="energy-bars">
                         <div class="energy-bar">
                             <div class="bar" style="width: 40%"></div>
-                            <span>C-C 단일결합: 348 kJ/mol</span>
+                            <span>C-C 단일결합: 347 kJ/mol</span>
                         </div>
                         <div class="energy-bar">
                             <div class="bar" style="width: 70%"></div>
-                            <span>C=C 이중결합: 614 kJ/mol</span>
+                            <span>C=C 이중결합: 602 kJ/mol</span>
                         </div>
                         <div class="energy-bar">
                             <div class="bar" style="width: 95%"></div>
-                            <span>C≡C 삼중결합: 839 kJ/mol</span>
+                            <span>C≡C 삼중결합: 835 kJ/mol</span>
                         </div>
                     </div>
                 </div>
@@ -318,17 +318,17 @@ const topicContents = {
                         <tr>
                             <td>C-C</td>
                             <td>1.54 Å</td>
-                            <td>348 kJ/mol</td>
+                            <td>347 kJ/mol</td>
                         </tr>
                         <tr>
                             <td>C=C</td>
                             <td>1.34 Å</td>
-                            <td>614 kJ/mol</td>
+                            <td>602 kJ/mol</td>
                         </tr>
                         <tr>
                             <td>C≡C</td>
                             <td>1.20 Å</td>
-                            <td>839 kJ/mol</td>
+                            <td>835 kJ/mol</td>
                         </tr>
                     </table>
                 </div>
