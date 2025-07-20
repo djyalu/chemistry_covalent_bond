@@ -105,6 +105,11 @@ http://localhost:8080
   - problems.js: generateProblem/generateTopicProblem 함수에 category 정보 추가
   - 문제 생성 시 category 필드가 개별 문제 객체에 포함되도록 수정
   - checkAnswer 함수에서 주제별 진도 추적 정상 작동
+- **🐛 2025-07-21 00:10: JavaScript 오류 긴급 수정**
+  - updateTopicProgress: 존재하지 않는 DOM 요소 접근 시 null 체크 추가
+  - loadNextQuestion: 함수 존재 여부 확인 후 안전한 호출
+  - 백업 문제에 category 필드 추가
+  - 함수 로딩 순서 문제 대응
 
 ### 🐛 알려진 이슈
 - Service Worker 관련 경고 (비활성화됨)
