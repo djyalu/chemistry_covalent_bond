@@ -296,12 +296,22 @@ function loadNextQuestion() {
         
         // 주제별 문제풀이인 경우
         if (currentPracticeTopic) {
-            currentQuestion = generateTopicProblem(currentPracticeTopic, userSelectedDifficulty);
+            if (typeof generateTopicProblem === 'function') {
+                currentQuestion = generateTopicProblem(currentPracticeTopic, userSelectedDifficulty);
+            } else {
+                console.error('generateTopicProblem 함수를 찾을 수 없습니다');
+                currentQuestion = null;
+            }
         }
         // 일반 문제풀이인 경우  
         else {
             // 기본 문제 생성
-            currentQuestion = generateProblem(userSelectedDifficulty);
+            if (typeof generateProblem === 'function') {
+                currentQuestion = generateProblem(userSelectedDifficulty);
+            } else {
+                console.error('generateProblem 함수를 찾을 수 없습니다');
+                currentQuestion = null;
+            }
             
             // 문제 생성 실패 시 백업 문제 사용
             if (!currentQuestion) {
@@ -313,6 +323,7 @@ function loadNextQuestion() {
                     correctIndex: 0,
                     explanation: "물 분자에서 수소와 산소는 전자를 공유하는 공유결합으로 연결되어 있습니다.",
                     hint: "원자들이 전자를 공유하는 결합을 생각해보세요.",
+                    category: "covalent", // 카테고리 추가
                     points: 10,
                     id: Date.now()
                 };
@@ -685,6 +696,12 @@ function updateProgressDisplay(progress) {
 function updateTopicProgress() {
     const topics = ['covalent', 'ionic', 'molecular', 'bonding'];
     const container = document.getElementById('topic-progress-bars');
+    
+    // 컨테이너가 존재하지 않으면 무시 (새로운 진도 시스템 사용)
+    if (!container) {
+        console.log('기존 topic-progress-bars 요소 없음 - 새 진도 시스템 사용');
+        return;
+    }
     
     container.innerHTML = topics.map(topic => {
         const progress = getTopicProgress(topic);
