@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화학 학습 프로그램 - 공유결합과 이온화합물</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 화학 학습 프로그램</h1>
+            <p class="subtitle">공유결합과 이온화합물을 재미있게 배워보아요!</p>
+        </header>
+
+        <nav class="navigation">
+            <button class="nav-btn active" data-section="learn">학습하기</button>
+            <button class="nav-btn" data-section="practice">문제풀기</button>
+            <button class="nav-btn" data-section="progress">학습진도</button>
+        </nav>
+
+        <main id="content">
+            <!-- 학습 섹션 -->
+            <section id="learn" class="section active">
+                <div class="topic-grid">
+                    <div class="topic-card" data-topic="covalent">
+                        <h3>공유결합</h3>
+                        <img src="https://via.placeholder.com/200x150/4CAF50/FFFFFF?text=공유결합" alt="공유결합">
+                        <p>원자들이 전자를 공유하여 만드는 결합</p>
+                        <button class="learn-btn" onclick="showTopic('covalent')">학습하기</button>
+                    </div>
+                    
+                    <div class="topic-card" data-topic="ionic">
+                        <h3>이온화합물</h3>
+                        <img src="https://via.placeholder.com/200x150/2196F3/FFFFFF?text=이온화합물" alt="이온화합물">
+                        <p>양이온과 음이온이 만나 만드는 화합물</p>
+                        <button class="learn-btn" onclick="showTopic('ionic')">학습하기</button>
+                    </div>
+                    
+                    <div class="topic-card" data-topic="molecular">
+                        <h3>분자 구조</h3>
+                        <img src="https://via.placeholder.com/200x150/FF9800/FFFFFF?text=분자구조" alt="분자구조">
+                        <p>분자의 3차원 구조와 VSEPR 이론</p>
+                        <button class="learn-btn" onclick="showTopic('molecular')">학습하기</button>
+                    </div>
+                    
+                    <div class="topic-card" data-topic="bonding">
+                        <h3>결합의 세기</h3>
+                        <img src="https://via.placeholder.com/200x150/9C27B0/FFFFFF?text=결합세기" alt="결합세기">
+                        <p>단일결합, 이중결합, 삼중결합의 차이</p>
+                        <button class="learn-btn" onclick="showTopic('bonding')">학습하기</button>
+                    </div>
+                </div>
+                
+                <div id="topic-content" class="topic-content" style="display:none;">
+                    <!-- 동적으로 내용이 로드됩니다 -->
+                </div>
+            </section>
+
+            <!-- 문제 풀기 섹션 -->
+            <section id="practice" class="section">
+                <div class="practice-header">
+                    <h2>문제 풀어보기</h2>
+                    <div class="difficulty-selector">
+                        <label>난이도:</label>
+                        <select id="difficulty">
+                            <option value="easy">쉬움</option>
+                            <option value="medium" selected>보통</option>
+                            <option value="hard">어려움</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="question-container" class="question-container">
+                    <div class="question-header">
+                        <span id="question-number">문제 1</span>
+                        <span id="score">점수: 0</span>
+                    </div>
+                    
+                    <div id="question-content" class="question-content">
+                        <!-- 문제가 동적으로 로드됩니다 -->
+                    </div>
+                    
+                    <div id="answer-section" class="answer-section">
+                        <!-- 답변 입력 영역 -->
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="submit-btn" class="submit-btn" onclick="checkAnswer()">정답 확인</button>
+                        <button id="next-btn" class="next-btn" onclick="loadNextQuestion()" style="display:none;">다음 문제</button>
+                        <button id="hint-btn" class="hint-btn" onclick="showHint()">힌트 보기</button>
+                    </div>
+                    
+                    <div id="feedback" class="feedback"></div>
+                </div>
+            </section>
+
+            <!-- 학습 진도 섹션 -->
+            <section id="progress" class="section">
+                <h2>나의 학습 진도</h2>
+                
+                <div class="progress-overview">
+                    <div class="stat-card">
+                        <h3>총 학습 시간</h3>
+                        <p id="total-time">0분</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>푼 문제 수</h3>
+                        <p id="total-questions">0문제</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>정답률</h3>
+                        <p id="accuracy">0%</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>최고 점수</h3>
+                        <p id="high-score">0점</p>
+                    </div>
+                </div>
+                
+                <div class="topic-progress">
+                    <h3>주제별 진도</h3>
+                    <div id="topic-progress-bars">
+                        <!-- 진도 바가 동적으로 생성됩니다 -->
+                    </div>
+                </div>
+                
+                <div class="achievements">
+                    <h3>획득한 배지</h3>
+                    <div id="achievement-list">
+                        <!-- 배지가 동적으로 표시됩니다 -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 화학 학습 프로그램. 중학생을 위한 재미있는 화학 학습!</p>
+        </footer>
+    </div>
+
+    <!-- 분자 시각화를 위한 캔버스 -->
+    <canvas id="molecule-canvas" style="display:none;"></canvas>
+    
+    <script src="app.js"></script>
+    <script src="problems.js"></script>
+    <script src="content.js"></script>
+</body>
+</html>
