@@ -560,8 +560,120 @@ const problemTemplates = {
                     type: "multiple-choice",
                     options: ["H:1, S:1, O:4", "H:2, S:1, O:4", "H:2, S:2, O:4", "H:1, S:2, O:4"],
                     correctIndex: 1,
-                    explanation: "H₂SO₄는 수소 2개, 황 1개, 산소 4개로 구성됩니다.",
-                    hint: "첨자 숫자가 각 원소의 개수를 나타냅니다."
+                    explanation: "H₂SO₄는 수소 2개, 황 1개, 산소 4개로 구성되어 있습니다.",
+                    hint: "첨자가 없으면 1개입니다."
+                },
+                {
+                    question: "원자 번호의 의미는?",
+                    type: "multiple-choice",
+                    options: ["중성자 수", "양성자 수", "전자 수", "핵자 수"],
+                    correctIndex: 1,
+                    explanation: "원자 번호는 원자핵에 있는 양성자의 개수를 나타냅니다.",
+                    hint: "원소의 정체성을 결정하는 입자를 생각해보세요."
+                },
+                {
+                    question: "동위원소란?",
+                    type: "multiple-choice",
+                    options: ["같은 전자 수", "같은 양성자 수, 다른 중성자 수", "같은 중성자 수", "같은 원자량"],
+                    correctIndex: 1,
+                    explanation: "동위원소는 양성자 수는 같지만 중성자 수가 다른 원자들입니다.",
+                    hint: "탄소-12와 탄소-14의 차이점을 생각해보세요."
+                },
+                {
+                    question: "분자량과 원자량의 관계는?",
+                    type: "multiple-choice",
+                    options: ["분자량 = 원자량의 합", "분자량 > 원자량", "분자량 < 원자량", "관계없음"],
+                    correctIndex: 0,
+                    explanation: "분자량은 분자를 구성하는 모든 원자량의 합입니다.",
+                    hint: "H₂O의 분자량 = H(1) × 2 + O(16) = 18"
+                },
+                {
+                    question: "아보가드로 수의 값은?",
+                    type: "multiple-choice",
+                    options: ["6.02 × 10²²", "6.02 × 10²³", "6.02 × 10²⁴", "6.02 × 10²⁵"],
+                    correctIndex: 1,
+                    explanation: "아보가드로 수는 6.02 × 10²³ 개/mol입니다.",
+                    hint: "1몰에 포함된 입자의 개수입니다."
+                },
+                {
+                    question: "몰(mole)의 정의는?",
+                    type: "multiple-choice",
+                    options: ["질량의 단위", "부피의 단위", "물질량의 단위", "농도의 단위"],
+                    correctIndex: 2,
+                    explanation: "몰은 물질량의 SI 기본 단위입니다.",
+                    hint: "아보가드로 수만큼의 입자를 포함하는 양입니다."
+                },
+                {
+                    question: "표준 상태(STP)에서 기체 1몰의 부피는?",
+                    type: "multiple-choice",
+                    options: ["22.4 L", "24.5 L", "20.0 L", "25.0 L"],
+                    correctIndex: 0,
+                    explanation: "STP(0℃, 1기압)에서 모든 기체 1몰의 부피는 22.4L입니다.",
+                    hint: "아보가드로의 법칙에 의한 결과입니다."
+                },
+                {
+                    question: "화학 반응식의 균형을 맞추는 이유는?",
+                    type: "multiple-choice",
+                    options: ["보기 좋게 하려고", "질량 보존 법칙 때문", "에너지 보존 때문", "속도를 빠르게 하려고"],
+                    correctIndex: 1,
+                    explanation: "질량 보존 법칙에 따라 반응 전후 원자의 개수가 같아야 합니다.",
+                    hint: "라부아지에의 질량 보존 법칙을 생각해보세요."
+                },
+                {
+                    question: "이온이란?",
+                    type: "multiple-choice",
+                    options: ["전하를 가진 원자나 분자", "중성인 원자", "방사성 원자", "큰 원자"],
+                    correctIndex: 0,
+                    explanation: "이온은 전자를 얻거나 잃어서 전하를 띠게 된 원자나 분자입니다.",
+                    hint: "Na⁺, Cl⁻와 같이 전하를 표시하는 입자들입니다."
+                },
+                {
+                    question: "화학 결합의 종류가 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["이온결합", "공유결합", "금속결합", "핵력결합"],
+                    correctIndex: 3,
+                    explanation: "핵력결합은 원자핵 내부의 힘으로 화학 결합이 아닙니다.",
+                    hint: "화학 결합은 원자가 전자가 관여하는 결합입니다."
+                },
+                {
+                    question: "산과 염기의 공통점은?",
+                    type: "multiple-choice",
+                    options: ["모두 신맛", "모두 쓴맛", "모두 전해질", "모두 기체"],
+                    correctIndex: 2,
+                    explanation: "산과 염기는 모두 물에 녹아 이온을 만드는 전해질입니다.",
+                    hint: "이온을 만들어 전기를 통하게 합니다."
+                },
+                {
+                    question: "pH 7인 용액의 성질은?",
+                    type: "multiple-choice",
+                    options: ["강산성", "약산성", "중성", "염기성"],
+                    correctIndex: 2,
+                    explanation: "pH 7은 중성을 나타내며, 순수한 물의 pH입니다.",
+                    hint: "pH 스케일에서 7은 중간값입니다."
+                },
+                {
+                    question: "산화와 환원을 구분하는 기준은?",
+                    type: "multiple-choice",
+                    options: ["색깔 변화", "전자의 이동", "온도 변화", "부피 변화"],
+                    correctIndex: 1,
+                    explanation: "산화는 전자를 잃는 것, 환원은 전자를 얻는 것입니다.",
+                    hint: "OIL RIG - Oxidation Is Loss, Reduction Is Gain"
+                },
+                {
+                    question: "촉매의 특징이 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["반응속도 증가", "활성화에너지 감소", "반응 후 소모됨", "적은 양으로 효과적"],
+                    correctIndex: 2,
+                    explanation: "촉매는 반응 후에도 그대로 남아있어 계속 사용할 수 있습니다.",
+                    hint: "촉매는 반응을 도와주지만 자신은 변하지 않습니다."
+                },
+                {
+                    question: "화학식량 단위는?",
+                    type: "multiple-choice",
+                    options: ["g", "amu (u)", "kg", "mol"],
+                    correctIndex: 1,
+                    explanation: "화학식량의 단위는 원자질량단위(amu 또는 u)입니다.",
+                    hint: "원자나 분자의 상대적 질량을 나타내는 단위입니다."
                 },
                 {
                     question: "원자 번호가 의미하는 것은?",
@@ -671,6 +783,86 @@ const problemTemplates = {
                     correctIndex: 3,
                     explanation: "반응속도는 온도, 농도, 촉매, 표면적에 의해 영향을 받습니다.",
                     hint: "화학 반응의 빠르기에 영향을 주는 조건들을 생각해보세요."
+                },
+                {
+                    question: "다음 중 화합 반응(synthesis reaction)은?",
+                    type: "multiple-choice",
+                    options: ["2H₂O → 2H₂ + O₂", "2Na + Cl₂ → 2NaCl", "CaCO₃ → CaO + CO₂", "Zn + CuSO₄ → ZnSO₄ + Cu"],
+                    correctIndex: 1,
+                    explanation: "화합 반응은 두 개 이상의 물질이 결합하여 하나의 물질을 만드는 반응입니다.",
+                    hint: "A + B → AB 형태의 반응을 찾아보세요."
+                },
+                {
+                    question: "분해 반응의 특징은?",
+                    type: "multiple-choice",
+                    options: ["하나가 여러 개로", "여러 개가 하나로", "원소가 바뀜", "상태만 변함"],
+                    correctIndex: 0,
+                    explanation: "분해 반응은 하나의 화합물이 여러 개의 간단한 물질로 분해되는 반응입니다.",
+                    hint: "AB → A + B 형태를 생각해보세요."
+                },
+                {
+                    question: "치환 반응에서 일어나는 일은?",
+                    type: "multiple-choice",
+                    options: ["새로운 원소 생성", "원소들의 자리 바뀜", "에너지만 변화", "상태 변화만"],
+                    correctIndex: 1,
+                    explanation: "치환 반응은 한 원소가 화합물 속의 다른 원소와 자리를 바꾸는 반응입니다.",
+                    hint: "A + BC → AC + B 형태를 생각해보세요."
+                },
+                {
+                    question: "발열 반응의 특징은?",
+                    type: "multiple-choice",
+                    options: ["온도가 내려감", "에너지를 흡수", "에너지를 방출", "온도 변화 없음"],
+                    correctIndex: 2,
+                    explanation: "발열 반응은 에너지를 방출하여 주변 온도가 올라가는 반응입니다.",
+                    hint: "손난티나 연소 반응을 생각해보세요."
+                },
+                {
+                    question: "흡열 반응의 예는?",
+                    type: "multiple-choice",
+                    options: ["연소", "중화", "광합성", "호흡"],
+                    correctIndex: 2,
+                    explanation: "광합성은 빛 에너지를 흡수하여 포도당을 만드는 흡열 반응입니다.",
+                    hint: "에너지를 흡수해야 일어나는 반응을 생각해보세요."
+                },
+                {
+                    question: "촉매의 역할은?",
+                    type: "multiple-choice",
+                    options: ["반응물이 됨", "생성물이 됨", "반응속도 증가", "반응 방향 바꿈"],
+                    correctIndex: 2,
+                    explanation: "촉매는 자신은 변하지 않으면서 반응속도를 빠르게 해주는 물질입니다.",
+                    hint: "반응 후에 그대로 남아있으면서 도와주는 역할을 생각해보세요."
+                },
+                {
+                    question: "화학 반응에서 질량이 보존되는 이유는?",
+                    type: "multiple-choice",
+                    options: ["원자가 생성되어서", "원자가 소멸되어서", "원자 개수가 변하지 않아서", "분자가 커져서"],
+                    correctIndex: 2,
+                    explanation: "화학 반응에서는 원자가 생성되거나 소멸되지 않고 재배열만 일어나므로 질량이 보존됩니다.",
+                    hint: "원자는 영원불멸하다는 원리를 생각해보세요."
+                },
+                {
+                    question: "다음 중 침전 반응은?",
+                    type: "multiple-choice",
+                    options: ["HCl + NaOH → NaCl + H₂O", "AgNO₃ + NaCl → AgCl↓ + NaNO₃", "CH₄ + O₂ → CO₂ + H₂O", "CaCO₃ → CaO + CO₂"],
+                    correctIndex: 1,
+                    explanation: "침전 반응은 용해도가 작은 물질이 고체로 석출되는 반응입니다.",
+                    hint: "↓ 기호가 있는 반응을 찾아보세요."
+                },
+                {
+                    question: "기체 발생 반응의 예는?",
+                    type: "multiple-choice",
+                    options: ["NaCl + AgNO₃ → AgCl + NaNO₃", "Zn + HCl → ZnCl₂ + H₂↑", "HCl + NaOH → NaCl + H₂O", "CuSO₄ + Fe → FeSO₄ + Cu"],
+                    correctIndex: 1,
+                    explanation: "아연과 염산의 반응에서 수소 기체가 발생합니다.",
+                    hint: "↑ 기호가 있는 반응을 찾아보세요."
+                },
+                {
+                    question: "복분해 반응의 특징은?",
+                    type: "multiple-choice",
+                    options: ["A + B → AB", "AB → A + B", "A + BC → AC + B", "AB + CD → AD + CB"],
+                    correctIndex: 3,
+                    explanation: "복분해 반응은 두 화합물이 이온을 서로 교환하는 반응입니다.",
+                    hint: "이온들이 파트너를 바꾸는 반응을 생각해보세요."
                 }
             ]
         },
@@ -751,7 +943,78 @@ const problemTemplates = {
                     explanation: "공유결합에서는 전자를 공유합니다.",
                     hint: "공유결합의 '공유'가 무엇을 뜻하는지 생각해보세요."
                 },
-                // 추가 문제들
+                {
+                    question: "설탕을 물에 녹였을 때 일어나는 현상은?",
+                    type: "multiple-choice",
+                    options: ["화학 변화", "물리 변화", "분해 반응", "산화 반응"],
+                    correctIndex: 1,
+                    explanation: "설탕이 물에 녹는 것은 분자 구조는 변하지 않는 물리 변화입니다.",
+                    hint: "설탕의 맛이 그대로 남아있는 이유를 생각해보세요."
+                },
+                {
+                    question: "소금(NaCl)이 물에 잘 녹는 이유는?",
+                    type: "multiple-choice",
+                    options: ["무극성이라서", "이온성 화합물이라서", "공유결합이라서", "크기가 작아서"],
+                    correctIndex: 1,
+                    explanation: "소금은 이온화합물로 극성인 물 분자와 잘 섞입니다.",
+                    hint: "'비슷한 것끼리 녹는다'는 원리를 생각해보세요."
+                },
+                {
+                    question: "달걀이 익을 때 일어나는 변화는?",
+                    type: "multiple-choice",
+                    options: ["물리 변화", "화학 변화", "상태 변화", "용해"],
+                    correctIndex: 1,
+                    explanation: "달걀이 익으면서 단백질 구조가 바뀌므로 화학 변화입니다.",
+                    hint: "익은 달걀을 다시 날달걀로 만들 수 있는지 생각해보세요."
+                },
+                {
+                    question: "드라이아이스가 승화하는 현상은?",
+                    type: "multiple-choice",
+                    options: ["고체→액체", "액체→기체", "고체→기체", "기체→고체"],
+                    correctIndex: 2,
+                    explanation: "승화는 고체가 액체를 거치지 않고 바로 기체가 되는 현상입니다.",
+                    hint: "드라이아이스에서 물이 나오지 않는 이유를 생각해보세요."
+                },
+                {
+                    question: "과일이 갈변하는 현상의 주된 원인은?",
+                    type: "multiple-choice",
+                    options: ["수분 증발", "산화 반응", "발효", "응고"],
+                    correctIndex: 1,
+                    explanation: "과일이 갈색으로 변하는 것은 공기 중 산소에 의한 산화 반응입니다.",
+                    hint: "사과를 자르고 두면 갈색으로 변하는 이유를 생각해보세요."
+                },
+                {
+                    question: "비타민 C의 주요 기능은?",
+                    type: "multiple-choice",
+                    options: ["산화 촉진", "항산화", "산성화", "중화"],
+                    correctIndex: 1,
+                    explanation: "비타민 C는 강력한 항산화제로 활성산소를 제거합니다.",
+                    hint: "과일이 갈변하는 것을 방지하는 역할을 생각해보세요."
+                },
+                {
+                    question: "카페인이 각성 효과를 나타내는 이유는?",
+                    type: "multiple-choice",
+                    options: ["뇌의 수용체 차단", "혈압 상승", "혈당 증가", "체온 상승"],
+                    correctIndex: 0,
+                    explanation: "카페인은 아데노신 수용체를 차단하여 졸음을 방지합니다.",
+                    hint: "카페인이 뇌에서 졸음을 유발하는 물질을 막는다고 생각해보세요."
+                },
+                {
+                    question: "치약에 포함된 플루오라이드(불소)의 역할은?",
+                    type: "multiple-choice",
+                    options: ["치아 미백", "충치 예방", "잇몸 강화", "입냄새 제거"],
+                    correctIndex: 1,
+                    explanation: "불소는 치아 에나멜을 강화하여 충치를 예방합니다.",
+                    hint: "치아가 산성에 강해지도록 도와주는 역할을 생각해보세요."
+                },
+                {
+                    question: "연료 전지의 장점이 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["친환경적", "효율이 높음", "소음이 적음", "설치비가 저렴함"],
+                    correctIndex: 3,
+                    explanation: "연료 전지는 초기 설치비용이 높다는 단점이 있습니다.",
+                    hint: "새로운 기술은 보통 초기 비용이 어떤지 생각해보세요."
+                },
                 {
                     question: "다음 중 비금속 원소끼리 만드는 결합은?",
                     type: "multiple-choice",
@@ -1139,6 +1402,9 @@ const problemTemplates = {
             ]
         },
         {
+            category: 'bonding',
+            templates: [
+                {
                     question: "물 분자에서 O-H 결합은 어떤 종류의 결합인가요?",
                     type: "multiple-choice",
                     options: ["이온결합", "공유결합", "금속결합", "수소결합"],
@@ -1201,6 +1467,78 @@ const problemTemplates = {
                     correctIndex: 0,
                     explanation: "강산과 강염기의 중화반응에서 중화열이 가장 큽니다.",
                     hint: "강산과 강염기를 찾아보세요."
+                },
+                {
+                    question: "활성화 에너지가 클수록 반응속도는?",
+                    type: "multiple-choice",
+                    options: ["빨라진다", "느려진다", "변하지 않는다", "온도에 따라 달라진다"],
+                    correctIndex: 1,
+                    explanation: "활성화 에너지가 클수록 반응이 시작되기 어려워 반응속도가 느려집니다.",
+                    hint: "반응이 시작되는 데 필요한 최소 에너지를 생각해보세요."
+                },
+                {
+                    question: "다음 중 가역반응은?",
+                    type: "multiple-choice",
+                    options: ["CH₄ + 2O₂ → CO₂ + 2H₂O", "N₂ + 3H₂ ⇌ 2NH₃", "2KClO₃ → 2KCl + 3O₂", "Zn + 2HCl → ZnCl₂ + H₂"],
+                    correctIndex: 1,
+                    explanation: "하버법 반응(N₂ + 3H₂ ⇌ 2NH₃)은 대표적인 가역반응입니다.",
+                    hint: "⇌ 기호가 있는 반응을 찾아보세요."
+                },
+                {
+                    question: "산화수가 변하지 않는 반응은?",
+                    type: "multiple-choice",
+                    options: ["Zn + CuSO₄ → ZnSO₄ + Cu", "HCl + NaOH → NaCl + H₂O", "2H₂O₂ → 2H₂O + O₂", "CH₄ + 2O₂ → CO₂ + 2H₂O"],
+                    correctIndex: 1,
+                    explanation: "중화반응에서는 원소들의 산화수가 변하지 않습니다.",
+                    hint: "전자의 이동이 없는 반응을 찾아보세요."
+                },
+                {
+                    question: "반응 차수가 2차인 반응의 속도식은?",
+                    type: "multiple-choice",
+                    options: ["v = k[A]", "v = k[A]²", "v = k[A][B]", "v = k[A]² 또는 v = k[A][B]"],
+                    correctIndex: 3,
+                    explanation: "2차 반응은 v = k[A]² (한 성분에 대해) 또는 v = k[A][B] (두 성분에 대해) 형태입니다.",
+                    hint: "농도 지수의 합이 2가 되는 경우를 생각해보세요."
+                },
+                {
+                    question: "르 샤틀리에 원리에 따르면, 압력 증가 시 평형은?",
+                    type: "multiple-choice",
+                    options: ["분자 수가 적은 쪽으로", "분자 수가 많은 쪽으로", "변하지 않음", "온도에 따라 달라짐"],
+                    correctIndex: 0,
+                    explanation: "압력이 증가하면 평형은 분자 수가 적어서 부피가 작은 쪽으로 이동합니다.",
+                    hint: "압력과 부피는 반비례 관계입니다."
+                },
+                {
+                    question: "반감기가 농도에 무관한 반응 차수는?",
+                    type: "multiple-choice",
+                    options: ["0차", "1차", "2차", "3차"],
+                    correctIndex: 1,
+                    explanation: "1차 반응의 반감기는 t₁/₂ = ln2/k로 초기 농도에 무관합니다.",
+                    hint: "방사성 동위원소의 붕괴를 생각해보세요."
+                },
+                {
+                    question: "평형상수 K가 클수록?",
+                    type: "multiple-choice",
+                    options: ["반응물이 많다", "생성물이 많다", "반응속도가 빠르다", "활성화에너지가 크다"],
+                    correctIndex: 1,
+                    explanation: "평형상수가 클수록 평형 시 생성물의 농도가 반응물보다 높습니다.",
+                    hint: "K = [생성물]/[반응물] 관계를 생각해보세요."
+                },
+                {
+                    question: "엔트로피가 증가하는 반응은?",
+                    type: "multiple-choice",
+                    options: ["2H₂ + O₂ → 2H₂O", "N₂ + 3H₂ → 2NH₃", "CaCO₃ → CaO + CO₂", "C + O₂ → CO₂"],
+                    correctIndex: 2,
+                    explanation: "고체에서 기체가 발생하는 반응은 엔트로피가 증가합니다.",
+                    hint: "분자의 무질서도가 증가하는 반응을 찾아보세요."
+                },
+                {
+                    question: "다음 중 자발적 반응의 조건은?",
+                    type: "multiple-choice",
+                    options: ["ΔG > 0", "ΔG < 0", "ΔG = 0", "ΔH < 0만"],
+                    correctIndex: 1,
+                    explanation: "깁스 자유에너지 변화(ΔG)가 음수일 때 반응이 자발적으로 일어납니다.",
+                    hint: "자유에너지가 감소하는 방향으로 반응이 진행됩니다."
                 }
             ]
         },
@@ -1568,6 +1906,78 @@ const problemTemplates = {
                     correctIndex: 2,
                     explanation: "MgO는 이온의 전하가 크고(Mg²⁺, O²⁻) 크기가 작아 격자 에너지가 가장 큽니다.",
                     hint: "이온의 전하와 크기를 고려해보세요."
+                },
+                {
+                    question: "아레니우스 방정식 k = Ae^(-Ea/RT)에서 각 항의 의미를 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["빈도인자", "활성화에너지", "온도"],
+                    answer: "A는 빈도인자, Ea는 활성화에너지, R은 기체상수, T는 절대온도",
+                    explanation: "아레니우스 방정식은 반응속도상수와 온도의 관계를 나타내며, 활성화에너지가 클수록 온도의 영향이 큽니다.",
+                    hint: "지수 함수에서 온도와 활성화에너지의 역할을 생각해보세요."
+                },
+                {
+                    question: "연쇄반응의 단계를 순서대로 나열하고 각각을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["개시", "전파", "종결"],
+                    answer: "개시(initiation) → 전파(propagation) → 종결(termination)",
+                    explanation: "개시에서 라디칼이 생성되고, 전파에서 연쇄적으로 반응이 계속되며, 종결에서 라디칼이 소멸됩니다.",
+                    hint: "자유 라디칼의 생성, 반응, 소멸 과정을 생각해보세요."
+                },
+                {
+                    question: "미하엘리스-멘텐 식 v = Vmax[S]/(Km + [S])에서 Km의 물리적 의미는?",
+                    type: "short-answer",
+                    keywords: ["친화도", "반최대속도", "기질농도"],
+                    answer: "효소와 기질의 친화도를 나타내며, 반최대속도일 때의 기질농도",
+                    explanation: "Km이 작을수록 효소와 기질의 친화도가 크고, Vmax/2일 때의 기질농도를 나타냅니다.",
+                    hint: "효소-기질 복합체의 안정성을 생각해보세요."
+                },
+                {
+                    question: "반응 메커니즘에서 속도결정단계의 특징을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["가장느린", "전체속도", "활성화에너지"],
+                    answer: "가장 느린 단계로 전체 반응속도를 결정하며, 가장 큰 활성화에너지를 가짐",
+                    explanation: "여러 단계 반응에서 가장 느린 단계가 전체 반응의 속도를 결정하므로 속도결정단계라고 합니다.",
+                    hint: "교통체증에서 가장 좁은 구간이 전체 흐름을 결정하는 것과 같습니다."
+                },
+                {
+                    question: "촉매작용의 종류별 특징을 비교 설명하세요: 균일촉매 vs 불균일촉매",
+                    type: "short-answer",
+                    keywords: ["상", "분리", "선택성"],
+                    answer: "균일촉매는 반응물과 같은 상, 불균일촉매는 다른 상에서 작용",
+                    explanation: "균일촉매는 분리가 어렵지만 선택성이 높고, 불균일촉매는 분리가 쉽지만 확산제한이 있습니다.",
+                    hint: "기체-고체, 액체-액체 반응을 생각해보세요."
+                },
+                {
+                    question: "농도-시간 그래프에서 0차, 1차, 2차 반응을 구별하는 방법을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["직선", "지수감소", "쌍곡선"],
+                    answer: "0차: [A]-t 직선, 1차: ln[A]-t 직선, 2차: 1/[A]-t 직선",
+                    explanation: "적분 속도식을 이용하여 적절한 함수로 플롯했을 때 직선이 되는 것으로 반응차수를 결정합니다.",
+                    hint: "각 차수별 적분 속도식의 형태를 생각해보세요."
+                },
+                {
+                    question: "병렬반응 A → B, A → C에서 생성물 선택성을 높이는 방법을 제시하세요.",
+                    type: "short-answer",
+                    keywords: ["온도", "촉매", "활성화에너지"],
+                    answer: "원하는 반응의 활성화에너지를 낮추는 촉매 사용 또는 온도 조절",
+                    explanation: "두 반응의 활성화에너지 차이를 이용하여 온도를 조절하거나 선택적 촉매를 사용합니다.",
+                    hint: "아레니우스 방정식에서 활성화에너지와 온도의 관계를 고려해보세요."
+                },
+                {
+                    question: "펜톤 반응의 메커니즘과 환경정화에의 응용을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["철", "과산화수소", "하이드록시라디칼"],
+                    answer: "Fe²⁺ + H₂O₂ → Fe³⁺ + OH⁻ + •OH로 강력한 산화제인 하이드록시 라디칼 생성",
+                    explanation: "펜톤 반응으로 생성된 하이드록시 라디칼은 유기오염물질을 효과적으로 분해할 수 있어 폐수처리에 활용됩니다.",
+                    hint: "철 이온과 과산화수소의 반응을 생각해보세요."
+                },
+                {
+                    question: "고압 조건에서 기체 반응의 평형상수 표현을 압력과 몰분율로 나타내세요.",
+                    type: "short-answer",
+                    keywords: ["압력", "몰분율", "푸가시티"],
+                    answer: "이상기체: Kp = ΠPi^νi, 실제기체: 푸가시티 사용",
+                    explanation: "고압에서는 기체의 비이상성을 고려하여 압력 대신 푸가시티를 사용해야 합니다.",
+                    hint: "실제 기체의 거동을 고려한 열역학적 활동도를 생각해보세요."
                 }
             ]
         },
