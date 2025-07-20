@@ -63,6 +63,51 @@ const problemTemplates = {
                     hint: "단일결합에서 공유하는 전자 개수를 생각해보세요."
                 }
             ]
+        },
+        {
+            category: 'basic-concepts',
+            templates: [
+                {
+                    question: "원자가 전자는 어디에 위치하나요?",
+                    type: "multiple-choice",
+                    options: ["내부 전자껍질", "가장 바깥 전자껍질", "원자핵", "모든 전자껍질"],
+                    correctIndex: 1,
+                    explanation: "원자가 전자는 가장 바깥 전자껍질에 위치하며 화학 결합에 참여합니다.",
+                    hint: "화학 결합에 참여하는 전자를 생각해보세요."
+                },
+                {
+                    question: "옥텟 규칙이란?",
+                    type: "multiple-choice",
+                    options: ["8개의 원자가 결합", "8개의 원자가 전자", "8개의 핵", "8개의 분자"],
+                    correctIndex: 1,
+                    explanation: "옥텟 규칙은 원자가 안정해지기 위해 8개의 원자가 전자를 갖으려 한다는 규칙입니다.",
+                    hint: "안정한 전자 배치 상태를 생각해보세요."
+                },
+                {
+                    question: "전기음성도가 가장 큰 원소는?",
+                    type: "multiple-choice",
+                    options: ["산소", "질소", "플루오린", "염소"],
+                    correctIndex: 2,
+                    explanation: "플루오린(F)은 전기음성도가 4.0으로 가장 큰 원소입니다.",
+                    hint: "주기율표에서 오른쪽 위에 있는 원소일수록 전기음성도가 큽니다."
+                },
+                {
+                    question: "H₂ 분자의 결합 차수는?",
+                    type: "multiple-choice",
+                    options: ["0", "1", "2", "3"],
+                    correctIndex: 1,
+                    explanation: "H₂는 2개의 결합 전자와 0개의 반결합 전자를 가져 결합 차수는 (2-0)/2 = 1입니다.",
+                    hint: "수소는 각각 1개의 전자를 제공합니다."
+                },
+                {
+                    question: "다음 중 극성 분자는?",
+                    type: "multiple-choice",
+                    options: ["CO₂", "CH₄", "H₂O", "N₂"],
+                    correctIndex: 2,
+                    explanation: "물(H₂O)은 굽은 구조로 인해 극성을 띠는 분자입니다.",
+                    hint: "분자의 모양과 전기음성도 차이를 고려해보세요."
+                }
+            ]
         }
     ],
     
@@ -112,7 +157,7 @@ const problemTemplates = {
                     type: "multiple-choice",
                     options: ["N-N (160)", "N=N (410)", "N≡N (942)", "O=O (495)"],
                     correctIndex: 2,
-                    explanation: "질소의 삼중결합(945 kJ/mol)이 가장 강한 결합입니다.",
+                    explanation: "질소의 삼중결합(942 kJ/mol)이 가장 강한 결합입니다.",
                     hint: "결합 차수가 높을수록 결합이 강합니다."
                 }
             ]
@@ -143,6 +188,35 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "물 분자 내의 O-H는 산소와 수소가 전자를 공유하는 공유결합입니다.",
                     hint: "같은 분자 내의 원자들 사이의 결합을 생각해보세요."
+                }
+            ]
+        },
+        {
+            category: 'advanced-concepts',
+            templates: [
+                {
+                    question: "공명 구조를 가지는 분자는?",
+                    type: "multiple-choice",
+                    options: ["메탄", "물", "벤젠", "암모니아"],
+                    correctIndex: 2,
+                    explanation: "벤젠은 전자가 비편재화되어 여러 공명 구조를 가집니다.",
+                    hint: "방향족 화합물의 특징을 생각해보세요."
+                },
+                {
+                    question: "분자간 힘 중 가장 강한 것은?",
+                    type: "multiple-choice",
+                    options: ["반데르발스 힘", "쌍극자-쌍극자 힘", "수소결합", "분산력"],
+                    correctIndex: 2,
+                    explanation: "수소결합은 분자간 힘 중 가장 강한 힘입니다.",
+                    hint: "물의 높은 끓는점의 원인을 생각해보세요."
+                },
+                {
+                    question: "VSEPR 이론에서 NH₃의 전자쌍 기하구조는?",
+                    type: "multiple-choice",
+                    options: ["직선형", "삼각평면형", "정사면체형", "삼각쌍뿔형"],
+                    correctIndex: 2,
+                    explanation: "NH₃는 3개의 결합전자쌍과 1개의 비공유전자쌍으로 정사면체형 전자쌍 기하구조를 가집니다.",
+                    hint: "전체 전자쌍의 개수를 세어보세요."
                 }
             ]
         }
@@ -233,22 +307,42 @@ const problemTemplates = {
 
 // 문제 생성 함수
 function generateProblem(difficulty) {
-    const templates = problemTemplates[difficulty];
-    const categoryIndex = Math.floor(Math.random() * templates.length);
-    const category = templates[categoryIndex];
-    const problemIndex = Math.floor(Math.random() * category.templates.length);
-    const problem = { ...category.templates[problemIndex] };
-    
-    // 동적 요소 추가
-    problem.points = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 20 : 30;
-    problem.id = Date.now();
-    
-    // 선택지 섞기 (객관식인 경우)
-    if (problem.type === 'multiple-choice') {
-        problem = shuffleOptions(problem);
+    try {
+        console.log('generateProblem 호출됨, difficulty:', difficulty);
+        
+        const templates = problemTemplates[difficulty];
+        console.log('템플릿 개수:', templates ? templates.length : 'undefined');
+        
+        if (!templates || templates.length === 0) {
+            console.error('템플릿이 없습니다:', difficulty);
+            return null;
+        }
+        
+        const categoryIndex = Math.floor(Math.random() * templates.length);
+        const category = templates[categoryIndex];
+        console.log('선택된 카테고리:', category.category, '문제 개수:', category.templates.length);
+        
+        const problemIndex = Math.floor(Math.random() * category.templates.length);
+        let problem = { ...category.templates[problemIndex] };
+        
+        console.log('선택된 문제:', problem);
+        
+        // 동적 요소 추가
+        problem.points = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 20 : 30;
+        problem.id = Date.now();
+        
+        // 선택지 섞기 (객관식인 경우)
+        if (problem.type === 'multiple-choice') {
+            problem = shuffleOptions(problem);
+        }
+        
+        console.log('최종 문제:', problem);
+        return problem;
+        
+    } catch (error) {
+        console.error('문제 생성 중 오류:', error);
+        return null;
     }
-    
-    return problem;
 }
 
 // 선택지 섞기

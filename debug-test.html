@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제 풀기 디버그 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-info { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>문제 풀기 디버그 테스트</h1>
+    
+    <div class="debug-info">
+        <h3>테스트 결과:</h3>
+        <div id="test-results"></div>
+    </div>
+    
+    <div class="debug-info">
+        <h3>콘솔 로그:</h3>
+        <p>브라우저 개발자 도구의 콘솔 탭을 확인하세요.</p>
+    </div>
+    
+    <button onclick="testProblemGeneration()">문제 생성 테스트</button>
+    <button onclick="testAllDifficulties()">모든 난이도 테스트</button>
+    
+    <script src="problems.js"></script>
+    <script>
+        function testProblemGeneration() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '';
+            
+            console.clear();
+            console.log('=== 문제 생성 테스트 시작 ===');
+            
+            try {
+                // generateProblem 함수가 전역에 있는지 확인
+                if (typeof generateProblem !== 'function') {
+                    results.innerHTML += '<p class="error">❌ generateProblem 함수를 찾을 수 없습니다.</p>';
+                    return;
+                }
+                
+                // medium 난이도로 문제 생성 테스트
+                const problem = generateProblem('medium');
+                
+                if (problem) {
+                    results.innerHTML += '<p class="success">✅ 문제가 성공적으로 생성되었습니다!</p>';
+                    results.innerHTML += `<p><strong>문제:</strong> ${problem.question}</p>`;
+                    results.innerHTML += `<p><strong>타입:</strong> ${problem.type}</p>`;
+                    
+                    if (problem.type === 'multiple-choice' && problem.options) {
+                        results.innerHTML += `<p><strong>선택지:</strong> ${problem.options.join(', ')}</p>`;
+                        results.innerHTML += `<p><strong>정답 인덱스:</strong> ${problem.correctIndex}</p>`;
+                    }
+                } else {
+                    results.innerHTML += '<p class="error">❌ 문제 생성이 실패했습니다.</p>';
+                }
+                
+            } catch (error) {
+                results.innerHTML += `<p class="error">❌ 오류 발생: ${error.message}</p>`;
+                console.error('테스트 중 오류:', error);
+            }
+        }
+        
+        function testAllDifficulties() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<h4>모든 난이도 테스트:</h4>';
+            
+            const difficulties = ['easy', 'medium', 'hard'];
+            
+            difficulties.forEach(difficulty => {
+                try {
+                    const problem = generateProblem(difficulty);
+                    
+                    if (problem) {
+                        results.innerHTML += `<p class="success">✅ ${difficulty}: OK</p>`;
+                    } else {
+                        results.innerHTML += `<p class="error">❌ ${difficulty}: 실패</p>`;
+                    }
+                } catch (error) {
+                    results.innerHTML += `<p class="error">❌ ${difficulty}: 오류 - ${error.message}</p>`;
+                }
+            });
+        }
+        
+        // 페이지 로드 시 자동 테스트
+        window.addEventListener('load', () => {
+            console.log('페이지 로드 완료, problems.js 로드 상태 확인');
+            
+            // problemTemplates 객체 확인
+            if (typeof problemTemplates !== 'undefined') {
+                console.log('problemTemplates 로드됨:', Object.keys(problemTemplates));
+            } else {
+                console.error('problemTemplates가 로드되지 않음');
+            }
+            
+            // generateProblem 함수 확인
+            if (typeof generateProblem === 'function') {
+                console.log('generateProblem 함수 로드됨');
+            } else {
+                console.error('generateProblem 함수가 로드되지 않음');
+            }
+        });
+    </script>
+</body>
+</html>

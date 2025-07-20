@@ -54,21 +54,42 @@ function loadNextQuestion() {
     questionCount++;
     const difficulty = document.getElementById('difficulty').value;
     
-    // problems.js에서 문제 가져오기
-    currentQuestion = generateProblem(difficulty);
-    
-    // 문제 표시
-    document.getElementById('question-number').textContent = `문제 ${questionCount}`;
-    document.getElementById('question-content').innerHTML = currentQuestion.question;
-    
-    // 답변 영역 설정
-    const answerSection = document.getElementById('answer-section');
-    answerSection.innerHTML = createAnswerInput(currentQuestion.type);
-    
-    // 버튼 상태 초기화
-    document.getElementById('submit-btn').style.display = 'inline-block';
-    document.getElementById('next-btn').style.display = 'none';
-    document.getElementById('feedback').innerHTML = '';
+    try {
+        // problems.js에서 문제 가져오기
+        currentQuestion = generateProblem(difficulty);
+        
+        // 디버깅: 문제 데이터 검증
+        console.log('Generated question:', currentQuestion);
+        
+        if (!currentQuestion) {
+            console.error('문제 생성 실패: currentQuestion이 null/undefined');
+            document.getElementById('question-content').innerHTML = '문제를 불러오는 중 오류가 발생했습니다.';
+            return;
+        }
+        
+        if (!currentQuestion.question) {
+            console.error('문제 데이터 오류: question 필드가 없음', currentQuestion);
+            document.getElementById('question-content').innerHTML = '문제 데이터에 오류가 있습니다.';
+            return;
+        }
+        
+        // 문제 표시
+        document.getElementById('question-number').textContent = `문제 ${questionCount}`;
+        document.getElementById('question-content').innerHTML = currentQuestion.question;
+        
+        // 답변 영역 설정
+        const answerSection = document.getElementById('answer-section');
+        answerSection.innerHTML = createAnswerInput(currentQuestion.type);
+        
+        // 버튼 상태 초기화
+        document.getElementById('submit-btn').style.display = 'inline-block';
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('feedback').innerHTML = '';
+        
+    } catch (error) {
+        console.error('문제 로드 중 예외 발생:', error);
+        document.getElementById('question-content').innerHTML = '문제를 불러오는 중 오류가 발생했습니다.';
+    }
 }
 
 // 답변 입력 필드 생성
@@ -145,10 +166,20 @@ function checkAnswer() {
             </div>
         `;
     } else {
+        // 정답 정보 가져오기
+        let correctAnswerText = '';
+        if (currentQuestion.type === 'multiple-choice') {
+            correctAnswerText = currentQuestion.options[currentQuestion.correctIndex];
+        } else if (currentQuestion.answer) {
+            correctAnswerText = currentQuestion.answer;
+        } else {
+            correctAnswerText = '정답 정보가 없습니다.';
+        }
+        
         feedback.innerHTML = `
             <div class="wrong-answer">
                 <h3>😢 틀렸습니다.</h3>
-                <p><strong>정답:</strong> ${currentQuestion.answer}</p>
+                <p><strong>정답:</strong> ${correctAnswerText}</p>
                 <p>${currentQuestion.explanation}</p>
             </div>
         `;
