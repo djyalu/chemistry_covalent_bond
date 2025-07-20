@@ -51,6 +51,78 @@ const problemTemplates = {
                     correctIndex: 3,
                     explanation: "메탄에서 탄소는 4개의 수소와 각각 공유결합을 만듭니다.",
                     hint: "탄소의 원자가 전자 개수를 생각해보세요."
+                },
+                {
+                    question: "HCl 분자에서 수소와 염소 사이의 결합은?",
+                    type: "multiple-choice",
+                    options: ["이온결합", "공유결합", "금속결합", "배위결합"],
+                    correctIndex: 1,
+                    explanation: "염화수소에서 수소와 염소는 전자를 공유하여 공유결합을 형성합니다.",
+                    hint: "두 비금속 원소 사이의 결합을 생각해보세요."
+                },
+                {
+                    question: "다음 중 공유결합으로만 이루어진 분자는?",
+                    type: "multiple-choice",
+                    options: ["KBr", "O₂", "MgO", "CaCl₂"],
+                    correctIndex: 1,
+                    explanation: "산소 분자(O₂)는 두 산소 원자가 전자를 공유하는 공유결합 분자입니다.",
+                    hint: "같은 원소끼리 결합한 경우를 찾아보세요."
+                },
+                {
+                    question: "F₂ 분자에서 플루오린 원자들은 몇 개의 전자를 공유하나요?",
+                    type: "multiple-choice",
+                    options: ["1개", "2개", "4개", "6개"],
+                    correctIndex: 1,
+                    explanation: "F₂ 분자에서는 각 플루오린 원자가 1개씩의 전자를 내어 총 2개를 공유합니다.",
+                    hint: "단일결합에서 공유되는 전자 개수를 생각해보세요."
+                },
+                {
+                    question: "공유결합의 특징이 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["방향성이 있다", "전자를 공유한다", "녹는점이 높다", "분자를 형성한다"],
+                    correctIndex: 2,
+                    explanation: "공유결합 물질은 일반적으로 이온화합물에 비해 녹는점이 낮습니다.",
+                    hint: "얼음과 소금의 녹는점을 비교해보세요."
+                },
+                {
+                    question: "Cl₂ 분자가 형성되는 이유는?",
+                    type: "multiple-choice",
+                    options: ["전자를 주고받기 위해", "옥텟 규칙을 만족하기 위해", "전기적 중성을 유지하기 위해", "금속결합을 하기 위해"],
+                    correctIndex: 1,
+                    explanation: "염소 원자는 전자 7개를 가지고 있어, 1개를 더 얻어 옥텟을 완성하려고 합니다.",
+                    hint: "염소 원자의 바깥 전자 개수를 생각해보세요."
+                },
+                {
+                    question: "다음 중 극성 공유결합을 하는 것은?",
+                    type: "multiple-choice",
+                    options: ["H₂", "Cl₂", "HF", "N₂"],
+                    correctIndex: 2,
+                    explanation: "HF는 수소와 플루오린의 전기음성도 차이가 커서 극성 공유결합을 합니다.",
+                    hint: "서로 다른 원소끼리의 결합을 찾아보세요."
+                },
+                {
+                    question: "CCl₄ 분자에서 탄소와 염소는 몇 개의 공유결합을 만드나요?",
+                    type: "multiple-choice",
+                    options: ["1개", "2개", "3개", "4개"],
+                    correctIndex: 3,
+                    explanation: "사염화탄소에서 탄소는 4개의 염소와 각각 단일 공유결합을 만듭니다.",
+                    hint: "탄소는 항상 4개의 결합을 만듭니다."
+                },
+                {
+                    question: "H₂S에서 황과 수소 사이의 결합 타입은?",
+                    type: "multiple-choice",
+                    options: ["이온결합", "공유결합", "수소결합", "반데르발스 힘"],
+                    correctIndex: 1,
+                    explanation: "황화수소에서 황과 수소는 전자를 공유하는 공유결합을 형성합니다.",
+                    hint: "두 비금속 원소 사이의 화학결합을 생각해보세요."
+                },
+                {
+                    question: "공유결합에서 결합 길이가 짧을수록 결합은?",
+                    type: "multiple-choice",
+                    options: ["약해진다", "강해진다", "변하지 않는다", "불안정해진다"],
+                    correctIndex: 1,
+                    explanation: "결합 길이가 짧을수록 원자들이 더 가깝게 결합되어 있어 결합이 강해집니다.",
+                    hint: "원자 사이의 거리와 인력의 관계를 생각해보세요."
                 }
             ]
         },
@@ -96,6 +168,78 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "CO₂는 직선형 대칭 구조로 인해 쌍극자 모멘트가 상쇄되어 무극성입니다.",
                     hint: "O=C=O 구조의 대칭성을 생각해보세요."
+                },
+                {
+                    question: "다음 중 직선형 분자는?",
+                    type: "multiple-choice",
+                    options: ["H₂O", "NH₃", "CO₂", "CH₄"],
+                    correctIndex: 2,
+                    explanation: "이산화탄소(CO₂)는 O=C=O 구조로 직선형 분자입니다.",
+                    hint: "탄소 원자 주위에 2개의 이중결합이 있는 분자를 찾아보세요."
+                },
+                {
+                    question: "분자의 모양을 결정하는 주요 요인은?",
+                    type: "multiple-choice",
+                    options: ["원자의 크기", "전자쌍의 반발", "원자량", "결합 에너지"],
+                    correctIndex: 1,
+                    explanation: "VSEPR 이론에 따르면 전자쌍들의 반발이 분자의 모양을 결정합니다.",
+                    hint: "전자들은 서로 밀어내려는 성질이 있습니다."
+                },
+                {
+                    question: "BeF₂ 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["굽은형", "직선형", "삼각형", "정사면체형"],
+                    correctIndex: 1,
+                    explanation: "BeF₂는 베릴륨 주위에 2개의 결합 전자쌍만 있어 직선형 구조입니다.",
+                    hint: "2개의 전자쌍이 가장 멀리 떨어지는 배치를 생각해보세요."
+                },
+                {
+                    question: "CHCl₃ 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["평면형", "정사면체형", "삼각뿔형", "직선형"],
+                    correctIndex: 1,
+                    explanation: "클로로폼(CHCl₃)은 탄소 중심에 4개의 결합이 있어 정사면체 구조입니다.",
+                    hint: "탄소는 항상 4개의 결합을 만들어 정사면체를 형성합니다."
+                },
+                {
+                    question: "H₂Se 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["직선형", "굽은형", "삼각형", "T자형"],
+                    correctIndex: 1,
+                    explanation: "셀렌화수소는 물과 같은 구조로 굽은형 분자입니다.",
+                    hint: "물(H₂O)과 같은 족 원소의 화합물입니다."
+                },
+                {
+                    question: "분자간 힘 중 가장 약한 것은?",
+                    type: "multiple-choice",
+                    options: ["수소결합", "쌍극자-쌍극자 힘", "런던 분산력", "이온-쌍극자 힘"],
+                    correctIndex: 2,
+                    explanation: "런던 분산력(반데르발스 힘)은 분자간 힘 중 가장 약한 힘입니다.",
+                    hint: "모든 분자에 존재하지만 가장 약한 힘을 생각해보세요."
+                },
+                {
+                    question: "극성 분자끼리 작용하는 힘은?",
+                    type: "multiple-choice",
+                    options: ["런던 분산력", "쌍극자-쌍극자 힘", "이온결합", "금속결합"],
+                    correctIndex: 1,
+                    explanation: "극성 분자들은 부분적 양전하와 음전하 사이의 쌍극자-쌍극자 힘으로 상호작용합니다.",
+                    hint: "극성 분자의 δ+와 δ- 사이의 인력을 생각해보세요."
+                },
+                {
+                    question: "CCl₄가 무극성인 이유는?",
+                    type: "multiple-choice",
+                    options: ["C-Cl 결합이 무극성이라서", "분자가 대칭구조라서", "이온화합물이라서", "분자량이 크다서"],
+                    correctIndex: 1,
+                    explanation: "사염화탄소는 정사면체 대칭 구조로 인해 극성 결합들의 쌍극자가 상쇄되어 무극성입니다.",
+                    hint: "정사면체 구조에서 결합들의 방향을 생각해보세요."
+                },
+                {
+                    question: "분자의 끓는점을 결정하는 주요 요인은?",
+                    type: "multiple-choice",
+                    options: ["분자량만", "분자간 힘만", "분자량과 분자간 힘 모두", "원자 개수만"],
+                    correctIndex: 2,
+                    explanation: "분자의 끓는점은 분자량과 분자간 힘(수소결합, 쌍극자 힘 등) 모두에 의해 결정됩니다.",
+                    hint: "물과 에탄올의 끓는점 차이를 생각해보세요."
                 }
             ]
         },
@@ -157,6 +301,89 @@ const problemTemplates = {
                     correctIndex: 2,
                     explanation: "Cl⁻(염화 이온)은 전자를 얻어 음전하를 띠는 음이온입니다.",
                     hint: "음의 전하(-)를 가진 이온을 찾아보세요."
+                },
+                {
+                    question: "염화칼슘(CaCl₂)에서 칼슘 이온의 전하는?",
+                    type: "multiple-choice",
+                    options: ["Ca⁺", "Ca²⁺", "Ca³⁺", "Ca⁻"],
+                    correctIndex: 1,
+                    explanation: "칼슘은 2족 원소로 2개의 전자를 잃어 Ca²⁺ 이온이 됩니다.",
+                    hint: "칼슘은 알칼리 토금속 원소입니다."
+                },
+                {
+                    question: "이온결합 화합물이 물에 잘 녹는 이유는?",
+                    type: "multiple-choice",
+                    options: ["물이 무극성이라서", "이온이 물 분자에 둘러싸이기 때문", "공유결합이 약해서", "분자량이 작아서"],
+                    correctIndex: 1,
+                    explanation: "물은 극성 분자로 이온들을 둘러싸서 용해시킵니다(수화 현상).",
+                    hint: "물 분자의 극성을 생각해보세요."
+                },
+                {
+                    question: "다음 중 이온화 에너지가 가장 큰 원소는?",
+                    type: "multiple-choice",
+                    options: ["Li", "Na", "K", "Rb"],
+                    correctIndex: 0,
+                    explanation: "이온화 에너지는 원자 크기가 작을수록 큽니다. Li가 가장 작으므로 이온화 에너지가 가장 큽니다.",
+                    hint: "같은 족에서 위로 갈수록 원자가 작아집니다."
+                },
+                {
+                    question: "전자친화도가 가장 큰 원소는?",
+                    type: "multiple-choice",
+                    options: ["F", "Cl", "Br", "I"],
+                    correctIndex: 1,
+                    explanation: "염소(Cl)가 가장 큰 전자친화도를 가집니다.",
+                    hint: "할로겐족에서 주기의 중간 정도에 있는 원소입니다."
+                },
+                {
+                    question: "이온 반지름과 원자 반지름의 관계는?",
+                    type: "multiple-choice",
+                    options: ["양이온 > 원자 > 음이온", "음이온 > 원자 > 양이온", "원자 > 양이온 > 음이온", "모두 같다"],
+                    correctIndex: 1,
+                    explanation: "전자를 얻으면 크기가 커지고(음이온), 전자를 잃으면 크기가 작아집니다(양이온).",
+                    hint: "전자를 얻거나 잃을 때 크기 변화를 생각해보세요."
+                },
+                {
+                    question: "다음 이온 화합물들을 격자 에너지가 큰 순서로 배열하세요.",
+                    type: "sequence",
+                    steps: ["LiF", "NaCl", "KBr", "CsI"],
+                    correctOrder: [0, 1, 2, 3],
+                    explanation: "격자 에너지는 이온의 전하가 클수록, 크기가 작을수록 큽니다.",
+                    hint: "이온의 크기와 전하를 고려해보세요."
+                },
+                {
+                    question: "이온 화합물 형성 과정을 올바른 순서로 배열하세요.",
+                    type: "sequence",
+                    steps: ["금속 원자가 전자를 잃는다", "비금속 원자가 전자를 얻는다", "양이온과 음이온이 형성된다", "정전기적 인력으로 결합한다"],
+                    correctOrder: [0, 1, 2, 3],
+                    explanation: "이온화합물은 전자 이동 → 이온 형성 → 정전기적 결합 순서로 형성됩니다.",
+                    hint: "전자의 이동부터 최종 결합까지의 과정을 생각해보세요."
+                },
+                {
+                    question: "다음 이온들을 양이온과 음이온으로 분류하세요.",
+                    type: "drag-drop",
+                    items: ["Na⁺", "Cl⁻", "Ca²⁺", "O²⁻", "Al³⁺", "S²⁻", "Mg²⁺", "F⁻"],
+                    categories: {
+                        "양이온": ["Na⁺", "Ca²⁺", "Al³⁺", "Mg²⁺"],
+                        "음이온": ["Cl⁻", "O²⁻", "S²⁻", "F⁻"]
+                    },
+                    explanation: "양이온은 전자를 잃어 양전하를 띠고, 음이온은 전자를 얻어 음전하를 띱니다.",
+                    hint: "전하의 부호를 확인해보세요."
+                },
+                {
+                    question: "소금(NaCl) 결정에서 Na⁺ 하나 주위에 몇 개의 Cl⁻이 있나요?",
+                    type: "multiple-choice",
+                    options: ["4개", "6개", "8개", "12개"],
+                    correctIndex: 1,
+                    explanation: "NaCl은 면심입방 구조로 각 이온 주위에 6개의 반대 이온이 배치됩니다.",
+                    hint: "이온 결정의 배위수를 생각해보세요."
+                },
+                {
+                    question: "이온화합물의 용융점이 높은 이유를 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["강한", "정전기", "인력", "결합"],
+                    answer: "이온들 사이의 강한 정전기적 인력 때문",
+                    explanation: "양이온과 음이온 사이의 강한 쿨롱 힘으로 인해 높은 에너지가 필요합니다.",
+                    hint: "반대 전하끼리의 인력을 생각해보세요."
                 }
             ]
         },
@@ -178,6 +405,78 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "수소 분자는 단일결합으로 2개의 전자를 공유합니다.",
                     hint: "단일결합에서 공유하는 전자 개수를 생각해보세요."
+                },
+                {
+                    question: "결합 에너지가 클수록 결합은?",
+                    type: "multiple-choice",
+                    options: ["약해진다", "강해진다", "변하지 않는다", "끊어진다"],
+                    correctIndex: 1,
+                    explanation: "결합 에너지가 클수록 원자들 사이의 결합이 강해집니다.",
+                    hint: "결합을 끊는 데 필요한 에너지를 생각해보세요."
+                },
+                {
+                    question: "다음 중 결합 길이가 가장 짧은 것은?",
+                    type: "multiple-choice",
+                    options: ["C-C", "C=C", "C≡C", "모두 같다"],
+                    correctIndex: 2,
+                    explanation: "결합 차수가 높을수록 결합 길이가 짧아집니다. C≡C가 가장 짧습니다.",
+                    hint: "전자를 많이 공유할수록 원자들이 더 가까워집니다."
+                },
+                {
+                    question: "N₂ 분자의 결합 차수는?",
+                    type: "multiple-choice",
+                    options: ["1", "2", "3", "4"],
+                    correctIndex: 2,
+                    explanation: "질소 분자는 N≡N 삼중결합을 하므로 결합 차수가 3입니다.",
+                    hint: "질소 원자가 옥텟을 만족하는 방법을 생각해보세요."
+                },
+                {
+                    question: "결합 극성이 가장 작은 것은?",
+                    type: "multiple-choice",
+                    options: ["H-F", "H-Cl", "H-Br", "H-I"],
+                    correctIndex: 3,
+                    explanation: "H-I는 전기음성도 차이가 가장 작아 결합 극성이 가장 작습니다.",
+                    hint: "할로겐족에서 아래로 갈수록 전기음성도가 감소합니다."
+                },
+                {
+                    question: "다음 중 가장 안정한 분자는?",
+                    type: "multiple-choice",
+                    options: ["H₂", "O₂", "N₂", "F₂"],
+                    correctIndex: 2,
+                    explanation: "N₂는 삼중결합으로 가장 강한 결합을 가져 가장 안정합니다.",
+                    hint: "결합 에너지가 가장 큰 분자를 찾아보세요."
+                },
+                {
+                    question: "공유결합에서 전자는 어떻게 분포하나요?",
+                    type: "multiple-choice",
+                    options: ["한쪽 원자에만", "두 원자 사이에 균등하게", "전기음성도에 따라", "무작위로"],
+                    correctIndex: 2,
+                    explanation: "공유결합에서 전자는 두 원자의 전기음성도 차이에 따라 분포합니다.",
+                    hint: "극성 결합과 무극성 결합의 차이를 생각해보세요."
+                },
+                {
+                    question: "결합 해리 에너지란?",
+                    type: "multiple-choice",
+                    options: ["결합을 만드는 에너지", "결합을 끊는 에너지", "전자를 얻는 에너지", "이온화 에너지"],
+                    correctIndex: 1,
+                    explanation: "결합 해리 에너지는 화학 결합을 끊어서 중성 원자로 만드는 데 필요한 에너지입니다.",
+                    hint: "해리는 '나뉘어진다'는 뜻입니다."
+                },
+                {
+                    question: "O₂ 분자의 결합 차수는?",
+                    type: "multiple-choice",
+                    options: ["1", "2", "3", "1.5"],
+                    correctIndex: 1,
+                    explanation: "산소 분자는 O=O 이중결합을 하므로 결합 차수가 2입니다.",
+                    hint: "산소 원자가 옥텟을 만족하는 결합 방법을 생각해보세요."
+                },
+                {
+                    question: "결합의 극성을 나타내는 기호는?",
+                    type: "multiple-choice",
+                    options: ["α, β", "δ+, δ-", "σ, π", "+, -"],
+                    correctIndex: 1,
+                    explanation: "δ+(델타 플러스)와 δ-(델타 마이너스)는 부분전하를 나타내는 기호입니다.",
+                    hint: "부분적인 양전하와 음전하를 나타내는 기호입니다."
                 }
             ]
         },
@@ -215,6 +514,126 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "H₂는 2개의 결합 전자와 0개의 반결합 전자를 가져 결합 차수는 (2-0)/2 = 1입니다.",
                     hint: "수소는 각각 1개의 전자를 제공합니다."
+                },
+                {
+                    question: "주기율표에서 같은 족의 원소들이 가지는 공통점은?",
+                    type: "multiple-choice",
+                    options: ["같은 원자량", "같은 원자가 전자 수", "같은 전자 껍질 수", "같은 밀도"],
+                    correctIndex: 1,
+                    explanation: "같은 족의 원소들은 가장 바깥 전자껍질의 전자 수(원자가 전자 수)가 같습니다.",
+                    hint: "족은 세로줄, 주기는 가로줄입니다."
+                },
+                {
+                    question: "네온(Ne)이 화학적으로 안정한 이유는?",
+                    type: "multiple-choice",
+                    options: ["원자량이 크기 때문", "원자가 전자가 8개이기 때문", "금속이기 때문", "전기음성도가 크기 때문"],
+                    correctIndex: 1,
+                    explanation: "네온은 원자가 전자가 8개로 옥텟을 만족하여 화학적으로 매우 안정합니다.",
+                    hint: "비활성 기체의 특성을 생각해보세요."
+                },
+                {
+                    question: "화학 결합이 일어나는 주된 이유는?",
+                    type: "multiple-choice",
+                    options: ["원자량을 줄이기 위해", "에너지를 낮춰 안정해지기 위해", "크기를 키우기 위해", "속도를 빠르게 하기 위해"],
+                    correctIndex: 1,
+                    explanation: "원자들은 결합을 통해 에너지가 낮은 안정한 상태가 되려고 합니다.",
+                    hint: "자연은 항상 에너지가 낮은 상태를 선호합니다."
+                },
+                {
+                    question: "원소를 금속과 비금속으로 구분하는 기준이 아닌 것은?",
+                    type: "multiple-choice",
+                    options: ["전기 전도성", "연성과 전성", "원자량", "금속 광택"],
+                    correctIndex: 2,
+                    explanation: "원자량은 금속과 비금속을 구분하는 기준이 아닙니다.",
+                    hint: "물리적 성질을 기준으로 구분됩니다."
+                },
+                {
+                    question: "다음 중 비금속 원소는?",
+                    type: "multiple-choice",
+                    options: ["철(Fe)", "황(S)", "구리(Cu)", "아연(Zn)"],
+                    correctIndex: 1,
+                    explanation: "황(S)은 비금속 원소입니다. 나머지는 모두 금속입니다.",
+                    hint: "주기율표에서 오른쪽에 위치한 원소들이 비금속입니다."
+                },
+                {
+                    question: "화학식 H₂SO₄에서 각 원소의 개수를 올바르게 나타낸 것은?",
+                    type: "multiple-choice",
+                    options: ["H:1, S:1, O:4", "H:2, S:1, O:4", "H:2, S:2, O:4", "H:1, S:2, O:4"],
+                    correctIndex: 1,
+                    explanation: "H₂SO₄는 수소 2개, 황 1개, 산소 4개로 구성됩니다.",
+                    hint: "첨자 숫자가 각 원소의 개수를 나타냅니다."
+                },
+                {
+                    question: "원자 번호가 의미하는 것은?",
+                    type: "multiple-choice",
+                    options: ["중성자 수", "양성자 수", "전자 수", "중성자 + 전자 수"],
+                    correctIndex: 1,
+                    explanation: "원자 번호는 원자핵에 있는 양성자의 개수를 나타냅니다.",
+                    hint: "원자의 정체성을 결정하는 기본 요소입니다."
+                },
+                {
+                    question: "동위원소란?",
+                    type: "multiple-choice",
+                    options: ["양성자 수가 같고 중성자 수가 다른 원자", "중성자 수가 같고 양성자 수가 다른 원자", "전자 수가 다른 원자", "모든 것이 같은 원자"],
+                    correctIndex: 0,
+                    explanation: "동위원소는 같은 원소(양성자 수 동일)이지만 중성자 수가 다른 원자들입니다.",
+                    hint: "탄소-12, 탄소-14 같은 예를 생각해보세요."
+                },
+                {
+                    question: "이온과 원자의 차이점은?",
+                    type: "multiple-choice",
+                    options: ["양성자 수가 다르다", "중성자 수가 다르다", "전자 수가 다르다", "원자량이 다르다"],
+                    correctIndex: 2,
+                    explanation: "이온은 전자를 얻거나 잃어서 전자 수가 양성자 수와 달라진 원자입니다.",
+                    hint: "전하를 띠는 이유를 생각해보세요."
+                },
+                {
+                    question: "분자와 화합물의 관계를 올바르게 설명한 것은?",
+                    type: "multiple-choice",
+                    options: ["모든 분자는 화합물이다", "모든 화합물은 분자다", "일부 화합물은 분자가 아니다", "분자와 화합물은 관련이 없다"],
+                    correctIndex: 2,
+                    explanation: "이온화합물 같은 화합물은 분자를 형성하지 않습니다.",
+                    hint: "소금(NaCl)은 화합물이지만 분자가 아닙니다."
+                },
+                {
+                    question: "원소 기호 작성 규칙으로 옳은 것은?",
+                    type: "multiple-choice",
+                    options: ["모두 대문자로", "모두 소문자로", "첫 글자만 대문자", "상관없다"],
+                    correctIndex: 2,
+                    explanation: "원소 기호는 첫 글자는 대문자, 둘째 글자부터는 소문자로 씁니다.",
+                    hint: "Ca, Cl, Na 등의 예를 생각해보세요."
+                },
+                {
+                    question: "원자와 분자를 구분하는 기준은?",
+                    type: "multiple-choice",
+                    options: ["크기", "원소의 종류 수", "전하", "상태"],
+                    correctIndex: 1,
+                    explanation: "원자는 한 종류의 원소로만, 분자는 한 종류 이상의 원소로 이루어집니다.",
+                    hint: "H₂는 분자, H는 원자입니다."
+                },
+                {
+                    question: "화학 반응에서 보존되는 것은?",
+                    type: "multiple-choice",
+                    options: ["분자 수", "원자 수", "에너지만", "부피"],
+                    correctIndex: 1,
+                    explanation: "화학 반응에서는 원자의 종류와 개수가 보존됩니다(질량 보존 법칙).",
+                    hint: "라부아지에의 질량 보존 법칙을 생각해보세요."
+                },
+                {
+                    question: "몰(mol)의 정의로 가장 적절한 것은?",
+                    type: "multiple-choice",
+                    options: ["6.02×10²³개의 입자를 나타내는 단위", "1g의 질량", "1L의 부피", "1개의 원자"],
+                    correctIndex: 0,
+                    explanation: "몰은 아보가드로 수(6.02×10²³)만큼의 입자를 나타내는 단위입니다.",
+                    hint: "아보가드로 수를 기억해보세요."
+                },
+                {
+                    question: "화학식에서 계수와 첨자의 역할이 다른 이유는?",
+                    type: "short-answer",
+                    keywords: ["분자", "개수", "구성", "비율"],
+                    answer: "계수는 분자의 개수, 첨자는 분자 내 원자의 개수를 나타내기 때문",
+                    explanation: "계수는 화학반응에서 분자의 개수를, 첨자는 분자 구성을 나타냅니다.",
+                    hint: "2H₂O에서 2는 계수, ₂는 첨자입니다."
                 }
             ]
         },
@@ -421,6 +840,62 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "이산화탄소(CO₂)는 O=C=O 구조로 탄소와 산소 사이에 이중결합을 가집니다.",
                     hint: "탄소가 산소 두 개와 결합하는 방법을 생각해보세요."
+                },
+                {
+                    question: "에틸렌(C₂H₄) 분자에서 탄소-탄소 결합은?",
+                    type: "multiple-choice",
+                    options: ["단일결합", "이중결합", "삼중결합", "배위결합"],
+                    correctIndex: 1,
+                    explanation: "에틸렌에서 두 탄소 원자는 C=C 이중결합으로 연결되어 있습니다.",
+                    hint: "C₂H₄에서 각 탄소가 4개의 결합을 만들어야 합니다."
+                },
+                {
+                    question: "HCN 분자에서 탄소와 질소 사이의 결합은?",
+                    type: "multiple-choice",
+                    options: ["단일결합", "이중결합", "삼중결합", "배위결합"],
+                    correctIndex: 2,
+                    explanation: "시안화수소에서 탄소와 질소는 C≡N 삼중결합으로 연결됩니다.",
+                    hint: "HCN에서 탄소와 질소가 옥텟을 만족하는 방법을 생각해보세요."
+                },
+                {
+                    question: "극성 공유결합이 형성되는 조건은?",
+                    type: "multiple-choice",
+                    options: ["같은 원소끼리 결합", "전기음성도 차이가 클 때", "금속과 비금속의 결합", "이온화 에너지가 클 때"],
+                    correctIndex: 1,
+                    explanation: "결합하는 원자들의 전기음성도 차이가 클수록 극성 공유결합이 형성됩니다.",
+                    hint: "전자를 끌어당기는 능력의 차이를 생각해보세요."
+                },
+                {
+                    question: "다음 중 결합 극성이 가장 큰 것은?",
+                    type: "multiple-choice",
+                    options: ["C-H", "N-H", "O-H", "F-H"],
+                    correctIndex: 3,
+                    explanation: "플루오린이 가장 큰 전기음성도를 가지므로 F-H 결합의 극성이 가장 큽니다.",
+                    hint: "주기율표에서 전기음성도가 가장 큰 원소를 찾아보세요."
+                },
+                {
+                    question: "공명 구조(resonance)란?",
+                    type: "multiple-choice",
+                    options: ["분자가 진동하는 것", "여러 Lewis 구조가 가능한 것", "전자가 이동하는 것", "결합이 끊어지는 것"],
+                    correctIndex: 1,
+                    explanation: "공명은 하나의 분자를 여러 개의 Lewis 구조로 나타낼 수 있는 현상입니다.",
+                    hint: "벤젠과 같은 분자의 구조를 생각해보세요."
+                },
+                {
+                    question: "P₄ 분자에서 인 원자 하나가 만드는 공유결합의 수는?",
+                    type: "multiple-choice",
+                    options: ["1개", "2개", "3개", "4개"],
+                    correctIndex: 2,
+                    explanation: "P₄는 정사면체 구조로 각 인 원자는 3개의 다른 인 원자와 결합합니다.",
+                    hint: "인 원자의 바깥 전자 개수는 5개입니다."
+                },
+                {
+                    question: "배위결합의 특징으로 옳은 것은?",
+                    type: "multiple-choice",
+                    options: ["두 원자가 전자를 하나씩 제공", "한 원자가 전자쌍을 모두 제공", "전자가 한쪽으로 완전히 이동", "자유전자가 결합에 참여"],
+                    correctIndex: 1,
+                    explanation: "배위결합은 한 원자가 전자쌍을 모두 제공하여 형성되는 공유결합의 특별한 경우입니다.",
+                    hint: "NH₄⁺ 이온의 형성 과정을 생각해보세요."
                 }
             ]
         },
@@ -458,6 +933,78 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "쌍극자 모멘트가 0이 아니면 극성 분자, 0이면 무극성 분자입니다.",
                     hint: "전기적 비대칭성을 나타내는 물리량을 생각해보세요."
+                },
+                {
+                    question: "SF₆ 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["정사면체형", "삼각쌍뿔형", "정팔면체형", "평면 정사각형"],
+                    correctIndex: 2,
+                    explanation: "육플루오린화황(SF₆)은 황 원자 주위에 6개의 결합이 있어 정팔면체 구조입니다.",
+                    hint: "6개의 결합 전자쌍이 가장 멀리 떨어지는 배치를 생각해보세요."
+                },
+                {
+                    question: "PCl₅ 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["정사면체형", "삼각쌍뿔형", "정팔면체형", "평면 오각형"],
+                    correctIndex: 1,
+                    explanation: "오염화인(PCl₅)은 인 원자 주위에 5개의 결합이 있어 삼각쌍뿔 구조입니다.",
+                    hint: "5개의 전자쌍 배치에서 3개는 평면에, 2개는 축에 위치합니다."
+                },
+                {
+                    question: "ClF₃ 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["삼각평면형", "T자형", "직선형", "삼각뿔형"],
+                    correctIndex: 1,
+                    explanation: "삼플루오린화염소는 3개의 결합과 2개의 비공유 전자쌍으로 T자형 구조입니다.",
+                    hint: "5개의 전자쌍 중 2개가 비공유 전자쌍인 경우를 생각해보세요."
+                },
+                {
+                    question: "분자의 모양에서 비공유 전자쌍의 영향은?",
+                    type: "multiple-choice",
+                    options: ["영향이 없다", "결합각을 넓힌다", "결합각을 좁힌다", "분자를 직선형으로 만든다"],
+                    correctIndex: 2,
+                    explanation: "비공유 전자쌍은 공유 전자쌍보다 더 많은 공간을 차지하여 결합각을 좁힙니다.",
+                    hint: "암모니아의 결합각이 109.5°보다 작은 이유를 생각해보세요."
+                },
+                {
+                    question: "XeF₄ 분자의 모양은?",
+                    type: "multiple-choice",
+                    options: ["정사면체형", "평면 정사각형", "삼각쌍뿔형", "정팔면체형"],
+                    correctIndex: 1,
+                    explanation: "사플루오린화제논은 4개의 결합과 2개의 비공유 전자쌍으로 평면 정사각형 구조입니다.",
+                    hint: "6개의 전자쌍 중 2개가 비공유 전자쌍인 경우를 생각해보세요."
+                },
+                {
+                    question: "분자간 수소결합이 일어나는 조건은?",
+                    type: "multiple-choice",
+                    options: ["H가 모든 원소와 결합", "H가 N, O, F와 결합", "H가 금속과 결합", "H가 할로겐과 결합"],
+                    correctIndex: 1,
+                    explanation: "수소결합은 수소가 전기음성도가 매우 큰 N, O, F와 결합했을 때만 일어납니다.",
+                    hint: "전기음성도가 가장 큰 3개 원소를 생각해보세요."
+                },
+                {
+                    question: "분자의 쌍극자 모멘트를 결정하는 요인은?",
+                    type: "multiple-choice",
+                    options: ["결합의 극성만", "분자의 모양만", "결합의 극성과 분자의 모양", "원자의 크기만"],
+                    correctIndex: 2,
+                    explanation: "분자의 쌍극자 모멘트는 개별 결합의 극성과 분자 전체의 기하학적 배치에 의해 결정됩니다.",
+                    hint: "극성 결합이 있어도 대칭 구조면 무극성이 될 수 있습니다."
+                },
+                {
+                    question: "I₃⁻ 이온의 모양은?",
+                    type: "multiple-choice",
+                    options: ["굽은형", "직선형", "삼각형", "T자형"],
+                    correctIndex: 1,
+                    explanation: "삼요오드 음이온은 5개의 전자쌍 중 3개가 비공유 전자쌍이어서 직선형 구조입니다.",
+                    hint: "5개 전자쌍 중 2개만 결합에 참여하는 경우를 생각해보세요."
+                },
+                {
+                    question: "물 분자에서 H-O-H 결합각이 104.5°인 이유는?",
+                    type: "multiple-choice",
+                    options: ["수소가 작아서", "산소의 비공유 전자쌍 때문", "수소결합 때문", "이온성 때문"],
+                    correctIndex: 1,
+                    explanation: "물 분자의 산소에는 2개의 비공유 전자쌍이 있어 이들이 결합 전자쌍을 밀어내어 결합각이 줄어듭니다.",
+                    hint: "정사면체 각도 109.5°보다 작아진 이유를 생각해보세요."
                 }
             ]
         },
@@ -487,6 +1034,38 @@ const problemTemplates = {
                     correctIndex: 2,
                     explanation: "질소의 삼중결합(942 kJ/mol)이 가장 강한 결합입니다.",
                     hint: "결합 차수가 높을수록 결합이 강합니다."
+                },
+                {
+                    question: "결합 진동 주파수가 높을수록 결합의 특성은?",
+                    type: "multiple-choice",
+                    options: ["약하고 길다", "강하고 짧다", "약하고 짧다", "강하고 길다"],
+                    correctIndex: 1,
+                    explanation: "진동 주파수가 높을수록 결합이 강하고 길이가 짧습니다.",
+                    hint: "스프링이 딱딱할수록 진동수가 높아지는 것과 같습니다."
+                },
+                {
+                    question: "C-H, N-H, O-H 결합 중 가장 극성이 큰 것은?",
+                    type: "multiple-choice",
+                    options: ["C-H", "N-H", "O-H", "모두 같다"],
+                    correctIndex: 2,
+                    explanation: "산소의 전기음성도가 가장 크므로 O-H 결합이 가장 극성입니다.",
+                    hint: "전기음성도: O > N > C"
+                },
+                {
+                    question: "결합 차수 1.5를 가지는 것은?",
+                    type: "multiple-choice",
+                    options: ["벤젠의 C-C 결합", "O₂ 분자", "N₂ 분자", "H₂ 분자"],
+                    correctIndex: 0,
+                    explanation: "벤젠의 탄소-탄소 결합은 공명으로 인해 결합 차수가 1.5입니다.",
+                    hint: "공명 구조를 가지는 분자를 생각해보세요."
+                },
+                {
+                    question: "van der Waals 반지름과 공유 반지름의 관계는?",
+                    type: "multiple-choice",
+                    options: ["van der Waals > 공유", "공유 > van der Waals", "항상 같다", "원소에 따라 다름"],
+                    correctIndex: 0,
+                    explanation: "van der Waals 반지름이 공유 반지름보다 큽니다. 공유결합에서는 원자들이 더 가까워집니다.",
+                    hint: "결합을 할 때와 하지 않을 때의 크기를 비교해보세요."
                 }
             ]
         },
@@ -510,6 +1089,56 @@ const problemTemplates = {
                     hint: "공유하는 전자의 개수를 비교해보세요."
                 },
                 {
+                    question: "결합의 이온성 비율이 가장 큰 것은?",
+                    type: "multiple-choice",
+                    options: ["H-F", "H-Cl", "H-Br", "H-I"],
+                    correctIndex: 0,
+                    explanation: "H-F는 전기음성도 차이가 가장 커서 이온성 비율이 가장 큽니다.",
+                    hint: "전기음성도 차이가 클수록 이온성이 커집니다."
+                },
+                {
+                    question: "Born-Haber 사이클에서 격자 에너지는?",
+                    type: "multiple-choice",
+                    options: ["항상 음수", "항상 양수", "0", "온도에 따라 변함"],
+                    correctIndex: 1,
+                    explanation: "격자 에너지는 이온 결정을 기체 이온으로 분해하는 데 필요한 에너지로 항상 양수입니다.",
+                    hint: "결정을 분해하는 데는 에너지가 필요합니다."
+                },
+                {
+                    question: "다음 중 가장 큰 격자 에너지를 가지는 것은?",
+                    type: "multiple-choice",
+                    options: ["LiF", "LiCl", "NaF", "NaCl"],
+                    correctIndex: 0,
+                    explanation: "LiF는 이온의 전하 곱이 크고 이온 반지름 합이 가장 작아 격자 에너지가 가장 큽니다.",
+                    hint: "격자 에너지는 이온의 전하에 비례하고 거리에 반비례합니다."
+                },
+                {
+                    question: "금속결합에서 자유전자의 역할은?",
+                    type: "multiple-choice",
+                    options: ["절연체 역할", "도체 역할", "반도체 역할", "역할 없음"],
+                    correctIndex: 1,
+                    explanation: "자유전자는 금속의 전기 전도성과 열 전도성을 담당합니다.",
+                    hint: "금속이 전기를 잘 통하는 이유를 생각해보세요."
+                },
+                {
+                    question: "합금에서 원자들 사이의 결합은?",
+                    type: "multiple-choice",
+                    options: ["이온결합", "공유결합", "금속결합", "반데르발스 힘"],
+                    correctIndex: 2,
+                    explanation: "합금은 금속들의 혼합물로 금속결합이 주된 결합입니다.",
+                    hint: "구리와 아연으로 만든 황동을 생각해보세요."
+                },
+                {
+                    question: "결합 해리 엔탈피와 결합 형성 엔탈피의 관계는?",
+                    type: "multiple-choice",
+                    options: ["같다", "부호가 반대", "비례관계", "관계없다"],
+                    correctIndex: 1,
+                    explanation: "결합 해리는 흡열(+), 결합 형성은 발열(-)로 부호가 반대입니다.",
+                    hint: "에너지 관점에서 결합을 끊는 것과 만드는 것을 비교해보세요."
+                }
+            ]
+        },
+        {
                     question: "물 분자에서 O-H 결합은 어떤 종류의 결합인가요?",
                     type: "multiple-choice",
                     options: ["이온결합", "공유결합", "금속결합", "수소결합"],
@@ -648,6 +1277,78 @@ const problemTemplates = {
     
     hard: [
         {
+            category: 'covalent',
+            templates: [
+                {
+                    question: "벤젠(C₆H₆) 분자에서 탄소-탄소 결합의 특징을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["공명", "비편재화", "중간", "길이"],
+                    answer: "공명 구조로 인해 단일결합과 이중결합의 중간 길이를 가짐",
+                    explanation: "벤젠의 탄소-탄소 결합은 공명 구조로 인해 전자가 비편재화되어 단일결합과 이중결합의 중간 성질을 나타냅니다.",
+                    hint: "방향족 화합물의 전자 구조를 생각해보세요."
+                },
+                {
+                    question: "하이브리드 궤도(sp³, sp², sp)에 따른 결합각을 올바르게 매칭하세요.",
+                    type: "matching",
+                    pairs: [
+                        { left: "sp³ 혼성", right: "109.5°" },
+                        { left: "sp² 혼성", right: "120°" },
+                        { left: "sp 혼성", right: "180°" }
+                    ],
+                    explanation: "혼성 궤도의 종류에 따라 결합각이 달라집니다. sp³는 정사면체, sp²는 평면삼각형, sp는 직선형입니다.",
+                    hint: "전자쌍 개수에 따른 기하학적 배치를 생각해보세요."
+                },
+                {
+                    question: "다음 분자들의 극성을 판단하고 그 이유를 설명하세요: CH₄, NH₃, CO₂, H₂O",
+                    type: "short-answer",
+                    keywords: ["대칭", "쌍극자", "극성", "무극성"],
+                    answer: "CH₄, CO₂는 무극성(대칭구조), NH₃, H₂O는 극성(비대칭구조)",
+                    explanation: "분자의 극성은 극성 결합의 존재와 분자의 대칭성에 의해 결정됩니다. 대칭 구조는 쌍극자가 상쇄되어 무극성이 됩니다.",
+                    hint: "분자의 모양과 결합의 극성을 함께 고려해보세요."
+                },
+                {
+                    question: "σ 결합과 π 결합의 차이점을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["시그마", "파이", "중첩", "회전"],
+                    answer: "σ결합은 궤도의 머리-머리 중첩, π결합은 옆면-옆면 중첩으로 형성됨",
+                    explanation: "σ결합은 원자 궤도가 직접 중첩되어 강하고 회전 가능하며, π결합은 궤도가 평행하게 중첩되어 상대적으로 약하고 회전이 제한됩니다.",
+                    hint: "이중결합에서 첫 번째와 두 번째 결합의 차이를 생각해보세요."
+                },
+                {
+                    question: "다음 중 분자간 수소결합이 가능한 분자들을 모두 고르세요.",
+                    type: "multiple-choice",
+                    options: ["CH₄, NH₃, H₂O", "NH₃, H₂O, HF", "CO₂, CH₄, N₂", "HCl, HBr, HI"],
+                    correctIndex: 1,
+                    explanation: "수소결합은 H가 N, O, F와 결합했을 때만 가능합니다. NH₃, H₂O, HF가 모두 해당됩니다.",
+                    hint: "전기음성도가 매우 큰 원소들과 결합한 수소를 찾아보세요."
+                },
+                {
+                    question: "전자 밀도가 높은 영역에서 낮은 영역으로의 이동을 나타내는 화살표를 그려보세요: H-Cl",
+                    type: "short-answer",
+                    keywords: ["화살표", "전자", "염소", "극성"],
+                    answer: "H → Cl (전자가 염소 쪽으로 치우침)",
+                    explanation: "염소가 수소보다 전기음성도가 크므로 공유 전자쌍이 염소 쪽으로 치우쳐 극성을 나타냅니다.",
+                    hint: "더 전기음성도가 큰 원소 쪽으로 전자가 끌려갑니다."
+                },
+                {
+                    question: "분자 궤도 이론에서 결합성 궤도와 반결합성 궤도의 차이점은?",
+                    type: "short-answer",
+                    keywords: ["결합성", "반결합성", "에너지", "안정성"],
+                    answer: "결합성 궤도는 에너지가 낮아 안정하고, 반결합성 궤도는 에너지가 높아 불안정함",
+                    explanation: "결합성 궤도는 원자 궤도가 건설적으로 간섭하여 낮은 에너지를 가지며, 반결합성 궤도는 파괴적 간섭으로 높은 에너지를 가집니다.",
+                    hint: "파동의 보강 간섭과 상쇄 간섭을 생각해보세요."
+                },
+                {
+                    question: "C₂H₂ (아세틸렌)의 C≡C 삼중결합에서 σ결합과 π결합의 개수는?",
+                    type: "multiple-choice",
+                    options: ["σ 1개, π 2개", "σ 2개, π 1개", "σ 3개, π 0개", "σ 0개, π 3개"],
+                    correctIndex: 0,
+                    explanation: "삼중결합은 1개의 σ결합과 2개의 π결합으로 구성됩니다.",
+                    hint: "다중결합에서 첫 번째는 항상 σ결합입니다."
+                }
+            ]
+        },
+        {
             category: 'molecular',
             templates: [
                 {
@@ -673,6 +1374,66 @@ const problemTemplates = {
                     correctIndex: 1,
                     explanation: "메탄은 정사면체 구조로 결합각이 109.5°입니다.",
                     hint: "정사면체 구조에서의 결합각을 생각해보세요."
+                },
+                {
+                    question: "다음 분자들을 쌍극자 모멘트의 크기 순으로 배열하세요: CO₂, H₂O, NH₃, CH₄",
+                    type: "short-answer",
+                    keywords: ["H₂O", "NH₃", "대칭", "무극성"],
+                    answer: "H₂O > NH₃ > CO₂ = CH₄ (무극성)",
+                    explanation: "물이 가장 큰 쌍극자 모멘트를 가지고, CO₂와 CH₄는 대칭 구조로 무극성입니다.",
+                    hint: "분자의 대칭성과 결합의 극성을 모두 고려해보세요."
+                },
+                {
+                    question: "BrF₅ 분자의 모양과 극성을 예측하세요.",
+                    type: "short-answer",
+                    keywords: ["사각뿔", "극성", "전자쌍"],
+                    answer: "사각뿔형, 극성 분자",
+                    explanation: "오플루오린화브롬은 6개의 전자쌍(5개 결합, 1개 비공유)으로 사각뿔 구조이며 비대칭이므로 극성입니다.",
+                    hint: "6개 전자쌍 중 1개가 비공유 전자쌍인 경우를 생각해보세요."
+                },
+                {
+                    question: "다음 화합물들의 혼성 궤도를 올바르게 매칭하세요.",
+                    type: "matching",
+                    pairs: [
+                        { left: "CH₄", right: "sp³" },
+                        { left: "C₂H₄", right: "sp²" },
+                        { left: "C₂H₂", right: "sp" },
+                        { left: "NH₃", right: "sp³" }
+                    ],
+                    explanation: "탄소나 질소 주위의 전자쌍 개수에 따라 혼성이 결정됩니다.",
+                    hint: "4개 전자쌍은 sp³, 3개는 sp², 2개는 sp 혼성입니다."
+                },
+                {
+                    question: "분자간 힘의 세기를 비교하여 끓는점 순서를 예측하세요: Ne, HF, H₂O, NH₃",
+                    type: "short-answer",
+                    keywords: ["H₂O", "HF", "NH₃", "Ne"],
+                    answer: "H₂O > HF > NH₃ > Ne",
+                    explanation: "수소결합 > 분산력 순으로 강하며, 물은 수소결합을 2개 형성할 수 있어 가장 높은 끓는점을 가집니다.",
+                    hint: "수소결합 가능 개수와 분자 크기를 고려해보세요."
+                },
+                {
+                    question: "Lewis 구조에서 옥텟 규칙의 예외인 분자들을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["BF₃", "SF₆", "전자부족", "확장옥텟"],
+                    answer: "BF₃(전자부족), SF₆(확장옥텟) 등이 예외",
+                    explanation: "3주기 이후 원소들은 d궤도를 이용해 옥텟을 확장할 수 있고, 붕소는 전자가 부족한 상태로 안정합니다.",
+                    hint: "주기별 사용 가능한 궤도의 차이를 생각해보세요."
+                },
+                {
+                    question: "분자 궤도 이론으로 O₂ 분자의 자기적 성질을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["상자성", "홀전자", "분자궤도"],
+                    answer: "반결합성 π* 궤도에 홀전자 2개가 있어 상자성",
+                    explanation: "분자 궤도 이론에 따르면 O₂는 반결합성 궤도에 홀전자가 있어 상자성을 나타냅니다.",
+                    hint: "O₂가 자석에 끌리는 성질을 분자 궤도로 설명해보세요."
+                },
+                {
+                    question: "다음 이온들의 결합각을 비교하고 설명하세요: H₃O⁺, NH₄⁺, OH⁻",
+                    type: "short-answer",
+                    keywords: ["109.5", "정사면체", "삼각뿔"],
+                    answer: "NH₄⁺ (109.5°) > H₃O⁺ > OH⁻",
+                    explanation: "NH₄⁺는 완전한 정사면체, H₃O⁺는 삼각뿔형으로 비공유 전자쌍의 영향으로 각도가 감소합니다.",
+                    hint: "비공유 전자쌍의 개수와 그 영향을 고려해보세요."
                 }
             ]
         },
@@ -702,6 +1463,62 @@ const problemTemplates = {
                     answer: "더 많은 전자쌍을 공유하기 때문",
                     explanation: "삼중결합은 3개의 전자쌍을 공유하여 이중결합(2개)보다 강한 결합을 형성합니다.",
                     hint: "결합 차수와 결합 세기의 관계를 생각해보세요."
+                },
+                {
+                    question: "분자 궤도 이론에서 결합 차수를 계산하는 공식을 적용하여 He₂⁺의 안정성을 예측하세요.",
+                    type: "short-answer",
+                    keywords: ["결합차수", "0.5", "안정"],
+                    answer: "결합 차수 0.5로 약하지만 안정함",
+                    explanation: "He₂⁺는 (결합성 전자 2개 - 반결합성 전자 1개)/2 = 0.5의 결합 차수를 가져 약한 결합이지만 존재 가능합니다.",
+                    hint: "분자 궤도 에너지 준위와 전자 배치를 고려해보세요."
+                },
+                {
+                    question: "결정장 이론에서 d궤도 분열을 설명하고, 정팔면체 착물에서의 에너지 차이를 나타내세요.",
+                    type: "short-answer",
+                    keywords: ["t2g", "eg", "분열", "정팔면체"],
+                    answer: "d궤도가 t2g(낮은 에너지)와 eg(높은 에너지) 준위로 분열됨",
+                    explanation: "정팔면체 착물에서 리간드의 전기장에 의해 d궤도가 에너지 차이를 가지는 두 그룹으로 분열됩니다.",
+                    hint: "배위자와 d궤도의 상호작용을 생각해보세요."
+                },
+                {
+                    question: "다음 화합물들의 결합성을 정량적으로 비교 분석하세요: LiF, BeO, B₂O₃, CO₂",
+                    type: "short-answer",
+                    keywords: ["이온성", "공유성", "전기음성도", "경향"],
+                    answer: "LiF(이온성) > BeO(혼합) > B₂O₃(공유성) > CO₂(순수 공유성)",
+                    explanation: "전기음성도 차이에 따라 LiF는 순수 이온성, CO₂는 순수 공유성이며, BeO와 B₂O₃는 중간적 성질을 보입니다.",
+                    hint: "주기율표에서 금속성과 비금속성의 변화를 고려해보세요."
+                },
+                {
+                    question: "Pauling의 전기음성도 척도와 Mulliken의 전기음성도 척도의 차이점을 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["열화학", "이온화에너지", "전자친화도"],
+                    answer: "Pauling은 열화학 데이터, Mulliken은 이온화에너지와 전자친화도 평균 사용",
+                    explanation: "Pauling 척도는 결합 에너지 데이터를 기반으로 하고, Mulliken 척도는 원자의 이온화 에너지와 전자 친화도의 평균값을 사용합니다.",
+                    hint: "두 척도가 사용하는 실험 데이터의 종류를 비교해보세요."
+                },
+                {
+                    question: "반데르발스 상수 a와 b가 분자간 힘에 미치는 영향을 정량적으로 분석하세요.",
+                    type: "short-answer",
+                    keywords: ["인력", "부피", "보정"],
+                    answer: "a는 분자간 인력 보정, b는 분자 자체 부피 보정",
+                    explanation: "van der Waals 방정식에서 a는 분자간 인력으로 인한 압력 감소를, b는 분자 자체가 차지하는 부피를 보정합니다.",
+                    hint: "이상기체 방정식과의 차이점을 생각해보세요."
+                },
+                {
+                    question: "초분자 화학에서 비공유 결합의 협동 효과를 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["협동", "증강", "다중", "결합"],
+                    answer: "다중 비공유 결합이 개별 결합의 합보다 강한 결합력 나타냄",
+                    explanation: "여러 개의 약한 비공유 결합이 동시에 작용할 때 개별 결합 세기의 단순 합보다 훨씬 강한 전체 결합 세기를 나타내는 현상입니다.",
+                    hint: "DNA의 이중나선 구조가 안정한 이유를 생각해보세요."
+                },
+                {
+                    question: "전이금속 착물에서 18전자 규칙의 예외 사례들을 분류하고 설명하세요.",
+                    type: "short-answer",
+                    keywords: ["16전자", "20전자", "d8", "예외"],
+                    answer: "d8 평면사각형(16전자), 일부 d0-d3 착물(전자부족), d10 착물(전자과잉)",
+                    explanation: "18전자 규칙은 일반적 안정성 지침이지만, 평면사각형 d8 착물, 전자가 부족한 초기 전이금속 착물 등에서 예외가 나타납니다.",
+                    hint: "d궤도 전자 개수와 배위 기하학의 관계를 고려해보세요."
                 }
             ]
         },

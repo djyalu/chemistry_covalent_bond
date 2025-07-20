@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="enhanced-styles.css">
     <link rel="stylesheet" href="dynamic-learning-styles.css">
     <link rel="stylesheet" href="interactive-problems.css">
+    <link rel="stylesheet" href="progress-styles.css">
     <link rel="stylesheet" href="content-styles.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2196F3">
@@ -161,42 +162,83 @@
 
             <!-- 학습 진도 섹션 -->
             <section id="progress" class="section">
-                <h2>나의 학습 진도</h2>
+                <h2>📊 나의 학습 진도</h2>
                 
+                <!-- 종합 통계 -->
                 <div class="progress-overview">
-                    <div class="stat-card">
-                        <h3>총 학습 시간</h3>
-                        <p id="total-time">0분</p>
+                    <div class="stat-card primary">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-content">
+                            <h3>총 학습 시간</h3>
+                            <p id="total-time">0분</p>
+                            <small>오늘: <span id="today-time">0분</span></small>
+                        </div>
                     </div>
                     
-                    <div class="stat-card">
-                        <h3>푼 문제 수</h3>
-                        <p id="total-questions">0문제</p>
+                    <div class="stat-card success">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <h3>푼 문제 수</h3>
+                            <p id="total-questions">0문제</p>
+                            <small>오늘: <span id="today-questions">0문제</span></small>
+                        </div>
                     </div>
                     
-                    <div class="stat-card">
-                        <h3>정답률</h3>
-                        <p id="accuracy">0%</p>
+                    <div class="stat-card info">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <h3>전체 정답률</h3>
+                            <p id="accuracy">0%</p>
+                            <small>최근 10문제: <span id="recent-accuracy">0%</span></small>
+                        </div>
                     </div>
                     
-                    <div class="stat-card">
-                        <h3>최고 점수</h3>
-                        <p id="high-score">0점</p>
+                    <div class="stat-card warning">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-content">
+                            <h3>최고 점수</h3>
+                            <p id="high-score">0점</p>
+                            <small>연속 정답: <span id="max-streak">0개</span></small>
+                        </div>
                     </div>
                 </div>
-                
+
+                <!-- 주제별 상세 진도 -->
                 <div class="topic-progress">
-                    <h3>주제별 진도</h3>
-                    <div id="topic-progress-bars">
-                        <!-- 진도 바가 동적으로 생성됩니다 -->
+                    <h3>📈 주제별 학습 현황</h3>
+                    <div id="topic-progress-detail">
+                        <!-- 주제별 진도가 동적으로 생성됩니다 -->
                     </div>
                 </div>
-                
+
+                <!-- 학습 활동 차트 -->
+                <div class="activity-chart">
+                    <h3>📅 최근 7일 학습 활동</h3>
+                    <div id="activity-chart">
+                        <!-- 활동 차트가 동적으로 생성됩니다 -->
+                    </div>
+                </div>
+
+                <!-- 성취 시스템 -->
                 <div class="achievements">
-                    <h3>획득한 배지</h3>
-                    <div id="achievement-list">
+                    <h3>🏅 획득한 배지</h3>
+                    <div id="achievement-grid">
                         <!-- 배지가 동적으로 표시됩니다 -->
                     </div>
+                </div>
+
+                <!-- 학습 추천 -->
+                <div class="learning-recommendations">
+                    <h3>💡 학습 추천</h3>
+                    <div id="recommendations">
+                        <!-- 개인화된 추천이 표시됩니다 -->
+                    </div>
+                </div>
+
+                <!-- 학습 통계 리셋 -->
+                <div class="progress-controls">
+                    <button onclick="exportProgress()" class="btn-secondary">📋 진도 내보내기</button>
+                    <button onclick="resetProgress()" class="btn-danger">🔄 통계 초기화</button>
                 </div>
             </section>
         </main>
@@ -215,6 +257,7 @@
     <script src="molecule-viewer.js?v=6"></script>
     <script src="enhanced-problems.js?v=6"></script>
     <script src="gamification.js?v=6"></script>
+    <script src="progress.js?v=1"></script>
     <!-- enhanced-learning.js 완전 비활성화 -->
     <script src="visual-aid.js?v=6"></script>
     

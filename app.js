@@ -47,8 +47,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 진도 데이터 로드
+    // 진도 데이터 로드 (기존 시스템)
     loadProgress();
+    
+    // 새로운 진도 관리자 초기화 확인
+    setTimeout(() => {
+        if (window.progressManager) {
+            console.log('Progress Manager initialized successfully');
+            // 현재 활성 섹션이 practice면 미니 대시보드 업데이트
+            const practiceSection = document.getElementById('practice');
+            if (practiceSection && practiceSection.classList.contains('active')) {
+                updateMiniDashboard();
+            }
+        }
+    }, 200);
     
     // 첫 문제는 practice 섹션에 진입할 때 로드
 });
@@ -69,6 +81,9 @@ function switchSection(sectionName) {
     
     // practice 섹션에 진입할 때 첫 문제 로드
     if (sectionName === 'practice') {
+        // 미니 대시보드 초기화
+        updateMiniDashboard();
+        
         // 문제가 아직 로드되지 않았거나 새로운 세션이면 문제 로드
         if (!currentQuestion || questionCount === 0) {
             setTimeout(() => {
@@ -536,10 +551,19 @@ function checkAnswer() {
     document.getElementById('submit-btn').style.display = 'none';
     document.getElementById('next-btn').style.display = 'inline-block';
     
-    // 학습 대시보드 업데이트
-    updateLearningDashboard();
+    // 새로운 진도 추적 시스템 사용
+    if (window.progressManager) {
+        // 문제 주제 결정
+        const questionTopic = currentQuestion.category || currentPracticeTopic || 'covalent';
+        
+        // 진도 기록
+        window.progressManager.recordAnswer(isCorrect, questionTopic, currentQuestion.points || 10);
+        
+        // 미니 대시보드 업데이트
+        updateMiniDashboard();
+    }
     
-    // 진도 저장
+    // 기존 진도 저장 (하위 호환성)
     saveProgress();
 }
 
@@ -927,6 +951,58 @@ function updateLearningDashboard() {
         
         const weakElement = document.getElementById('weak-area');
         if (weakElement) weakElement.textContent = '-';
+    }
+}
+
+// 미니 대시보드 업데이트 (문제풀기 섹션의 통계)
+function updateMiniDashboard() {
+    if (window.progressManager) {
+        const data = window.progressManager.data;
+        
+        // 레벨 계산 (10문제마다 레벨업)
+        const level = Math.floor(data.totalQuestions / 10) + 1;
+        const levelElement = document.getElementById('current-level');
+        if (levelElement) levelElement.textContent = level;
+        
+        // 정답률 업데이트
+        const accuracyElement = document.getElementById('current-accuracy');
+        if (accuracyElement) {
+            const accuracy = data.totalQuestions > 0 ? 
+                Math.round((data.correctAnswers / data.totalQuestions) * 100) : 0;
+            accuracyElement.textContent = `${accuracy}%`;
+        }
+        
+        // 연속 정답 업데이트
+        const streakElement = document.getElementById('current-streak');
+        if (streakElement) streakElement.textContent = `연속 정답: ${data.currentStreak}`;
+        
+        // 약점 영역 분석
+        const weakElement = document.getElementById('weak-area');
+        if (weakElement) {
+            let weakestTopic = '-';
+            let lowestAccuracy = 100;
+            
+            for (const [topic, stats] of Object.entries(data.topicStats)) {
+                if (stats.attempted > 0) {
+                    const accuracy = (stats.correct / stats.attempted) * 100;
+                    if (accuracy < lowestAccuracy) {
+                        lowestAccuracy = accuracy;
+                        weakestTopic = topic;
+                    }
+                }
+            }
+            
+            const topicNames = {
+                covalent: '공유결합',
+                ionic: '이온화합물', 
+                molecular: '분자구조',
+                bonding: '결합세기',
+                reactions: '화학반응',
+                dailyChemistry: '일상화학'
+            };
+            
+            weakElement.textContent = topicNames[weakestTopic] || weakestTopic;
+        }
     }
 }
 
