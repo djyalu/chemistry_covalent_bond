@@ -608,8 +608,8 @@ const problemTemplates = {
                     type: "multiple-choice",
                     options: ["22.4 L", "24.5 L", "20.0 L", "25.0 L"],
                     correctIndex: 0,
-                    explanation: "STP(0℃, 1기압)에서 모든 기체 1몰의 부피는 22.4L입니다.",
-                    hint: "아보가드로의 법칙에 의한 결과입니다."
+                    explanation: "STP(0℃, 1atm = 101.325 kPa)에서 모든 이상기체 1몰의 부피는 22.4L입니다.",
+                    hint: "아보가드로의 법칙에 의한 표준 몰부피입니다."
                 },
                 {
                     question: "화학 반응식의 균형을 맞추는 이유는?",
@@ -1141,8 +1141,8 @@ const problemTemplates = {
                     type: "multiple-choice",
                     options: ["H₂O", "CO₂", "CH₄", "NH₃"],
                     correctIndex: 1,
-                    explanation: "이산화탄소(CO₂)는 O=C=O 구조로 탄소와 산소 사이에 이중결합을 가집니다.",
-                    hint: "탄소가 산소 두 개와 결합하는 방법을 생각해보세요."
+                    explanation: "이산화탄소(CO₂)는 O=C=O 직선형 구조로 탄소와 각 산소 사이에 이중결합(C=O)을 가집니다.",
+                    hint: "탄소가 산소 두 개와 이중결합하는 방법을 생각해보세요."
                 },
                 {
                     question: "에틸렌(C₂H₄) 분자에서 탄소-탄소 결합은?",
@@ -2661,7 +2661,7 @@ const dynamicProblemGenerators = {
                 law: "아보가드로의 법칙",
                 description: "같은 온도, 압력에서 같은 부피의 기체는 같은 분자 수",
                 formula: "V ∝ n",
-                question: "STP에서 모든 기체 1몰의 부피는?",
+                question: "STP(0℃, 1atm)에서 모든 이상기체 1몰의 부피는?",
                 answer: "22.4 L",
                 options: ["22.4 L", "24.5 L", "20.0 L", "25.0 L"]
             }
@@ -2680,7 +2680,7 @@ const dynamicProblemGenerators = {
         };
     },
 
-    // 화학결합 에너지 비교 문제 생성기
+    // 화학결합 에너지 비교 문제 생성기 (표준 근사값 사용)
     bondEnergyComparisonProblem() {
         const bonds = [
             { bond: "H-H", energy: 436, type: "단일결합" },
@@ -2785,9 +2785,9 @@ const dynamicProblemGenerators = {
         problem.uniqueId = `dynamic_${problem.category}_${Date.now()}`;
         
         return problem;
-    }
+    },
     
-    // 결합 에너지 문제 생성기
+    // 결합 에너지 문제 생성기 (표준 근사값 사용)
     bondEnergyProblem() {
         const bonds = [
             { bond: "H-H", energy: 436, type: "단일결합" },
@@ -2801,12 +2801,12 @@ const dynamicProblemGenerators = {
         const bond = bonds[Math.floor(Math.random() * bonds.length)];
         
         return {
-            question: `${bond.bond} 결합의 결합 에너지는 약 몇 kJ/mol인가요?`,
+            question: `${bond.bond} 결합의 결합 에너지는 약 몇 kJ/mol인가요? (표준 근사값)`,
             type: "multiple-choice",
             options: [bond.energy, bond.energy + 100, bond.energy - 100, bond.energy + 200].sort(() => Math.random() - 0.5),
             correctIndex: 0,
             answer: bond.energy.toString(),
-            explanation: `${bond.bond} ${bond.type}의 결합 에너지는 ${bond.energy} kJ/mol입니다.`,
+            explanation: `${bond.bond} ${bond.type}의 표준 결합 에너지는 약 ${bond.energy} kJ/mol입니다 (실제값은 ±5-10 kJ/mol 차이 가능).`,
             category: "bonding",
             hint: `${bond.type}의 세기를 고려해보세요.`
         };
